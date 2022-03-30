@@ -9,7 +9,7 @@
         <ul class="sidebar-menu">
 
             <li class="menu-header">Dashboard</li>
-            <li class={{ (Route::currentRouteName() == 'admin.dashboard') ? 'active' : ''}}><a class="nav-link" href="/seller"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+            <li class={{ (Route::currentRouteName() == 'dashboard.index') ? 'active' : ''}}><a class="nav-link" href="{{route('dashboard.index')}}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
 
             <li class="menu-header">Menu</li>
             <li class= "@stack('active.user-management')">
@@ -18,13 +18,13 @@
                     <span>User Management</span>
                 </a>
             </li>
-            <li class="dropdown">
-                <a href="#" class="nav-link has-dropdown @stack('active.orders')" data-toggle="dropdown">
+            <li class="dropdown @stack('active.self-service')">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fab fa-stripe-s"></i>
-                    <span>My Transaction</span></a>
+                    <span>Self Service</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="layout-default.html">History</a></li>
-                    <li><a class="nav-link" href="">Order</a></li>
+                    <li class="@stack('active.my-attendance')"><a class="nav-link" href="{{ route('attendance.index') }}">My Attendance</a></li>
+                    {{-- <li><a class="nav-link" href="">Order</a></li> --}}
                 </ul>
             </li>
         </ul>

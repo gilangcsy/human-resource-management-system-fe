@@ -75,12 +75,12 @@
                                     Login
                                 </button>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <video id="webcam" autoplay playsinline width="640" height="480"></video>
                                 <canvas id="canvas"></canvas>
 
                                 <a href="#" id="download" download onclick="take()">SNAP</a>
-                            </div>
+                            </div> --}}
                         </form>
 
                     </div>

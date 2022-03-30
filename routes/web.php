@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +18,7 @@ use App\Http\Controllers\UserManagementController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 
 Route::group(['middleware' => ['auth.check']], function () {
 	Route::prefix('admin/')
@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth.check']], function () {
 		->group(function () {
 			Route::get('', [AdminController::class, 'index'])->name('admin.dashboard');
 	});
+	
+	Route::get('', [DashboardController::class, 'index'])->name('dashboard.index');
 
 	Route::prefix('user-management/')->namespace('User Management')->group(function () {
 		Route::get('', [UserManagementController::class, 'index'])->name('user-management.index');
@@ -34,6 +36,14 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::post('', [UserManagementController::class, 'send_invitational'])->name('user-management.send_invitational');
 		Route::delete('/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('user-management.destroy');
 		Route::get('/setActive/{id}', [UserManagementController::class, 'set_active'])->name('user-management.set_active');
+	});
+
+	Route::prefix('my-attendance/')->namespace('Self Service')->group(function () {
+		Route::get('', [AttendanceController::class, 'index'])->name('attendance.index');
+		Route::get('/create', [AttendanceController::class, 'create'])->name('attendance.create');
+		Route::post('/', [AttendanceController::class, 'store'])->name('attendance.store');
+		Route::get('/edit/{id}', [AttendanceController::class, 'edit'])->name('attendance.edit');
+		Route::patch('/edit/{id}', [AttendanceController::class, 'update'])->name('attendance.update');
 	});
 });
 

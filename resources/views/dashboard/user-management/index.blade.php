@@ -1,5 +1,7 @@
 @extends('dashboard.partials.app')
 
+@section('title', 'User Management')
+
 @section('css')
 <!-- CSS Libraries -->
 <link rel="stylesheet" href="{{asset('assets/modules/datatables/datatables.min.css')}}">
@@ -67,14 +69,21 @@
                                                     width="150" data-toggle="tooltip" title="{{$item->thumbnail}}">
                                             </td> --}}
                                             <td>
-                                                <a href="" class="badge {{ $user->isVerified == true ? 'badge-success' : 'badge-danger' }}">
+                                                <a href="" class="badge {{ $user->isVerified == true ? 'badge-primary' : 'badge-danger' }}">
                                                     {{ $user->isVerified == true ? 'Yes' : 'No' }}
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('user-management.set_active', $user->id) }}" class="badge {{ $user->isActive == true ? 'badge-success' : 'badge-danger' }}">
+                                                {{-- <a href="{{ route('user-management.set_active', $user->id) }}" class="badge {{ $user->isActive == true ? 'badge-success' : 'badge-danger' }}">
                                                     {{ $user->isActive == true ? 'Yes' : 'No' }}
-                                                </a>
+                                                </a> --}}
+                                                
+                                                {{-- <div class="control-label">Toggle switch single</div> --}}
+                                                <label class="custom-switch mt-2">
+                                                    <input type="checkbox" name="custom-switch-checkbox" {{ $user->isVerified == true ? 'checked' : '' }} class="custom-switch-input">
+                                                    <span class="custom-switch-indicator"></span>
+                                                    {{-- <span class="custom-switch-description">I agree with terms and conditions</span> --}}
+                                                </label>
                                             </td>
                                             <td>
                                                 <form action="/user-management/{{ $user->id }}/{{ session()->get('userId') }}" method="POST">
