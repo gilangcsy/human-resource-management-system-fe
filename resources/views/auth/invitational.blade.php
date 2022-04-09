@@ -60,9 +60,9 @@
                                             value="{{ old('token', $token) }}" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <label for="fullName">Full Name</label>
-                                        <input id="fullName" type="text" class="form-control" name="fullName"
-                                            value="{{ old('fullName') }}" autofocus>
+                                        <label for="full_name">Full Name</label>
+                                        <input id="full_name" type="text" class="form-control" name="full_name"
+                                            value="{{ old('full_name') }}" autofocus>
                                     </div>
 
                                     <div class="row">

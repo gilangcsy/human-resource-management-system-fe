@@ -62,7 +62,7 @@
                                             <td>
                                                 {{ $loop->iteration }}
                                             </td>
-                                            <td>{{ $user->fullName }}</td>
+                                            <td>{{ $user->full_name }}</td>
                                             <td>{{ $user->email }}</td>
                                             {{-- <td>
                                                 <img alt="image" src="{{ $devHostStorage }}service/{{$item->thumbnail}}"

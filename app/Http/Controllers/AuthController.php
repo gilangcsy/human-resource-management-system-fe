@@ -61,7 +61,7 @@ class AuthController extends Controller
             $request->session()->put('token', $login->credentials->token);
             $request->session()->put('email', $login->credentials->email);
             $request->session()->put('employeeId', $login->credentials->employeeId);
-            $request->session()->put('fullName', $login->credentials->fullName);
+            $request->session()->put('full_name', $login->credentials->full_name);
             $request->session()->put('userId', $login->credentials->userId);
 			
             return redirect()->route('dashboard.index')->with('status', 'Welcome, ' . $login->credentials->email);
@@ -84,7 +84,7 @@ class AuthController extends Controller
         
         $acceptingInvitation = Http::patch($this->url_dynamic() . 'auth/invitation/accepting', [
             'email' => $request->email,
-            'fullName' => $request->fullName,
+            'full_name' => $request->full_name,
             'password' => $request->password,
             'token' => $request->token,
         ]);
@@ -147,7 +147,7 @@ class AuthController extends Controller
         } else {
             $devHost = env("HOST_API_DEV", "");
             $response = Http::post($devHost . 'users', [
-        	    'fullName' => $request->fullName,
+        	    'full_name' => $request->full_name,
         	    'username' => $request->username,
         	    'email' => $request->email,
         	    'password' => $request->password,
@@ -170,10 +170,10 @@ class AuthController extends Controller
             'token' =>  $token
         ]);
         $checkToken = json_decode($checkToken->body());
-        if($checkToken->success) {
+        if($checkToken->success || $checkToken != null) {
             return redirect()->route('auth.invitational')->with('token', $token);
         } else {
-            return redirect(route('auth.index'))->with('error', $checkToken->message);
+            return redirect(route('auth.index'))->with('error', $checkToken->message || 'Internal error.');
         }
     }
 }
