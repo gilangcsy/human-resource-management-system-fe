@@ -60,7 +60,7 @@ class AuthController extends Controller
         if ($login->success){
             $request->session()->put('token', $login->credentials->token);
             $request->session()->put('email', $login->credentials->email);
-            $request->session()->put('employeeId', $login->credentials->employeeId);
+            $request->session()->put('employee_id', $login->credentials->employee_id);
             $request->session()->put('full_name', $login->credentials->full_name);
             $request->session()->put('userId', $login->credentials->userId);
 			

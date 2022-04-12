@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ asset('assets/modules/jquery-selectric/selectric.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/modules/summernote/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/modules/izitoast/css/iziToast.min.css')}}">
 
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -48,21 +49,21 @@
 
                                 <div class="form-group">
                                     <label>Employee ID</label>
-                                    <input type="text" name="employeeId" value="{{Session::get('employeeId')}}"
+                                    <input type="text" name="employee_id" value="{{Session::get('employee_id')}}"
                                         class="form-control" autocomplete="off" readonly>
                                     <div class="invalid-feedback">Please fill in the Employee Id</div>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Employee Name</label>
-                                    <input type="text" name="fullName" value="{{Session::get('fullName')}}"
+                                    <input type="text" name="full_name" value="{{Session::get('full_name')}}"
                                         class="form-control" autocomplete="off" readonly>
                                     <div class="invalid-feedback">Please fill in the Full Name</div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Clock In</label>
-                                    <input type="text" name="employeeId" value="{{ $attendanceData->clockIn != '' ? \Carbon\carbon::parse(strtotime($attendanceData->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') : '' }}"
+                                    <input type="text" name="employee_id" value="{{ $attendanceData->clockIn != '' ? \Carbon\carbon::parse(strtotime($attendanceData->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') : '' }}"
                                         class="form-control" autocomplete="off" readonly>
                                 </div>
 
@@ -72,7 +73,7 @@
                                 
                                 <div class="form-group">
                                     <label>Clock Out</label>
-                                    <input type="text" name="employeeId" value="{{ $attendanceData->clockOut }}"
+                                    <input type="text" name="employee_id" value="{{ $attendanceData->clockOut }}"
                                         class="form-control" autocomplete="off" readonly>
                                 </div>
                                 
@@ -160,6 +161,8 @@
 @endsection
 
 @section('js')
+    <!-- JS Libraies -->
+    <script src="{{asset('assets/modules/izitoast/js/iziToast.min.js')}}"></script>
     <script src="{{ asset('assets/modules/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('assets/modules/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
@@ -240,6 +243,16 @@
             })
         }
     </script>
+
+    @if (Session::has('error'))
+        <script>
+            iziToast.error({
+                title: `Leave.`,
+                message: `{{ Session::get('error') }}`,
+                position: 'topRight'
+            });
+        </script>
+    @endif
 @endsection
 
 

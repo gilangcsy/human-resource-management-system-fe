@@ -48,7 +48,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->User->employeeId }}</td>
-                                            <td>{{ $item->User->fullName }}</td>
+                                            <td>{{ $item->User->full_name }}</td>
                                             <td>{{ \Carbon\carbon::parse(strtotime($item->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') }}</td>
                                             <td>{{$item->clockOut != null ? \Carbon\carbon::parse(strtotime($item->clockOut))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') : 'N/A'}}</td>
                                             

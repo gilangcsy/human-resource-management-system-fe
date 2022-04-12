@@ -11,21 +11,54 @@
             <li class="menu-header">Dashboard</li>
             <li class={{ (Route::currentRouteName() == 'dashboard.index') ? 'active' : ''}}><a class="nav-link" href="{{route('dashboard.index')}}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
 
-            <li class="menu-header">Menu</li>
-            <li class= "@stack('active.user-management')">
-                <a class="nav-link" href="{{ route('user-management.index') }}">
-                    <i class="fab fa-servicestack"></i>
-                    <span>User Management</span>
+            <li class="menu-header">Self Service</li>
+            <li class="@stack('active.my-attendance')">
+                <a class="nav-link" href="{{ route('attendance.index') }}">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>My Attendance</span>
                 </a>
             </li>
-            <li class="dropdown @stack('active.self-service')">
+            <li class="@stack('active.leave')">
+                <a class="nav-link" href="{{ route('leave.index') }}">
+                    <i class="fas fa-plane-departure"></i>
+                    <span>Leave</span>
+                </a>
+            </li>
+            {{-- <li class="dropdown @stack('active.self-service')">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fab fa-stripe-s"></i>
+                    <i class=""></i>
                     <span>Self Service</span></a>
                 <ul class="dropdown-menu">
-                    <li class="@stack('active.my-attendance')"><a class="nav-link" href="{{ route('attendance.index') }}">My Attendance</a></li>
-                    {{-- <li><a class="nav-link" href="">Order</a></li> --}}
+                    <li class=><a class="nav-link" >My Attendance</a></li>
+                    <li><a class="nav-link" href="">Order</a></li>
                 </ul>
+            </li> --}}
+            <li class="menu-header">Master Data</li>
+            <li class="@stack('active.claim-type')">
+                <a class="nav-link" href="{{ route('claim-type.index') }}">
+                    <i class="fas fa-wallet"></i>
+                    <span>Claim Type</span>
+                </a>
+            </li>
+            <li class="@stack('active.leave-type')">
+                <a class="nav-link" href="{{ route('leave-type.index') }}">
+                    <i class="fas fa-bicycle"></i>
+                    <span>Leave Type</span>
+                </a>
+            </li>
+
+            <li class="@stack('active.approval-template')">
+                <a class="nav-link"  href="{{ route('approval-template.index') }}">
+                    <i class="fas fa-sitemap"></i>
+                    <span>Approval Template</span>
+                </a>
+            </li>
+            <li class="menu-header">User Management</li>
+            <li class="@stack('active.user-management')">
+                <a class="nav-link" href="{{ route('user-management.index') }}">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Employee</span>
+                </a>
             </li>
         </ul>
 

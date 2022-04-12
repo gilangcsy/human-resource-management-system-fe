@@ -21,7 +21,7 @@ class AttendanceController extends Controller
         $response = json_decode($response->body());
         $attendances = $response->data;
         if($response->success) {
-            return view('dashboard.my-attendance.index', compact('attendances'));
+            return view('dashboard.pages.my-attendance.index', compact('attendances'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
@@ -57,7 +57,7 @@ class AttendanceController extends Controller
         $response = json_decode($response->body());
         if($response->success) {
             $attendanceStatus = $response->status;
-            return view('dashboard.my-attendance.form', compact('attendanceStatus', 'attendanceData', 'id', 'url', 'url_storage'));
+            return view('dashboard.pages.my-attendance.form', compact('attendanceStatus', 'attendanceData', 'id', 'url', 'url_storage'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
@@ -89,6 +89,7 @@ class AttendanceController extends Controller
         ]);
 
         $response = json_decode($response->body());
+        
         if($response->success) {
             return redirect()->route('dashboard.index')->with('status', $response->message);
         } else {
@@ -125,7 +126,7 @@ class AttendanceController extends Controller
         if($response->success) {
             $attendanceStatus = $response->status;
             $attendanceData = $attendance->data;
-            return view('dashboard.my-attendance.form', compact('attendanceStatus', 'attendanceData', 'url_storage', 'url', 'id'));
+            return view('dashboard.pages.my-attendance.form', compact('attendanceStatus', 'attendanceData', 'url_storage', 'url', 'id'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
