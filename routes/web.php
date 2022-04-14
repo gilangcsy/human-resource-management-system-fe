@@ -10,6 +10,7 @@ use App\Http\Controllers\ClaimTypeController;
 use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\ApprovalTemplateController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,15 +34,10 @@ Route::group(['middleware' => ['auth.check']], function () {
 	
 	Route::get('', [DashboardController::class, 'index'])->name('dashboard.index');
 
-	Route::prefix('user-management/')->namespace('User Management')->group(function () {
-		Route::get('', [UserManagementController::class, 'index'])->name('user-management.index');
-		Route::get('/{id}', [UserManagementController::class, 'edit'])->name('user-management.edit');
-		Route::patch('/{id}', [UserManagementController::class, 'update'])->name('user-management.update');
-		Route::post('', [UserManagementController::class, 'send_invitational'])->name('user-management.send_invitational');
-		Route::delete('/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('user-management.destroy');
-		Route::get('/setActive/{id}', [UserManagementController::class, 'set_active'])->name('user-management.set_active');
-	});
+	
+	//=============SELF SERVICE===================================================================================================//
 
+	//-------------MY ATTENDANCE--------------------------------------------------------------------------------------------------//
 	Route::prefix('my-attendance/')->namespace('Self Service')->group(function () {
 		Route::get('', [AttendanceController::class, 'index'])->name('attendance.index');
 		Route::get('/create', [AttendanceController::class, 'create'])->name('attendance.create');
@@ -50,7 +46,7 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::patch('/edit/{id}', [AttendanceController::class, 'update'])->name('attendance.update');
 	});
 	
-	//-----------------------------------------------LEAVE APPLICATION-----------------------------------------------//
+	//-------------LEAVE APPLICATION----------------------------------------------------------------------------------------------//
 	Route::prefix('leave/')->namespace('Leave')->group(function () {
 		Route::get('', [LeaveController::class, 'index'])->name('leave.index');
 		Route::get('/create', [LeaveController::class, 'create'])->name('leave.create');
@@ -60,12 +56,15 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::patch('/edit/{id}', [LeaveController::class, 'update'])->name('leave.update');
 		Route::delete('/destroy/{id}', [LeaveController::class, 'destroy'])->name('leave.destroy');
 	});
+	//=============END OF SELF SERVICE============================================================================================//
 
 
 
-	//-----------------------------------------------MASTER DATA-----------------------------------------------//
 
-	//-----------------------------------------------CLAIM TYPE-----------------------------------------------//
+
+	//=============MASTER DATA=====================================================================================================//
+
+	//-------------CLAIM TYPE------------------------------------------------------------------------------------------------------//
 	Route::prefix('claim-type/')->namespace('Claim Type')->group(function () {
 		Route::get('', [ClaimTypeController::class, 'index'])->name('claim-type.index');
 		Route::get('/create', [ClaimTypeController::class, 'create'])->name('claim-type.create');
@@ -75,7 +74,7 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::delete('/destroy/{id}', [ClaimTypeController::class, 'destroy'])->name('claim-type.destroy');
 	});
 
-	//-----------------------------------------------LEAVE TYPE-----------------------------------------------//
+	//-------------LEAVE TYPE------------------------------------------------------------------------------------------------------//
 	Route::prefix('leave-type/')->namespace('Leave Type')->group(function () {
 		Route::get('', [LeaveTypeController::class, 'index'])->name('leave-type.index');
 		Route::get('/create', [LeaveTypeController::class, 'create'])->name('leave-type.create');
@@ -86,7 +85,7 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::delete('/destroy/{id}', [LeaveTypeController::class, 'destroy'])->name('leave-type.destroy');
 	});
 
-	//-----------------------------------------------APPROVAL TEMPLATE-----------------------------------------------//
+	//-------------APPROVAL TEMPLATE----------------------------------------------------------------------------------------------//
 	Route::prefix('approval-template/')->namespace('Approval Template')->group(function () {
 		Route::get('', [ApprovalTemplateController::class, 'index'])->name('approval-template.index');
 		Route::get('/create', [ApprovalTemplateController::class, 'create'])->name('approval-template.create');
@@ -96,8 +95,33 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::delete('/destroy/{id}', [ApprovalTemplateController::class, 'destroy'])->name('approval-template.destroy');
 	});
 
-});
+	//-------------ROLE-----------------------------------------------------------------------------------------------------------//
+	Route::prefix('role/')->namespace('Role')->group(function () {
+		Route::get('', [RoleController::class, 'index'])->name('role.index');
+		Route::get('/create', [RoleController::class, 'create'])->name('role.create');
+		Route::post('/', [RoleController::class, 'store'])->name('role.store');
+		Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
+		Route::patch('/edit/{id}', [RoleController::class, 'update'])->name('role.update');
+		Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+	});
 
+	//=============END OF MASTER DATA=============================================================================================//
+
+
+
+
+
+	//=============USER MANAGEMENT================================================================================================//
+	//-------------EMPLOYEE-------------------------------------------------------------------------------------------------------//
+	Route::prefix('user-management/')->namespace('User Management')->group(function () {
+		Route::get('', [UserManagementController::class, 'index'])->name('user-management.index');
+		Route::get('/{id}', [UserManagementController::class, 'edit'])->name('user-management.edit');
+		Route::patch('/{id}', [UserManagementController::class, 'update'])->name('user-management.update');
+		Route::post('', [UserManagementController::class, 'send_invitational'])->name('user-management.send_invitational');
+		Route::delete('/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('user-management.destroy');
+		Route::get('/setActive/{id}', [UserManagementController::class, 'set_active'])->name('user-management.set_active');
+	});
+});
 
 
 Route::prefix('auth/')->namespace('Auth')->group(function () {

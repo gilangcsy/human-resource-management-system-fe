@@ -34,6 +34,12 @@
                 </ul>
             </li> --}}
             <li class="menu-header">Master Data</li>
+            <li class="@stack('active.approval-template')">
+                <a class="nav-link"  href="{{ route('approval-template.index') }}">
+                    <i class="fas fa-sitemap"></i>
+                    <span>Approval Template</span>
+                </a>
+            </li>
             <li class="@stack('active.claim-type')">
                 <a class="nav-link" href="{{ route('claim-type.index') }}">
                     <i class="fas fa-wallet"></i>
@@ -47,12 +53,13 @@
                 </a>
             </li>
 
-            <li class="@stack('active.approval-template')">
-                <a class="nav-link"  href="{{ route('approval-template.index') }}">
-                    <i class="fas fa-sitemap"></i>
-                    <span>Approval Template</span>
+            <li class="@stack('active.role')">
+                <a class="nav-link" href="{{ route('role.index') }}">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Role</span>
                 </a>
             </li>
+
             <li class="menu-header">User Management</li>
             <li class="@stack('active.user-management')">
                 <a class="nav-link" href="{{ route('user-management.index') }}">
