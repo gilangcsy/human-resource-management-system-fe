@@ -11,6 +11,14 @@
             <li class="menu-header">Dashboard</li>
             <li class={{ (Route::currentRouteName() == 'dashboard.index') ? 'active' : ''}}><a class="nav-link" href="{{route('dashboard.index')}}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
 
+            <li class="menu-header">Monitoring</li>
+            <li class="@stack('active.approval-leave')">
+                <a class="nav-link" href="{{ route('approval-leave.index') }}">
+                    <i class="fas fa-tasks"></i>
+                    <span>Approval Leave</span>
+                </a>
+            </li>
+
             <li class="menu-header">Self Service</li>
             <li class="@stack('active.my-attendance')">
                 <a class="nav-link" href="{{ route('attendance.index') }}">
@@ -61,16 +69,21 @@
             </li>
 
             <li class="menu-header">User Management</li>
-            <li class="@stack('active.user-management')">
+            <li class="@stack('active.employee')">
                 <a class="nav-link" href="{{ route('user-management.index') }}">
                     <i class="fas fa-user-tie"></i>
                     <span>Employee</span>
                 </a>
             </li>
+            <li class="@stack('active.approval-authorization')">
+                <a class="nav-link" href="{{ route('approval-authorization.index') }}">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span>Approval Authorization</span>
+                </a>
+            </li>
         </ul>
 
-		<ul class="sidebar-menu {{Session::get('roleCheck') == 1 ? '' : 'd-none'}}">
-
+		{{-- <ul class="sidebar-menu {{Session::get('roleCheck') == 1 ? '' : 'd-none'}}">
             <li class="menu-header">Dashboard</li>
             <li class={{ (Route::currentRouteName() == 'admin.dashboard') ? 'active' : ''}}><a class="nav-link" href="/seller"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
 
@@ -80,7 +93,7 @@
 					<span>Payment</span>
 				</a>
 			</li>
-        </ul>
+        </ul> --}}
 
         <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
             <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">

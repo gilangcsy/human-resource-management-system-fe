@@ -1,6 +1,6 @@
 @extends('dashboard.partials.app')
 
-@section('title', 'My Attendance')
+@section('title', 'Approval Authorization')
 
 @section('css')
 <!-- CSS Libraries -->
@@ -17,7 +17,7 @@
 <input type="hidden" id="error" value="{{Session::get('error')}}">
 <section class="section">
     <div class="section-header">
-        <h1>My Attendance</h1>
+        <h1>Approval Authorization</h1>
     </div>
 
     <div class="section-body">
@@ -26,36 +26,48 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        
+                        <a href="{{ route('approval-authorization.create') }}" class="btn btn-primary">Add New Approval Authorization</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">
+                                        <th>
                                             No.
                                         </th>
-                                        <th>Emp. ID</th>
-                                        <th>Emp. Name</th>
-                                        <th>Clock In</th>
-                                        <th>Clock Out</th>
-                                        <th>Action</th>
+                                        <th>Role Name</th>
+                                        <th>Template Name</th>
+                                        <th>Template Type</th>
+                                        <th>Approver</th>
+                                        <th class="text-left">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($attendances as $item)
+                                    @foreach ($approvalAuthorization as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->User->employee_id }}</td>
-                                            <td>{{ $item->User->full_name }}</td>
-                                            <td>{{ \Carbon\carbon::parse(strtotime($item->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') }}</td>
-                                            <td>{{$item->clockOut != null ? \Carbon\carbon::parse(strtotime($item->clockOut))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') : 'N/A'}}</td>
-                                            
+                                            <td>{{ $item->role_name }}</td>
+                                            <td>{{ $item->approval_template_name }}</td>
+                                            <td>{{ $item->approval_template_type }}</td>
                                             <td>
-                                                <a href="{{ route('attendance.edit', $item->id) }}" class="btn btn-warning">
+                                                1. {{ $item->approver_one_name }}
+                                                <br>
+                                                2. {{ $item->approver_two_name }}
+                                                <br>
+                                                3. {{ $item->approver_three_name }}
+                                            </td>
+                                            <td class="d-flex">
+                                                <a href="{{ route('approval-authorization.edit', $item->id) }}" class="btn btn-warning">
                                                     <i class="fa fa-pen-square"></i>
                                                 </a>
+                                                <form action="{{route('approval-authorization.destroy', $item->id)}}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -87,7 +99,7 @@
         <script>
             let status = document.getElementById('status').value
             iziToast.success({
-                title: `User management.`,
+                title: `Approval Authorization.`,
                 message: `${status}`,
                 position: 'topRight'
             });
@@ -99,7 +111,7 @@
         <script>
             let error = document.getElementById('error').value
             iziToast.error({
-                title: `User management.`,
+                title: `Approval Authorization.`,
                 message: `${error}`,
                 position: 'topRight'
             });
@@ -107,10 +119,6 @@
     @endif
 @endsection
 
-@push('active.my-attendance')
-    active
-@endpush
-
-@push('active.self-service')
+@push('active.approval-authorization')
     active
 @endpush

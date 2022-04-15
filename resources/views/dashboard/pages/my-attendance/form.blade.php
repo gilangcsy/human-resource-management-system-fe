@@ -68,17 +68,17 @@
                                 </div>
 
                                 <div class="form-group text-center">
-                                    <img alt="clock in selfie" width="200" src="{{ $attendanceData->clockInPhoto == '' ? asset('assets/img/avatar/avatar-1.png') : $url_storage . 'storage/images/attendances/clockIn/' . $attendanceData->clockInPhoto}}" width="350" height="350" class=" mr-1 img-thumbnail img-fluid">
+                                    <img alt="clock in selfie" width="200" src="{{ $attendanceData->clockInPhoto == '' ? asset('assets/img/avatar/avatar-1.png') : $url_storage . 'storage/attachment/attendances/clockIn/' . $attendanceData->clockInPhoto}}" width="350" height="350" class=" mr-1 img-thumbnail img-fluid">
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Clock Out</label>
-                                    <input type="text" name="employee_id" value="{{ $attendanceData->clockOut }}"
+                                    <input type="text" name="employee_id" value="{{ $attendanceData->clockOut != '' ? \Carbon\carbon::parse(strtotime($attendanceData->clockOut))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') : '' }}"
                                         class="form-control" autocomplete="off" readonly>
                                 </div>
                                 
                                 <div class="form-group text-center">
-                                    <img alt="clock in selfie" width="200" src="{{ $attendanceData->clockOutPhoto == '' ? asset('assets/img/avatar/avatar-1.png') : $url_storage . 'storage/images/attendances/clockOut/' . $attendanceData->clockOutPhoto}}" width="350" class="mr-1 img-thumbnail img-fluid">
+                                    <img alt="clock in selfie" width="200" src="{{ $attendanceData->clockOutPhoto == '' ? asset('assets/img/avatar/avatar-1.png') : $url_storage . 'storage/attachment/attendances/clockOut/' . $attendanceData->clockOutPhoto}}" width="350" class="mr-1 img-thumbnail img-fluid">
                                 </div>
                                 
                                 <div class="form-group">

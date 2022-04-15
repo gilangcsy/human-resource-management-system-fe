@@ -59,9 +59,14 @@
                                 <div class="form-group">
                                     <label>Approver One</label>
                                     <select class="form-control select2" name="approver_one" id="approver_one">
-                                        <option value="">-- Select Approver One --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" {{ $user->id == $approvalTemplate->approver_one_id ? 'selected' : '' }}>{{ $user->full_name }}</option>
+                                        @foreach ($roles as $role)
+                                            <optgroup label="{{ $role->name }}">
+                                                @foreach ($users as $user)
+                                                    @if ($role->id == $user->RoleId)
+                                                        <option value="{{ $user->id }}" {{ $user->id == old('ApprovalTemplateId', $approvalTemplate->approver_one_id) ? 'selected' : '' }}>{{ $user->full_name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </optgroup>
                                         @endforeach
                                     </select>
                                 </div>
@@ -70,8 +75,14 @@
                                     <label>Approver Two</label>
                                     <select class="form-control select2" name="approver_two" id="approver_two">
                                         <option value="">-- Select Approver Two --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" {{ $user->id == $approvalTemplate->approver_two_id ? 'selected' : '' }}>{{ $user->full_name }}</option>
+                                        @foreach ($roles as $role)
+                                            <optgroup label="{{ $role->name }}">
+                                                @foreach ($users as $user)
+                                                    @if ($role->id == $user->RoleId)
+                                                        <option value="{{ $user->id }}" {{ $user->id == old('ApprovalTemplateId', $approvalTemplate->approver_two_id) ? 'selected' : '' }}>{{ $user->full_name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </optgroup>
                                         @endforeach
                                     </select>
                                 </div>
@@ -80,8 +91,14 @@
                                     <label>Approver Three</label>
                                     <select class="form-control select2" name="approver_three" id="approver_three">
                                         <option value="">-- Select Approver Three --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" {{ $user->id == $approvalTemplate->approver_three_id ? 'selected' : '' }}>{{ $user->full_name }}</option>
+                                        @foreach ($roles as $role)
+                                            <optgroup label="{{ $role->name }}">
+                                                @foreach ($users as $user)
+                                                    @if ($role->id == $user->RoleId)
+                                                        <option value="{{ $user->id }}" {{ $user->id == old('ApprovalTemplateId', $approvalTemplate->approver_three_id) ? 'selected' : '' }}>{{ $user->full_name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </optgroup>
                                         @endforeach
                                     </select>
                                 </div>

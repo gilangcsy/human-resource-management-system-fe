@@ -17,7 +17,7 @@ class ApprovalTemplateController extends Controller
      */
     public function index()
     {
-        $response = Http::get($this->url_dynamic() . 'master/approvalSetting');
+        $response = Http::get($this->url_dynamic() . 'master/approvalTemplate');
         $response = json_decode($response->body());
         $approvalTemplate = $response->data;
         if($response->success) {
@@ -38,6 +38,10 @@ class ApprovalTemplateController extends Controller
         $users = json_decode($users->body());
         $users = $users->data;
         
+        $roles = Http::get($this->url_dynamic() . 'master/role');
+        $roles = json_decode($roles->body());
+        $roles = $roles->data;
+        
         $approvalTemplate = (object) [
             'id' => '',
             'data' => 0,
@@ -48,7 +52,7 @@ class ApprovalTemplateController extends Controller
             'type' => ''
         ];
         
-        return view('dashboard.pages.approval-template.form', compact('approvalTemplate', 'users'));
+        return view('dashboard.pages.approval-template.form', compact('approvalTemplate', 'users', 'roles'));
     }
 
     /**
@@ -63,7 +67,7 @@ class ApprovalTemplateController extends Controller
             'name' => 'required'
         ])->validate();
         
-        $response = Http::post($this->url_dynamic() . 'master/approvalSetting', [
+        $response = Http::post($this->url_dynamic() . 'master/approvalTemplate', [
             'name' => $request->name,
             'approver_one' => $request->approver_one,
             'approver_two' => $request->approver_two,
@@ -100,7 +104,7 @@ class ApprovalTemplateController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get($this->url_dynamic() . 'master/approvalSetting/' . $id);
+        $response = Http::get($this->url_dynamic() . 'master/approvalTemplate/' . $id);
         $response = json_decode($response->body());
         $approvalTemplate = $response->data['0'];
         
@@ -108,8 +112,12 @@ class ApprovalTemplateController extends Controller
         $users = json_decode($users->body());
         $users = $users->data;
         
+        $roles = Http::get($this->url_dynamic() . 'master/role');
+        $roles = json_decode($roles->body());
+        $roles = $roles->data;
+        
         if($response->success) {
-            return view('dashboard.pages.approval-template.form', compact('approvalTemplate', 'users'));
+            return view('dashboard.pages.approval-template.form', compact('approvalTemplate', 'users', 'roles'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
@@ -128,7 +136,7 @@ class ApprovalTemplateController extends Controller
             'name' => 'required'
         ])->validate();
         
-        $response = Http::patch($this->url_dynamic() . 'master/approvalSetting/' . $id, [
+        $response = Http::patch($this->url_dynamic() . 'master/approvalTemplate/' . $id, [
             'name' => $request->name,
             'approver_one' => $request->approver_one,
             'approver_two' => $request->approver_two,
@@ -153,7 +161,7 @@ class ApprovalTemplateController extends Controller
      */
     public function destroy($id)
     {
-        $response = Http::delete($this->url_dynamic() . 'master/approvalSetting/' . $id, [
+        $response = Http::delete($this->url_dynamic() . 'master/approvalTemplate/' . $id, [
             'deleted_by' => session()->get('userId'),
         ]);
 

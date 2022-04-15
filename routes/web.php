@@ -11,6 +11,8 @@ use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\ApprovalTemplateController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ApprovalAuthorization;
+use App\Http\Controllers\ApprovalLeaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,23 @@ Route::group(['middleware' => ['auth.check']], function () {
 	});
 	
 	Route::get('', [DashboardController::class, 'index'])->name('dashboard.index');
+
+	//=============MONITORING=====================================================================================================//
+	
+	//-------------APPROVAL LEAVE ------------------------------------------------------------------------------------------------//
+	Route::prefix('approval-leave/')->namespace('Leave')->group(function () {
+		Route::get('', [ApprovalLeaveController::class, 'index'])->name('approval-leave.index');
+		Route::get('/create', [ApprovalLeaveController::class, 'create'])->name('approval-leave.create');
+		Route::post('/', [ApprovalLeaveController::class, 'store'])->name('approval-leave.store');
+		Route::get('/edit/{id}', [ApprovalLeaveController::class, 'edit'])->name('approval-leave.edit');
+		Route::get('/show/{id}', [ApprovalLeaveController::class, 'show'])->name('approval-leave.show');
+		Route::patch('/edit/{id}', [ApprovalLeaveController::class, 'update'])->name('approval-leave.update');
+		Route::delete('/destroy/{id}', [ApprovalLeaveController::class, 'destroy'])->name('approval-leave.destroy');
+		Route::post('/action', [ApprovalLeaveController::class, 'action'])->name('approval-leave.action');
+	});
+	//=============END OF SELF SERVICE============================================================================================//
+
+
 
 	
 	//=============SELF SERVICE===================================================================================================//
@@ -120,6 +139,16 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::post('', [UserManagementController::class, 'send_invitational'])->name('user-management.send_invitational');
 		Route::delete('/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('user-management.destroy');
 		Route::get('/setActive/{id}', [UserManagementController::class, 'set_active'])->name('user-management.set_active');
+	});
+
+	//-------------APPROVAL AUTHORIZATION------------------------------------------------------------------------------------------//
+	Route::prefix('approval-authorization/')->namespace('Approval Authorization')->group(function () {
+		Route::get('', [ApprovalAuthorization::class, 'index'])->name('approval-authorization.index');
+		Route::get('/create', [ApprovalAuthorization::class, 'create'])->name('approval-authorization.create');
+		Route::get('/{id}', [ApprovalAuthorization::class, 'edit'])->name('approval-authorization.edit');
+		Route::patch('/{id}', [ApprovalAuthorization::class, 'update'])->name('approval-authorization.update');
+		Route::post('', [ApprovalAuthorization::class, 'store'])->name('approval-authorization.store');
+		Route::delete('/{id}', [ApprovalAuthorization::class, 'destroy'])->name('approval-authorization.destroy');
 	});
 });
 

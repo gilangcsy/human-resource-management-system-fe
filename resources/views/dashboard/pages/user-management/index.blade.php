@@ -146,6 +146,6 @@
         </script>
     @endif
 @endsection
-@push('active.user-management')
+@push('active.employee')
     active
 @endpush

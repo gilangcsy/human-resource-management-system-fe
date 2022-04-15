@@ -90,19 +90,7 @@
                                             <td>1</td>
                                             <td>{{ $leave->approver_one_name }}</td>
                                             <td>
-                                                @php
-                                                    if ($leave->approval_one_status == null) {
-                                                        $badge = 'badge-warning';
-                                                        $message = 'Waiting for Validation';
-                                                    } elseif ($leave->approval_one_status == true) {
-                                                        $badge = 'badge-success';
-                                                        $message = 'Approved';
-                                                    } else {
-                                                        $badge = 'badge-danger';
-                                                        $message = 'Rejected';
-                                                    }
-                                                @endphp
-                                                <span class="badge {{ $badge }}">{{ $message }}</span>
+                                                <span class="badge {{ $leave->approval_one_status == 'Approved' ? 'badge-success' : $leave->approval_one_status == 'Rejected' ? 'badge-danger' : 'badge-warning' }}">{{ $leave->approval_one_status  }}</span>
                                             </td>
                                         </tr>
                                         @if ($leave->approver_two != null)
@@ -110,19 +98,7 @@
                                                 <td>2</td>
                                                 <td>{{ $leave->approver_two_name }}</td>
                                                 <td>
-                                                    @php
-                                                        if ($leave->approval_two_status == null) {
-                                                            $badge_two = 'badge-warning';
-                                                            $message_two = 'Waiting for Validation';
-                                                        } elseif ($leave->approval_two_status == true) {
-                                                            $badge_two = 'badge-success';
-                                                            $message_two = 'Approved';
-                                                        } else {
-                                                            $badge_two = 'badge-danger';
-                                                            $message_two = 'Rejected';
-                                                        }
-                                                    @endphp
-                                                    <span class="badge {{ $badge_two }}">{{ $message_two }}</span>
+                                                    <span class="badge {{ $leave->approval_two_status == 'Approved' ? 'badge-success' : $leave->approval_two_status == 'Rejected' ? 'badge-danger' : 'badge-warning' }}">{{ $leave->approval_two_status  }}</span>
                                                 </td>
                                             </tr>
                                         @endif
@@ -131,18 +107,7 @@
                                                 <td>3</td>
                                                 <td>{{ $leave->approver_three_name }}</td>
                                                 <td>
-                                                    @php
-                                                        $badge_three = 'badge-warning';
-                                                        $message_three = 'Waiting for Validation';
-                                                        if ($leave->approval_three_status == true) {
-                                                            $badge_three = 'badge-success';
-                                                            $message_three = 'Approved';
-                                                        } elseif ($leave->approval_three_status == false) {
-                                                            $badge_three = 'badge-danger';
-                                                            $message_three = 'Rejected';
-                                                        }
-                                                    @endphp
-                                                    <span class="badge {{ $badge_three }}">{{ $message_three }}</span>
+                                                    <span class="badge {{ $leave->approval_three_status == 'Approved' ? 'badge-success' : $leave->approval_three_status == 'Rejected' ? 'badge-danger' : 'badge-warning' }}">{{ $leave->approval_three_status  }}</span>
                                                 </td>
                                             </tr>
                                         @endif
