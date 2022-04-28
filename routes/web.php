@@ -13,6 +13,8 @@ use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ApprovalAuthorization;
 use App\Http\Controllers\ApprovalLeaveController;
+use App\Http\Controllers\AccessRightsController;
+use App\Http\Controllers\MenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,14 +29,16 @@ use App\Http\Controllers\ApprovalLeaveController;
 
 
 
-Route::group(['middleware' => ['auth.check']], function () {
+Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 	Route::prefix('admin/')
 		->namespace('Admin')
 		->group(function () {
 			Route::get('', [AdminController::class, 'index'])->name('admin.dashboard');
 	});
-	
-	Route::get('', [DashboardController::class, 'index'])->name('dashboard.index');
+	Route::get('', function () {
+		return redirect()->route('dashboard.index');
+	});
+	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 	//=============MONITORING=====================================================================================================//
 	
@@ -47,7 +51,7 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::get('/show/{id}', [ApprovalLeaveController::class, 'show'])->name('approval-leave.show');
 		Route::patch('/edit/{id}', [ApprovalLeaveController::class, 'update'])->name('approval-leave.update');
 		Route::delete('/destroy/{id}', [ApprovalLeaveController::class, 'destroy'])->name('approval-leave.destroy');
-		Route::post('/action', [ApprovalLeaveController::class, 'action'])->name('approval-leave.action');
+		Route::post('/create', [ApprovalLeaveController::class, 'action'])->name('approval-leave.action');
 	});
 	//=============END OF SELF SERVICE============================================================================================//
 
@@ -57,7 +61,7 @@ Route::group(['middleware' => ['auth.check']], function () {
 	//=============SELF SERVICE===================================================================================================//
 
 	//-------------MY ATTENDANCE--------------------------------------------------------------------------------------------------//
-	Route::prefix('my-attendance/')->namespace('Self Service')->group(function () {
+	Route::prefix('attendance/')->namespace('Self Service')->group(function () {
 		Route::get('', [AttendanceController::class, 'index'])->name('attendance.index');
 		Route::get('/create', [AttendanceController::class, 'create'])->name('attendance.create');
 		Route::post('/', [AttendanceController::class, 'store'])->name('attendance.store');
@@ -82,6 +86,15 @@ Route::group(['middleware' => ['auth.check']], function () {
 
 
 	//=============MASTER DATA=====================================================================================================//
+	//-------------APPROVAL TEMPLATE-----------------------------------------------------------------------------------------------//
+	Route::prefix('approval-template/')->namespace('Approval Template')->group(function () {
+		Route::get('', [ApprovalTemplateController::class, 'index'])->name('approval-template.index');
+		Route::get('/create', [ApprovalTemplateController::class, 'create'])->name('approval-template.create');
+		Route::post('/', [ApprovalTemplateController::class, 'store'])->name('approval-template.store');
+		Route::get('/edit/{id}', [ApprovalTemplateController::class, 'edit'])->name('approval-template.edit');
+		Route::patch('/edit/{id}', [ApprovalTemplateController::class, 'update'])->name('approval-template.update');
+		Route::delete('/destroy/{id}', [ApprovalTemplateController::class, 'destroy'])->name('approval-template.destroy');
+	});
 
 	//-------------CLAIM TYPE------------------------------------------------------------------------------------------------------//
 	Route::prefix('claim-type/')->namespace('Claim Type')->group(function () {
@@ -104,14 +117,14 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::delete('/destroy/{id}', [LeaveTypeController::class, 'destroy'])->name('leave-type.destroy');
 	});
 
-	//-------------APPROVAL TEMPLATE----------------------------------------------------------------------------------------------//
-	Route::prefix('approval-template/')->namespace('Approval Template')->group(function () {
-		Route::get('', [ApprovalTemplateController::class, 'index'])->name('approval-template.index');
-		Route::get('/create', [ApprovalTemplateController::class, 'create'])->name('approval-template.create');
-		Route::post('/', [ApprovalTemplateController::class, 'store'])->name('approval-template.store');
-		Route::get('/edit/{id}', [ApprovalTemplateController::class, 'edit'])->name('approval-template.edit');
-		Route::patch('/edit/{id}', [ApprovalTemplateController::class, 'update'])->name('approval-template.update');
-		Route::delete('/destroy/{id}', [ApprovalTemplateController::class, 'destroy'])->name('approval-template.destroy');
+	//-------------MENU-----------------------------------------------------------------------------------------------------------//
+	Route::prefix('menu/')->namespace('Menu')->group(function () {
+		Route::get('', [MenuController::class, 'index'])->name('menu.index');
+		Route::get('/create', [MenuController::class, 'create'])->name('menu.create');
+		Route::post('/', [MenuController::class, 'store'])->name('menu.store');
+		Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+		Route::patch('/edit/{id}', [MenuController::class, 'update'])->name('menu.update');
+		Route::delete('/destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
 	});
 
 	//-------------ROLE-----------------------------------------------------------------------------------------------------------//
@@ -131,17 +144,17 @@ Route::group(['middleware' => ['auth.check']], function () {
 
 
 	//=============USER MANAGEMENT================================================================================================//
-	//-------------EMPLOYEE-------------------------------------------------------------------------------------------------------//
-	Route::prefix('user-management/')->namespace('User Management')->group(function () {
-		Route::get('', [UserManagementController::class, 'index'])->name('user-management.index');
-		Route::get('/{id}', [UserManagementController::class, 'edit'])->name('user-management.edit');
-		Route::patch('/{id}', [UserManagementController::class, 'update'])->name('user-management.update');
-		Route::post('', [UserManagementController::class, 'send_invitational'])->name('user-management.send_invitational');
-		Route::delete('/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('user-management.destroy');
-		Route::get('/setActive/{id}', [UserManagementController::class, 'set_active'])->name('user-management.set_active');
+	//-------------ACCESS RIGHTS--------------------------------------------------------------------------------------------------//
+	Route::prefix('access-rights/')->namespace('Approval Authorization')->group(function () {
+		Route::get('', [AccessRightsController::class, 'index'])->name('access-rights.index');
+		Route::get('/create', [AccessRightsController::class, 'create'])->name('access-rights.create');
+		Route::get('/create/{id}', [AccessRightsController::class, 'edit'])->name('access-rights.edit');
+		Route::patch('/{id}', [AccessRightsController::class, 'update'])->name('access-rights.update');
+		Route::post('', [AccessRightsController::class, 'store'])->name('access-rights.store');
+		Route::delete('/destroy/{id}', [AccessRightsController::class, 'destroy'])->name('access-rights.destroy');
 	});
 
-	//-------------APPROVAL AUTHORIZATION------------------------------------------------------------------------------------------//
+	//-------------APPROVAL AUTHORIZATION-----------------------------------------------------------------------------------------//
 	Route::prefix('approval-authorization/')->namespace('Approval Authorization')->group(function () {
 		Route::get('', [ApprovalAuthorization::class, 'index'])->name('approval-authorization.index');
 		Route::get('/create', [ApprovalAuthorization::class, 'create'])->name('approval-authorization.create');
@@ -150,6 +163,18 @@ Route::group(['middleware' => ['auth.check']], function () {
 		Route::post('', [ApprovalAuthorization::class, 'store'])->name('approval-authorization.store');
 		Route::delete('/{id}', [ApprovalAuthorization::class, 'destroy'])->name('approval-authorization.destroy');
 	});
+
+	//-------------EMPLOYEE-------------------------------------------------------------------------------------------------------//
+	Route::prefix('employee/')->namespace('User Management')->group(function () {
+		Route::get('', [UserManagementController::class, 'index'])->name('employee.index');
+		Route::get('/{id}', [UserManagementController::class, 'edit'])->name('employee.edit');
+		Route::patch('/{id}', [UserManagementController::class, 'update'])->name('employee.update');
+		Route::post('', [UserManagementController::class, 'send_invitational'])->name('employee.send_invitational');
+		Route::delete('/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('employee.destroy');
+		Route::get('/setActive/{id}', [UserManagementController::class, 'set_active'])->name('employee.set_active');
+	});
+	//=============END OF USER MANAGEMENT=========================================================================================//
+
 });
 
 

@@ -26,7 +26,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <form action="{{ route('user-management.send_invitational') }}" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
+                        <form action="{{ route('employee.send_invitational') }}" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
 							@csrf
                             <div class="d-flex">
                                 <div class="form-group">
@@ -74,7 +74,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                {{-- <a href="{{ route('user-management.set_active', $user->id) }}" class="badge {{ $user->isActive == true ? 'badge-success' : 'badge-danger' }}">
+                                                {{-- <a href="{{ route('employee.set_active', $user->id) }}" class="badge {{ $user->isActive == true ? 'badge-success' : 'badge-danger' }}">
                                                     {{ $user->isActive == true ? 'Yes' : 'No' }}
                                                 </a> --}}
                                                 
@@ -86,14 +86,14 @@
                                                 </label>
                                             </td>
                                             <td>
-                                                <form action="/user-management/{{ $user->id }}/{{ session()->get('userId') }}" method="POST">
+                                                <form action="/employee/{{ $user->id }}/{{ session()->get('userId') }}" method="POST">
                                                     @method('delete')
                                                     @csrf
                                                     <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>
-                                                <a href="{{ route('user-management.edit', $user->id) }}" class="btn btn-warning mt-3">
+                                                <a href="{{ route('employee.edit', $user->id) }}" class="btn btn-warning mt-3">
                                                     <i class="fa fa-pen-square"></i>
                                                 </a>
                                             </td>
@@ -139,7 +139,7 @@
         <script>
             let error = document.getElementById('error').value
             iziToast.error({
-                title: `User management.`,
+                title: `Employee.`,
                 message: `${error}`,
                 position: 'topRight'
             });

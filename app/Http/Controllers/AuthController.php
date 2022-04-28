@@ -64,6 +64,7 @@ class AuthController extends Controller
             $request->session()->put('full_name', $login->credentials->full_name);
             $request->session()->put('userId', $login->credentials->userId);
             $request->session()->put('role', $login->credentials->role);
+            $request->session()->put('role_id', $login->credentials->role_id);
 			
             return redirect()->route('dashboard.index')->with('status', 'Welcome, ' . $login->credentials->email);
         } else {

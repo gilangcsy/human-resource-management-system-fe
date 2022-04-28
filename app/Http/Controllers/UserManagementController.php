@@ -21,7 +21,7 @@ class UserManagementController extends Controller
         $response = json_decode($response->body());
         $users = $response->data;
         if($response->success) {
-            return view('dashboard.pages.user-management.index', compact('users'));
+            return view('dashboard.pages.employee.index', compact('users'));
         } else {
             return redirect()->back();
         }
@@ -71,7 +71,7 @@ class UserManagementController extends Controller
         $response = json_decode($response->body());
         $user = $response->data;
         if($response->success) {
-            return view('dashboard.pages.user-management.edit',compact('user'));
+            return view('dashboard.pages.employee.edit',compact('user'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }

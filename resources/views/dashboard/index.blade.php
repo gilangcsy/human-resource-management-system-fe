@@ -78,5 +78,6 @@
     @endif
 @endsection
 
-@push('dashboard.index')
+@push('active.dashboard')
+    active
 @endpush

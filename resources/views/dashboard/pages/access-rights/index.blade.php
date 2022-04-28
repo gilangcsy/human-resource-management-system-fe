@@ -1,6 +1,6 @@
 @extends('dashboard.partials.app')
 
-@section('title', 'My Attendance')
+@section('title', 'Access Rights')
 
 @section('css')
 <!-- CSS Libraries -->
@@ -17,7 +17,7 @@
 <input type="hidden" id="error" value="{{Session::get('error')}}">
 <section class="section">
     <div class="section-header">
-        <h1>My Attendance</h1>
+        <h1>Access Rights</h1>
     </div>
 
     <div class="section-body">
@@ -25,35 +25,25 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        
-                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">
+                                        <th>
                                             No.
                                         </th>
-                                        <th>Emp. ID</th>
-                                        <th>Emp. Name</th>
-                                        <th>Clock In</th>
-                                        <th>Clock Out</th>
-                                        <th>Action</th>
+                                        <th>Name</th>
+                                        <th class="text-left">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($attendances as $item)
+                                    @foreach ($roles as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->User->employee_id }}</td>
-                                            <td>{{ $item->User->full_name }}</td>
-                                            <td>{{ \Carbon\carbon::parse(strtotime($item->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') }}</td>
-                                            <td>{{$item->clockOut != null ? \Carbon\carbon::parse(strtotime($item->clockOut))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i') : 'N/A'}}</td>
-                                            
-                                            <td>
-                                                <a href="{{ route('attendance.edit', $item->id) }}" class="btn btn-warning">
+                                            <td>{{ $item->name }}</td>
+                                            <td class="d-flex">
+                                                <a href="{{ route('access-rights.edit', $item->id) }}" class="btn btn-warning">
                                                     <i class="fa fa-pen-square"></i>
                                                 </a>
                                             </td>
@@ -87,7 +77,7 @@
         <script>
             let status = document.getElementById('status').value
             iziToast.success({
-                title: `User management.`,
+                title: `Access Rights.`,
                 message: `${status}`,
                 position: 'topRight'
             });
@@ -99,7 +89,7 @@
         <script>
             let error = document.getElementById('error').value
             iziToast.error({
-                title: `User management.`,
+                title: `Access Rights.`,
                 message: `${error}`,
                 position: 'topRight'
             });
@@ -107,6 +97,6 @@
     @endif
 @endsection
 
-@push('active.attendance')
+@push('active.access-rights')
     active
 @endpush

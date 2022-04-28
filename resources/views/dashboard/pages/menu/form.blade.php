@@ -1,6 +1,6 @@
 @extends('dashboard.partials.app')
 
-@section('title', 'Leave Type')
+@section('title', 'Menu')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/modules/jquery-selectric/selectric.css') }}">
@@ -23,44 +23,74 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Leave Type</h1>
+            <h1>Menu</h1>
         </div>
 
         <div class="section-body">
-            <h2 class="section-title">{{ $leaveType->id != '' ? 'Edit' : 'Add' }} Leave Type</h2>
+            <h2 class="section-title">{{ $menu->id != '' ? 'Edit' : 'Add' }} Menu</h2>
             <p class="section-lead">
-                You can {{ $leaveType->id != '' ? 'edit' : 'add' }} new type of leave here.
+                You can {{ $menu->id != '' ? 'edit' : 'add' }} new menu here.
             </p>
 
-            <form action="{{ $leaveType->id == '' ? route('leave-type.store') : route('leave-type.update', $leaveType->id) }}"
+            <form action="{{ $menu->id == '' ? route('menu.store') : route('menu.update', $menu->id) }}"
                 method="POST" class="needs-validation" novalidate="">
                 @csrf
-                @if ($leaveType->id != '')
+                @if ($menu->id != '')
                     @method('patch')
                 @endif
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="card">
-                            {{-- <div class="card-header">
-                                <h4>Input Text</h4>
-                            </div> --}}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input type="text" name="name"
-                                        value="{{ $leaveType->name != '' ? $leaveType->name : '' }}" class="form-control"
+                                        value="{{ $menu->name != '' ? $menu->name : '' }}" class="form-control"
                                         autocomplete="off" required>
                                     <div class="invalid-feedback">Please fill in the name</div>
                                     @if($errors->has('name'))
                                         <div class="text-danger">{{ $errors->first('name') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="form-group">
+                                    <label>URL</label>
+                                    <input type="text" name="url"
+                                        value="{{ $menu->url != '' ? $menu->url : '' }}" class="form-control"
+                                        autocomplete="off">
+                                    <div class="invalid-feedback">Please fill in the url</div>
+                                    @if($errors->has('url'))
+                                        <div class="text-danger">{{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Icon</label>
+                                    <input type="text" name="icon"
+                                        value="{{ $menu->icon != '' ? $menu->icon : '' }}" class="form-control"
+                                        autocomplete="off">
+                                    <div class="invalid-feedback">Please fill in the icon</div>
+                                    @if($errors->has('icon'))
+                                        <div class="text-danger">{{ $errors->first('icon') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Master Menu</label>
+                                    <select class="form-control select2" name="master_menu" id="master_menu" {{ $menu->id != '' ? 'disabled' : '' }}>
+                                        <option value="0" {{ $menu->master_menu == 0 ? 'selected' : '' }}>Master Menu</option>
+                                        @foreach ($master_menu as $item)
+                                            <option value="{{ $item->id }}" {{ $item->id == $menu->master_menu ? 'selected' : '' }}>{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 text-right">
                         <button type="submit" class="btn btn-primary">
-                            {{ $leaveType->id != '' ? 'Update' : 'Save' }}
+                            {{ $menu->id != '' ? 'Update' : 'Save' }}
                         </button>
                         <a href="{{ URL::previous() }}" class="btn btn-primary">
                             Back
@@ -80,6 +110,6 @@
 @endsection
 
 
-@push('active.leave-type')
+@push('active.menu')
     active
 @endpush
