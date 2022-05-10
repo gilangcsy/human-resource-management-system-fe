@@ -44,28 +44,28 @@
                                 </div>
                             </div>
 
-                            <div class="form-group d-none">
+                            <div class="form-group">
                                 <label for="longitude">Longitude</label>
                                 <input id="longitude" type="text" class="form-control" name="longitude" tabindex="1" required
-                                    autofocus>
+                                    autofocus readonly>
                                 <div class="invalid-feedback">
                                     Please fill in your longitude
                                 </div>
                             </div>
                             
-                            <div class="form-group d-none">
+                            <div class="form-group">
                                 <label for="latitude">Latitude</label>
                                 <input id="latitude" type="text" class="form-control" name="latitude" tabindex="1" required
-                                    autofocus>
+                                    autofocus readonly>
                                 <div class="invalid-feedback">
                                     Please fill in your latitude
                                 </div>
                             </div>
 
-                            <div class="form-group d-none">
+                            <div class="form-group">
                                 <label for="address">Address</label>
                                 <input id="address" type="text" class="form-control" name="address" tabindex="1" required
-                                    autofocus>
+                                    autofocus readonly>
                                 <div class="invalid-feedback">
                                     Please fill in your address
                                 </div>
@@ -75,12 +75,6 @@
                                     Login
                                 </button>
                             </div>
-                            {{-- <div class="form-group">
-                                <video id="webcam" autoplay playsinline width="640" height="480"></video>
-                                <canvas id="canvas"></canvas>
-
-                                <a href="#" id="download" download onclick="take()">SNAP</a>
-                            </div> --}}
                         </form>
 
                     </div>
@@ -101,48 +95,38 @@
     <script>
         let longitude = document.getElementById('longitude');
         let latitude = document.getElementById('latitude');
-        var x = document.getElementById("demo");
-
+        let addredd = document.getElementById('address');
         function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            console.log(position.coords.latitude + ' ' + position.coords.longitude)
-            var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 15);
-    
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-    
-            L.marker([position.coords.latitude, position.coords.longitude]).addTo(map)
-                .bindPopup('This is where I Am :D')
-                .openPopup();
-
-                latitude.value = position.coords.latitude
-                longitude.value = position.coords.longitude
-
-                $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.coords.latitude}&lon=${position.coords.longitude}`, function(data){
+            var options = {
+              enableHighAccuracy: true,
+              maximumAge: 0
+            };
+            
+            function success(pos) {
+              var crd = pos.coords;
+            
+              console.log('Your current position is:');
+              console.log(`Latitude : ${crd.latitude}`);
+              console.log(`Longitude: ${crd.longitude}`);
+              console.log(`More or less ${crd.accuracy} meters.`);
+              
+                $.get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${crd.latitude}&lon=${crd.longitude}`, function(data){
                     address.value = data.display_name
                 });
+                
+                latitude.value = crd.latitude
+                longitude.value = crd.longitude
+            }
+            
+            function error(err) {
+              console.warn(`ERROR(${err.code}): ${err.message}`);
+            }
+            
+            
+            navigator.geolocation.getCurrentPosition(success, error, options);
         }
+        
         getLocation()
-
-        const webcamElement = document.getElementById('webcam');
-        const canvasElement = document.getElementById('canvas');
-        const webcam = new Webcam(webcamElement, 'user', canvasElement);
-
-        webcam.start();
-
-
-        function take() {
-            let picture = webcam.snap();
-            document.querySelector('#download').href = picture;
-        }
     </script>
     @if (Session::has('status'))
         <script>

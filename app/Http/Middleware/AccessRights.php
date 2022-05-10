@@ -25,45 +25,52 @@ class AccessRights
         // 1 => ""
         // 2 => "127.0.0.1:8000"
         // 3 => "approval-leave"
-
-        // > 3 meaning that they trying to access some page (beacause array 4 is url)
-        if(count($url) > 3) {
-            $response = Http::post($this->url_dynamic() . 'accessRights/check', [
-                'role_id' => session()->get('role_id'),
-                'url' => $url['3']
-            ]);
-            $response = json_decode($response->body());
-            $accessRights = $response->data;
-            
-            // Remember the order from $url variable. Index 4 is the route of pages.
-            //If there is no url following behind, then they want to access index
-            //Else, that's mean they want to access create, update, delete route.
-
-            if($accessRights != null) {
-                $accessRights = $accessRights[0];
-                if(count($url) < 5) {
-                    if($accessRights->allow_read == true) {
-                        return $next($request);
+        
+        //If user role is super admin, then next
+        if(session()->get('role_id') == 1) {
+            return $next($request);
+        } else {
+            // > 3 meaning that they trying to access some page (beacause array 4 is url)
+            if(count($url) > 3) {
+                $response = Http::post($this->url_dynamic() . 'accessRights/check', [
+                    'role_id' => session()->get('role_id'),
+                    'url' => $url['3']
+                ]);
+                $response = json_decode($response->body());
+                $accessRights = $response->data;
+                
+                // Remember the order from $url variable. Index 4 is the route of pages.
+                //If there is no url following behind, then they want to access index
+                //Else, that's mean they want to access create, update, delete route.
+    
+                if($accessRights != null) {
+                    $accessRights = $accessRights[0];
+                    if(count($url) < 5) {
+                        if($accessRights->allow_read == true) {
+                            return $next($request);
+                        } else {
+                            dd('cannot access.');
+                        }
                     } else {
-                        dd('cannot access.');
+                        if($url['4'] == 'create' && $accessRights->allow_create == true) {
+                            return $next($request);
+                        } else if($url['4'] == 'edit' && $accessRights->allow_update == true) {
+                            return $next($request);
+                        } else if($url['4'] == 'destroy' && $accessRights->allow_delete == true) {
+                            return $next($request);
+                        } else if($url['4'] == 'show' && $accessRights->allow_read == true) {
+                            return $next($request);
+                        } else {
+                            dd('you dont have authority.');
+                        }
                     }
                 } else {
-                    if($url['4'] == 'create' && $accessRights->allow_create == true) {
-                        return $next($request);
-                    } else if($url['4'] == 'edit' && $accessRights->allow_update == true) {
-                        return $next($request);
-                    } else if($url['4'] == 'destroy' && $accessRights->allow_delete == true) {
-                        return $next($request);
-                    } else if($url['4'] == 'show' && $accessRights->allow_read == true) {
-                        return $next($request);
-                    } else {
-                        dd('you dont have authority.');
-                    }
+                    dd('you dont have authority.');
                 }
-            } else {
-                dd('you dont have authority.');
             }
+            
         }
+
         // return $next($request);
     }
 }
