@@ -83,10 +83,13 @@ class UserManagementController extends Controller
     {
         $response = Http::get($this->url_dynamic() . 'users/' . $id);
         $response = json_decode($response->body());
-        dd($response);
         $user = $response->data;
+        
+        $response2 = Http::get($this->url_dynamic() . 'master/role');
+        $response2 = json_decode($response2->body());
+        $roles = $response2->data;
         if($response->success) {
-            return view('dashboard.pages.employee.edit',compact('user'));
+            return view('dashboard.pages.employee.form',compact('user', 'roles'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
@@ -101,7 +104,20 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = Http::patch($this->url_dynamic() . 'users/' . $id, [
+            'full_name' => $request->full_name,
+            'address' => $request->address,
+            'employee_id' => $request->employee_id,
+            'RoleId' => $request->RoleId,
+            'updatedBy' => session()->get('userId'),
+        ]);
+
+        $response = json_decode($response->body());
+        if($response->success) {
+            return redirect()->route('employee.index')->with('status', $response->message);
+        } else {
+            return redirect()->back()->with('error', $response->message);
+        }
     }
 
     /**

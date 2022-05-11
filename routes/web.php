@@ -170,7 +170,7 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 		Route::get('', [UserManagementController::class, 'index'])->name('employee.index');
 		Route::get('/create', [UserManagementController::class, 'create'])->name('employee.create');
 		Route::get('/edit/{id}', [UserManagementController::class, 'edit'])->name('employee.edit');
-		Route::patch('/{id}', [UserManagementController::class, 'update'])->name('employee.update');
+		Route::patch('/edit/{id}', [UserManagementController::class, 'update'])->name('employee.update');
 		Route::post('', [UserManagementController::class, 'send_invitational'])->name('employee.send_invitational');
 		Route::delete('/destroy/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('employee.destroy');
 		Route::get('/setActive/{id}', [UserManagementController::class, 'set_active'])->name('employee.set_active');

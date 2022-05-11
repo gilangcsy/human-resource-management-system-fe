@@ -30,8 +30,7 @@
                 You can {{ $user->id != '' ? 'edit' : 'invite new' }} employee here.
             </p>
 
-            <form
-                action="{{ $user->id == '' ? route('employee.send_invitational') : route('employee.update', $user->id) }}"
+            <form action="{{ $user->id == '' ? route('employee.send_invitational') : route('employee.update', $user->id) }}"
                 method="POST" class="needs-validation" novalidate="">
                 @csrf
                 @if ($user->id != '')
