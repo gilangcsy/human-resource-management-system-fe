@@ -148,7 +148,8 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 	Route::prefix('access-rights/')->namespace('Approval Authorization')->group(function () {
 		Route::get('', [AccessRightsController::class, 'index'])->name('access-rights.index');
 		Route::get('/create', [AccessRightsController::class, 'create'])->name('access-rights.create');
-		Route::get('/create/{id}', [AccessRightsController::class, 'edit'])->name('access-rights.edit');
+		//!!
+		Route::get('/edit/{id}', [AccessRightsController::class, 'edit'])->name('access-rights.edit');
 		Route::patch('/{id}', [AccessRightsController::class, 'update'])->name('access-rights.update');
 		Route::post('', [AccessRightsController::class, 'store'])->name('access-rights.store');
 		Route::delete('/destroy/{id}', [AccessRightsController::class, 'destroy'])->name('access-rights.destroy');
@@ -161,16 +162,17 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 		Route::get('/{id}', [ApprovalAuthorization::class, 'edit'])->name('approval-authorization.edit');
 		Route::patch('/{id}', [ApprovalAuthorization::class, 'update'])->name('approval-authorization.update');
 		Route::post('', [ApprovalAuthorization::class, 'store'])->name('approval-authorization.store');
-		Route::delete('/{id}', [ApprovalAuthorization::class, 'destroy'])->name('approval-authorization.destroy');
+		Route::delete('/destroy/{id}', [ApprovalAuthorization::class, 'destroy'])->name('approval-authorization.destroy');
 	});
 
 	//-------------EMPLOYEE-------------------------------------------------------------------------------------------------------//
 	Route::prefix('employee/')->namespace('User Management')->group(function () {
 		Route::get('', [UserManagementController::class, 'index'])->name('employee.index');
-		Route::get('/{id}', [UserManagementController::class, 'edit'])->name('employee.edit');
+		Route::get('/create', [UserManagementController::class, 'create'])->name('employee.create');
+		Route::get('/edit/{id}', [UserManagementController::class, 'edit'])->name('employee.edit');
 		Route::patch('/{id}', [UserManagementController::class, 'update'])->name('employee.update');
 		Route::post('', [UserManagementController::class, 'send_invitational'])->name('employee.send_invitational');
-		Route::delete('/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('employee.destroy');
+		Route::delete('/destroy/{id}/{deletedBy}', [UserManagementController::class, 'destroy'])->name('employee.destroy');
 		Route::get('/setActive/{id}', [UserManagementController::class, 'set_active'])->name('employee.set_active');
 	});
 	//=============END OF USER MANAGEMENT=========================================================================================//

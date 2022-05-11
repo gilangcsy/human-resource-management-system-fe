@@ -34,7 +34,21 @@ class UserManagementController extends Controller
      */
     public function create()
     {
-        //
+        $user = (object) [
+            'id' => '',
+            'data' => 0,
+            'email' => '',
+            'employee_id' => '',
+            'full_name' => '',
+            'address' => '',
+            'RoleId' => ''
+        ];
+        
+        $response = Http::get($this->url_dynamic() . 'master/role');
+        $response = json_decode($response->body());
+        $roles = $response->data;
+
+        return view('dashboard.pages.employee.form', compact('user', 'roles'));
     }
 
     /**
@@ -69,6 +83,7 @@ class UserManagementController extends Controller
     {
         $response = Http::get($this->url_dynamic() . 'users/' . $id);
         $response = json_decode($response->body());
+        dd($response);
         $user = $response->data;
         if($response->success) {
             return view('dashboard.pages.employee.edit',compact('user'));
@@ -108,14 +123,19 @@ class UserManagementController extends Controller
 
     public function send_invitational(Request $request)
     {
+
         $userId = $request->session()->get('userId');
         $response = Http::post($this->url_dynamic() . 'auth/invitation/invite', [
             'email' =>  $request->email,
+            'full_name' =>  $request->full_name,
+            'employee_id' =>  $request->employee_id,
+            'address' =>  $request->address,
+            'RoleId' =>  $request->RoleId,
             'invitedBy' => $userId
         ]);
         $response = json_decode($response->body());
         if($response->success) {
-            return redirect()->back()->with('status', $response->message);
+            return redirect()->route('employee.index')->with('status', $response->message);
         } else {
             return redirect()->back()->with('error', $response->message);
         }

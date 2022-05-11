@@ -26,7 +26,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <form action="{{ route('employee.send_invitational') }}" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
+                        {{-- <form action="{{ route('employee.send_invitational') }}" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
 							@csrf
                             <div class="d-flex">
                                 <div class="form-group">
@@ -34,12 +34,13 @@
                                     <div class="invalid-feedback">Please fill in the email</div>
                                 </div>
                                 <div>
-                                    <button type="submit" class="btn btn-primary ml-2">
-                                        Invite User
-                                    </button>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
+                        
+                        <a href="{{route('employee.create')}}" class="btn btn-primary ml-2">
+                            Invite User
+                        </a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -86,7 +87,7 @@
                                                 </label>
                                             </td>
                                             <td>
-                                                <form action="/employee/{{ $user->id }}/{{ session()->get('userId') }}" method="POST">
+                                                <form action="/employee/destroy/{{ $user->id }}/{{ session()->get('userId') }}" method="POST">
                                                     @method('delete')
                                                     @csrf
                                                     <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
