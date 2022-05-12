@@ -1,226 +1,192 @@
-<nav class="navbar navbar-expand-lg main-navbar">
-    <form class="form-inline mr-auto">
-        <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i
-                        class="fas fa-search"></i></a></li>
+<!-- START HEADER -->
+<div class="header ">
+    <!-- START MOBILE SIDEBAR TOGGLE -->
+    <a href="#" class="btn-link toggle-sidebar d-lg-none pg-icon btn-icon-link" data-toggle="sidebar">
+        menu</a>
+    <!-- END MOBILE SIDEBAR TOGGLE -->
+    <div class="">
+        <div class="brand inline   ">
+            <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png"
+                data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+        </div>
+        <!-- START NOTIFICATION LIST -->
+        <ul
+            class="d-lg-inline-block d-none notification-list no-margin d-lg-inline-block b-grey b-l b-r no-style p-l-20 p-r-20">
+            <li class="p-r-5 inline">
+                <div class="dropdown">
+                    <a href="javascript:;" id="notification-center" class="header-icon  btn-icon-link"
+                        data-toggle="dropdown">
+                        <i class="pg-icon">world</i>
+                        <span class="bubble"></span>
+                    </a>
+                    <!-- START Notification Dropdown -->
+                    <div class="dropdown-menu notification-toggle" role="menu"
+                        aria-labelledby="notification-center">
+                        <!-- START Notification -->
+                        <div class="notification-panel">
+                            <!-- START Notification Body-->
+                            <div class="notification-body scrollable">
+                                <!-- START Notification Item-->
+                                <div class="notification-item unread clearfix">
+                                    <!-- START Notification Item-->
+                                    <div class="heading open">
+                                        <a href="#" class="text-complete pull-left d-flex align-items-center">
+                                            <i class="pg-icon m-r-10">map</i>
+                                            <span class="bold">Carrot Design</span>
+                                            <span class="fs-12 m-l-10">David Nester</span>
+                                        </a>
+                                        <div class="pull-right">
+                                            <div
+                                                class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details">
+                                                <div><i class="pg-icon">chevron_down</i>
+                                                </div>
+                                            </div>
+                                            <span class=" time">few sec ago</span>
+                                        </div>
+                                        <div class="more-details">
+                                            <div class="more-details-inner">
+                                                <h5 class="semi-bold fs-16">“Apple’s Motivation - Innovation
+                                                    <br>
+                                                    distinguishes between <br>
+                                                    A leader and a follower.”</h5>
+                                                <p class="small hint-text">
+                                                    Commented on john Smiths wall.
+                                                    <br> via pages framework.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Notification Item-->
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option" data-toggle="tooltip" data-placement="left"
+                                        title="mark as read">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- START Notification Body-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item  clearfix">
+                                    <div class="heading">
+                                        <a href="#" class="text-danger pull-left">
+                                            <i class="pg-icon m-r-10">alert_warning</i>
+                                            <span class="bold">98% Server Load</span>
+                                            <span class="fs-12 m-l-10">Take Action</span>
+                                        </a>
+                                        <span class="pull-right time">2 mins ago</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item  clearfix">
+                                    <div class="heading">
+                                        <a href="#" class="text-warning pull-left">
+                                            <i class="pg-icon m-r-10">alert_warning</i>
+                                            <span class="bold">Warning Notification</span>
+                                            <span class="fs-12 m-l-10">Buy Now</span>
+                                        </a>
+                                        <span class="pull-right time">yesterday</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                                <!-- START Notification Item-->
+                                <div class="notification-item unread clearfix">
+                                    <div class="heading">
+                                        <div
+                                            class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                            <img width="30" height="30"
+                                                data-src-retina="assets/img/profiles/1x.jpg"
+                                                data-src="assets/img/profiles/1.jpg" alt=""
+                                                src="assets/img/profiles/1.jpg">
+                                        </div>
+                                        <a href="#" class="text-complete pull-left">
+                                            <span class="bold">Revox Design Labs</span>
+                                            <span class="fs-12 m-l-10">Owners</span>
+                                        </a>
+                                        <span class="pull-right time">11:00pm</span>
+                                    </div>
+                                    <!-- START Notification Item Right Side-->
+                                    <div class="option" data-toggle="tooltip" data-placement="left"
+                                        title="mark as read">
+                                        <a href="#" class="mark"></a>
+                                    </div>
+                                    <!-- END Notification Item Right Side-->
+                                </div>
+                                <!-- END Notification Item-->
+                            </div>
+                            <!-- END Notification Body-->
+                            <!-- START Notification Footer-->
+                            <div class="notification-footer text-center">
+                                <a href="#" class="">Read all notifications</a>
+                                <a data-toggle="refresh" class="portlet-refresh text-black pull-right"
+                                    href="#">
+                                    <i class="pg-refresh_new"></i>
+                                </a>
+                            </div>
+                            <!-- START Notification Footer-->
+                        </div>
+                        <!-- END Notification -->
+                    </div>
+                    <!-- END Notification Dropdown -->
+                </div>
+            </li>
+            <li class="p-r-5 inline">
+                <a href="#" class="header-icon  btn-icon-link">
+                    <i class="pg-icon">link_alt</i>
+                </a>
+            </li>
+            <li class="p-r-5 inline">
+                <a href="#" class="header-icon  btn-icon-link">
+                    <i class="pg-icon">grid_alt</i>
+                </a>
+            </li>
         </ul>
-        <div class="search-element">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-            <div class="search-backdrop"></div>
-            <div class="search-result">
-                <div class="search-header">
-                    Histories
-                </div>
-                <div class="search-item">
-                    <a href="#">How to hack NASA using CSS</a>
-                    <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-                </div>
-                <div class="search-item">
-                    <a href="#">Kodinger.com</a>
-                    <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-                </div>
-                <div class="search-item">
-                    <a href="#">#Stisla</a>
-                    <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-                </div>
-                <div class="search-header">
-                    Result
-                </div>
-                <div class="search-item">
-                    <a href="#">
-                        <img class="mr-3 rounded" width="30" src="assets/img/products/product-3-50.png" alt="product">
-                        oPhone S9 Limited Edition
-                    </a>
-                </div>
-                <div class="search-item">
-                    <a href="#">
-                        <img class="mr-3 rounded" width="30" src="assets/img/products/product-2-50.png" alt="product">
-                        Drone X2 New Gen-7
-                    </a>
-                </div>
-                <div class="search-item">
-                    <a href="#">
-                        <img class="mr-3 rounded" width="30" src="assets/img/products/product-1-50.png" alt="product">
-                        Headphone Blitz
-                    </a>
-                </div>
-                <div class="search-header">
-                    Projects
-                </div>
-                <div class="search-item">
-                    <a href="#">
-                        <div class="search-icon bg-danger text-white mr-3">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        Stisla Admin Template
-                    </a>
-                </div>
-                <div class="search-item">
-                    <a href="#">
-                        <div class="search-icon bg-primary text-white mr-3">
-                            <i class="fas fa-laptop"></i>
-                        </div>
-                        Create a new Homepage Design
-                    </a>
-                </div>
+        <!-- END NOTIFICATIONS LIST -->
+        <a href="#" class="search-link d-lg-inline-block d-none" data-toggle="search"><i
+                class="pg-icon">search</i>Type anywhere to <span
+                class="bold">search</span></a>
+    </div>
+    <div class="d-flex align-items-center">
+        <!-- START User Info-->
+        <div class="dropdown pull-right d-lg-block d-none">
+            <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" aria-label="profile dropdown">
+                <span class="thumbnail-wrapper d32 circular inline">
+                    <img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg"
+                        data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="32" height="32">
+                </span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
+                <a href="#" class="dropdown-item"><span>Signed in as <br /><b>David Aunsberg</b></span></a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">Your Profile</a>
+                <a href="#" class="dropdown-item">Your Activity</a>
+                <a href="#" class="dropdown-item">Your Archive</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">Features</a>
+                <a href="#" class="dropdown-item">Help</a>
+                <a href="#" class="dropdown-item">Settings</a>
+                <a href="#" class="dropdown-item">Logout</a>
+                <div class="dropdown-divider"></div>
+                <span class="dropdown-item fs-12 hint-text">Last edited by David<br />on Friday at
+                    5:27PM</span>
             </div>
         </div>
-    </form>
-    <ul class="navbar-nav navbar-right">
-        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
-            <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                <div class="dropdown-header">Messages
-                    <div class="float-right">
-                        <a href="#">Mark All As Read</a>
-                    </div>
-                </div>
-                {{-- <div class="dropdown-list-content dropdown-list-message">
-                    <a href="#" class="dropdown-item dropdown-item-unread">
-                        <div class="dropdown-item-avatar">
-                            <img alt="image" src="{{asset('assets/img/avatar/avatar-1.png')}}" class="rounded-circle">
-                <div class="is-online"></div>
-            </div>
-            <div class="dropdown-item-desc">
-                <b>Kusnaedi</b>
-                <p>Hello, Bro!</p>
-                <div class="time">10 Hours Ago</div>
-            </div>
-            </a>
-            <a href="#" class="dropdown-item dropdown-item-unread">
-                <div class="dropdown-item-avatar">
-                    <img alt="image" src="{{asset('assets/img/avatar/avatar-2.png')}}" class="rounded-circle">
-                </div>
-                <div class="dropdown-item-desc">
-                    <b>Dedik Sugiharto</b>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                    <div class="time">12 Hours Ago</div>
-                </div>
-            </a>
-            <a href="#" class="dropdown-item dropdown-item-unread">
-                <div class="dropdown-item-avatar">
-                    <img alt="image" src="assets/img/avatar/avatar-3.png" class="rounded-circle">
-                    <div class="is-online"></div>
-                </div>
-                <div class="dropdown-item-desc">
-                    <b>Agung Ardiansyah</b>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <div class="time">12 Hours Ago</div>
-                </div>
-            </a>
-            <a href="#" class="dropdown-item">
-                <div class="dropdown-item-avatar">
-                    <img alt="image" src="assets/img/avatar/avatar-4.png" class="rounded-circle">
-                </div>
-                <div class="dropdown-item-desc">
-                    <b>Ardian Rahardiansyah</b>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit ess</p>
-                    <div class="time">16 Hours Ago</div>
-                </div>
-            </a>
-            <a href="#" class="dropdown-item">
-                <div class="dropdown-item-avatar">
-                    <img alt="image" src="assets/img/avatar/avatar-5.png" class="rounded-circle">
-                </div>
-                <div class="dropdown-item-desc">
-                    <b>Alfa Zulkarnain</b>
-                    <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-                    <div class="time">Yesterday</div>
-                </div>
-            </a>
-            </div> --}}
-            <div class="dropdown-footer text-center">
-                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-            </div>
-            </div>
-        </li>
-        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
-            <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                <div class="dropdown-header">Notifications
-                    <div class="float-right">
-                        <a href="#">Mark All As Read</a>
-                    </div>
-                </div>
-                <div class="dropdown-list-content dropdown-list-icons">
-                    <a href="#" class="dropdown-item dropdown-item-unread">
-                        <div class="dropdown-item-icon bg-primary text-white">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            Template update is available now!
-                            <div class="time text-primary">2 Min Ago</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-info text-white">
-                            <i class="far fa-user"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            <b>You</b> and <b>Dedik Sugiharto</b> are now friends
-                            <div class="time">10 Hours Ago</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-success text-white">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            <b>Kusnaedi</b> has moved task <b>Fix bug header</b> to <b>Done</b>
-                            <div class="time">12 Hours Ago</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-danger text-white">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            Low disk space. Let's clean it!
-                            <div class="time">17 Hours Ago</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-info text-white">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            Welcome to Stisla template!
-                            <div class="time">Yesterday</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="dropdown-footer text-center">
-                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                </div>
-            </div>
-        </li>
-        <li class="dropdown">
-            <a href="#" data-toggle="dropdown"
-                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="{{asset('assets/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">Hi, {{Session::get('full_name')}}</div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">{{ Session::get('role') }}</div>
-                <a href="features-profile.html" class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile
-                </a>
-                <a href="features-activities.html" class="dropdown-item has-icon">
-                    <i class="fas fa-bolt"></i> Activities
-                </a>
-                <a href="features-settings.html" class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Settings
-                </a>
-                <div class="dropdown-divider"></div>
-                <form method="POST" action="{{ route('auth.logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-danger btn-lg btn-block" tabindex="4">
-                        Logout
-                    </button>
-                </form>
-            </div>
-        </li>
-    </ul>
-</nav>
+        <!-- END User Info-->
+        <a href="#" class="header-icon m-l-5 sm-no-margin d-inline-block" data-toggle="quickview"
+            data-toggle-element="#quickview">
+            <i class="pg-icon btn-icon-link">menu_add</i>
+        </a>
+    </div>
+</div>
+<!-- END HEADER -->
