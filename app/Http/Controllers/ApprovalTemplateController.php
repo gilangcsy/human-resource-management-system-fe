@@ -20,6 +20,7 @@ class ApprovalTemplateController extends Controller
         $response = Http::get($this->url_dynamic() . 'master/approvalTemplate');
         $response = json_decode($response->body());
         $approvalTemplate = $response->data;
+        
         if($response->success) {
             return view('dashboard.pages.approval-template.index', compact('approvalTemplate'));
         } else {

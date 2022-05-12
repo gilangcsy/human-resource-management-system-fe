@@ -1,8 +1,8 @@
-@extends('dashboard.partials.app')
 
-@section('title', 'Menu Management')
 
-@section('css')
+<?php $__env->startSection('title', 'Menu Management'); ?>
+
+<?php $__env->startSection('css'); ?>
     <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,9 +16,9 @@
     <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
     <!-- Please remove the file below for production: Contains demo classes -->
     <link class="main-stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css" />
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-content')
+<?php $__env->startSection('page-content'); ?>
     <!-- START PAGE CONTENT WRAPPER -->
     <div class="page-content-wrapper ">
         <!-- START PAGE CONTENT -->
@@ -40,75 +40,7 @@
             <!-- START CONTAINER FLUID -->
             <div class="container-fluid container-fixed-lg">
                 <!-- BEGIN PlACE PAGE CONTENT HERE -->
-                {{-- <!-- START card -->
-                <div class="card card-transparent">
-                    <div class="card-header ">
-                        <div class="card-title">Pages Default Tables Style
-                        </div>
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-hover demo-table-search table-responsive-block" id="tableWithSearch">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Places</th>
-                                    <th>Activities</th>
-                                    <th>Status</th>
-                                    <th>Last Update</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="v-align-middle semi-bold">
-                                        <p>First Tour</p>
-                                    </td>
-                                    <td class="v-align-middle"><a href="#" class="btn btn-tag">United States</a><a
-                                            href="#" class="btn btn-tag">India</a>
-                                        <a href="#" class="btn btn-tag">China</a><a href="#"
-                                            class="btn btn-tag">Africa</a>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>it is more then ONE nation/nationality as its fall name is The United Kingdom of
-                                            Great Britain and North Ireland..</p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>Public</p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>April 13,2014 10:13</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="v-align-middle semi-bold">
-                                        <p>Second Tour</p>
-                                    </td>
-                                    <td class="v-align-middle"><a href="#" class="btn btn-tag">United States</a><a
-                                            href="#" class="btn btn-tag">India</a>
-                                        <a href="#" class="btn btn-tag">China</a><a href="#"
-                                            class="btn btn-tag">Africa</a>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>it is more then ONE nation/nationality as its fall name is The United Kingdom of
-                                            Great Britain and North Ireland..</p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>Public</p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>April 13,2014 10:13</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- END card --> --}}
+                
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -200,10 +132,10 @@
         <!-- END COPYRIGHT -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
-    @if (Session::has('status'))
+<?php $__env->startSection('javascript'); ?>
+    <?php if(Session::has('status')): ?>
         <script>
             let status = document.getElementById('status').value
             iziToast.success({
@@ -212,9 +144,9 @@
                 position: 'topRight'
             });
         </script>
-    @endif
+    <?php endif; ?>
 
-    @if (Session::has('error'))
+    <?php if(Session::has('error')): ?>
         <script>
             let error = document.getElementById('error').value
             iziToast.error({
@@ -223,7 +155,7 @@
                 position: 'topRight'
             });
         </script>
-    @endif
+    <?php endif; ?>
 
     <script>
         $('#tableWithSearch tbody').sortable({
@@ -254,7 +186,7 @@
             })
 
             $.ajax({
-                url: '{{ $base_url }}master/menu/newPositions',
+                url: '<?php echo e($base_url); ?>master/menu/newPositions',
                 method: 'POST',
                 dataType: 'TEXT',
                 data: {
@@ -281,8 +213,10 @@
     <!-- BEGIN PAGE LEVEL JS -->
     <script src="assets/js/datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('active.menu')
+<?php $__env->startPush('active.menu'); ?>
     active
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/dashboard/pages/menu/index.blade.php ENDPATH**/ ?>

@@ -1,8 +1,8 @@
-@extends('dashboard.partials.app')
 
-@section('title', 'Approval Template')
 
-@section('css')
+<?php $__env->startSection('title', 'Approval Template'); ?>
+
+<?php $__env->startSection('css'); ?>
     <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,9 +16,9 @@
     <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
     <!-- Please remove the file below for production: Contains demo classes -->
     <link class="main-stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css" />
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-content')
+<?php $__env->startSection('page-content'); ?>
     <!-- START PAGE CONTENT WRAPPER -->
     <div class="page-content-wrapper ">
         <!-- START PAGE CONTENT -->
@@ -45,7 +45,7 @@
                 <div class="card card-transparent">
                     <div class="card-header">
                         <div class="card-title">
-                            <form action="{{ route('approval-template.create') }}">
+                            <form action="<?php echo e(route('approval-template.create')); ?>">
                                 <button class="btn btn-primary">
                                     <i class="pg-icon">plus</i>
                                     Add New Approval Template
@@ -73,28 +73,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($approvalTemplate as $item)
+                                <?php $__currentLoopData = $approvalTemplate; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->approver_one_name }}</td>
-                                        <td>{{ $item->approver_two_name }}</td>
-                                        <td>{{ $item->approver_three_name }}</td>
-                                        <td>{{ $item->type }}</td>
+                                        <td><?php echo e($loop->iteration); ?></td>
+                                        <td><?php echo e($item->name); ?></td>
+                                        <td><?php echo e($item->approver_one_name); ?></td>
+                                        <td><?php echo e($item->approver_two_name); ?></td>
+                                        <td><?php echo e($item->approver_three_name); ?></td>
+                                        <td><?php echo e($item->type); ?></td>
                                         <td class="d-flex">
-                                            <a href="{{route('approval-template.edit', $item->id)}}" class="btn btn-warning">
+                                            <a href="<?php echo e(route('approval-template.edit', $item->id)); ?>" class="btn btn-warning">
                                                 <i class="pg-icon">edit</i>
                                             </a>
 
-                                            <form action="{{ route('approval-template.destroy', $item->id) }}" method="POST">
-                                                @csrf
+                                            <form action="<?php echo e(route('approval-template.destroy', $item->id)); ?>" method="POST">
+                                                <?php echo csrf_field(); ?>
                                                 <button class="btn btn-danger ml-2">
                                                     <i class="pg-icon">trash</i>
                                                 </button>
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
                     </div>
@@ -124,30 +124,10 @@
         <!-- END COPYRIGHT -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
-    {{-- @if (Session::has('status'))
-        <script>
-            let status = document.getElementById('status').value
-            iziToast.success({
-                title: `Menu Management.`,
-                message: `${status}`,
-                position: 'topRight'
-            });
-        </script>
-    @endif
-
-    @if (Session::has('error'))
-        <script>
-            let error = document.getElementById('error').value
-            iziToast.error({
-                title: `Menu Management.`,
-                message: `${error}`,
-                position: 'topRight'
-            });
-        </script>
-    @endif --}}
+<?php $__env->startSection('javascript'); ?>
+    
 
     <!-- BEGIN VENDOR JS -->
     <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -175,4 +155,6 @@
         }).show();
     });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/dashboard/pages/approval-template/index.blade.php ENDPATH**/ ?>

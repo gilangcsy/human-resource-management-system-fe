@@ -216,4 +216,4 @@
     <!-- END OVERLAY -->
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('auth.partials.app-auth', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/auth/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('auth.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/auth/index.blade.php ENDPATH**/ ?>

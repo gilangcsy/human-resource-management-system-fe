@@ -1,4 +1,4 @@
-@extends('auth.partials.app-auth')
+@extends('auth.partials.app')
 
 @section('content')
     <!-- START Login Background Pic Wrapper-->
