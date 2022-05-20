@@ -87,7 +87,7 @@ class AttendanceController extends Controller
             'longitude' => $request->longitude,
             'latitude' => $request->latitude
         ]);
-        dd($response->json());
+        
         $response = json_decode($response->body());
         
         if($response->success) {
