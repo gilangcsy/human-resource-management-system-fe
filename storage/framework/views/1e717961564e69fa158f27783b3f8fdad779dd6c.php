@@ -46,7 +46,7 @@
                     <div class="card-header">
                         <div class="card-title">
                             <form action="<?php echo e(route('approval-template.create')); ?>">
-                                <button class="btn btn-primary">
+                                <button class="btn btn-complete">
                                     <i class="pg-icon">plus</i>
                                     Add New Approval Template
                                 </button>
@@ -88,7 +88,8 @@
 
                                             <form action="<?php echo e(route('approval-template.destroy', $item->id)); ?>" method="POST">
                                                 <?php echo csrf_field(); ?>
-                                                <button class="btn btn-danger ml-2">
+                                                <?php echo method_field('delete'); ?>
+                                                <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
                                                     <i class="pg-icon">trash</i>
                                                 </button>
                                             </form>
@@ -107,27 +108,13 @@
         <!-- END PAGE CONTENT -->
         <!-- START COPYRIGHT -->
         <!-- START CONTAINER FLUID -->
-        <!-- START CONTAINER FLUID -->
-        <div class=" container-fluid  container-fixed-lg footer">
-            <div class="copyright sm-text-center">
-                <p class="small-text no-margin pull-left sm-pull-reset">
-                    ©2014-2020 All Rights Reserved. Pages® and/or its subsidiaries or affiliates are registered
-                    trademark of Revox Ltd.
-                    <span class="hint-text m-l-15">Pages v05.23 20201105.r.190</span>
-                </p>
-                <p class="small no-margin pull-right sm-pull-reset">
-                    Hand-crafted <span class="hint-text">&amp; made with Love</span>
-                </p>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+        <?php echo $__env->make('dashboard.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- END COPYRIGHT -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('javascript'); ?>
-    
 
     <!-- BEGIN VENDOR JS -->
     <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -143,18 +130,22 @@
     <script src="assets/js/datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 
-    <script>
-        $(document).ready(function () {
-        // Simple notification having bootstrap's .alert class
-        $('.page-content-wrapper').pgNotification({
-            style: 'bar',
-            message: 'Login has been successfully.',
-            position: 'top',
-            timeout: 4000,
-            type: 'success'
-        }).show();
-    });
-    </script>
+    
+
+    <?php if(Session::has('status')): ?>
+        <script>
+            $(document).ready(function () {
+                // Simple notification having bootstrap's .alert class
+                $('.page-content-wrapper').pgNotification({
+                    style: 'bar',
+                    message: '<?php echo e(Session::get("status")); ?>',
+                    position: 'top',
+                    timeout: 4000,
+                    type: 'success'
+                }).show();
+            });
+        </script>
+    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/dashboard/pages/approval-template/index.blade.php ENDPATH**/ ?>

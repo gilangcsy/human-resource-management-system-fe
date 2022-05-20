@@ -3,123 +3,112 @@
 @section('title', 'Approval Leave')
 
 @section('css')
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
+    <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="assets/plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css"
+        media="screen" />
+    <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
+    <!-- Please remove the file below for production: Contains demo classes -->
+    <link class="main-stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css" />
 @endsection
 
-@section('content')
-    <input type="hidden" id="status" value="{{ Session::get('status') }}">
-    <input type="hidden" id="error" value="{{ Session::get('error') }}">
-    <section class="section">
-        <div class="section-header">
-            <h1>Approval Leave</h1>
-        </div>
+@section('page-content')
+    <!-- START PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper ">
+        <!-- START PAGE CONTENT -->
+        <div class="content ">
+            <!-- START JUMBOTRON -->
+            <div class="jumbotron" data-pages="parallax">
+                <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+                    <div class="inner">
+                        <!-- START BREADCRUMB -->
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Monitoring</a></li>
+                            <li class="breadcrumb-item active">Approval Leave</li>
+                        </ol>
+                        <!-- END BREADCRUMB -->
+                    </div>
+                </div>
+            </div>
+            <!-- END JUMBOTRON -->
+            <!-- START CONTAINER FLUID -->
+            <div class="container-fluid container-fixed-lg">
+                <!-- BEGIN PlACE PAGE CONTENT HERE -->
 
-        <div class="section-body">
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-pills" id="myTab3" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab"
-                                        aria-controls="home" aria-selected="true">Active Approval</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3"
-                                        role="tab" aria-controls="profile" aria-selected="false">History</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent2">
-                                <div class="tab-pane fade show active" id="home3" role="tabpanel"
-                                    aria-labelledby="home-tab3">
-                                    <form action="{{ route('approval-leave.action') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-primary approve">Approve</button>
-                                        <button type="submit" class="btn btn-danger reject">Reject</button>
-                                        <input type="hidden" name="isApproved" id="isApproved" value="">
-                                        <div class="table-responsive mt-3">
-                                            <table class="table table-striped table-sm" id="table-2">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center">
-                                                            <div class="custom-checkbox custom-control">
-                                                                <input type="checkbox" data-checkboxes="mygroup"
-                                                                    data-checkbox-role="dad" class="custom-control-input"
-                                                                    id="checkbox-all">
-                                                                <label for="checkbox-all"
-                                                                    class="custom-control-label">&nbsp;</label>
-                                                            </div>
-                                                        </th>
-                                                        <th>Emp. ID</th>
-                                                        <th>Emp. Name</th>
-                                                        <th>Period</th>
-                                                        <th>Description</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($leaves as $item)
-                                                        <tr>
-                                                            <td>
-                                                                <div class="custom-checkbox custom-control">
-                                                                    <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ $loop->iteration }}" name="action[]" value="{{ $item->id }}">
-                                                                    <label for="checkbox-{{ $loop->iteration }}" class="custom-control-label">&nbsp;</label>
-                                                                </div>
-                                                            </td>
-                                                            <td>{{ $item->requester_emp_id }}</td>
-                                                            <td>{{ $item->requester_name }}</td>
-                                                            <td>{{ \Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
-                                                                -
-                                                                {{ \Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
-                                                            </td>
-                                                            <td>{{ $item->description }}</td>
-                                                            <td>
-                                                                @php
-                                                                    $badge = 'badge-warning';
-                                                                    if ($item->last_status == 'Approved') {
-                                                                        $badge = 'badge-success';
-                                                                    } elseif ($item->last_status == 'Rejected') {
-                                                                        $badge = 'badge-danger';
-                                                                    }
-                                                                @endphp
-                                                                <span
-                                                                    class="badge {{ $badge }}">{{ $item->last_status }}</span>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                <!-- START card -->
+                <div class="card card-borderless">
+                    <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+                        <li class="nav-item">
+                            <a class="active" data-toggle="tab" role="tab" data-target="#tab2hellowWorld" href="#">
+                                All
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" data-toggle="tab" role="tab" data-target="#tab2FollowUs">History</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab2hellowWorld">
+                            <form action="{{ route('approval-leave.action') }}" method="POST">
+                                <div class="card card-transparent">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            @csrf
+                                            <button type="submit" class="btn btn-complete approve">Approve</button>
+                                            <button type="submit" class="btn btn-danger reject">Reject</button>
+                                            <input type="hidden" name="isApproved" id="isApproved" value="">
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
-                                    <div class="table-responsive mt-3">
-                                        <table class="table table-striped table-sm" id="table-1">
+                                        <div class="pull-right">
+                                            <div class="col-xs-12">
+                                                <input type="text" id="search-table2" class="form-control pull-right"
+                                                    placeholder="Search">
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-striped" id="tableWithSearch2">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        No.
+                                                    <th class="text-center">
+                                                        <div class="custom-checkbox custom-control">
+                                                            <input type="checkbox" data-checkboxes="mygroup"
+                                                                data-checkbox-role="dad" class="custom-control-input"
+                                                                id="checkbox-all">
+                                                            <label for="checkbox-all"
+                                                                class="custom-control-label">&nbsp;</label>
+                                                        </div>
                                                     </th>
-                                                    <th>Emp. ID</th>
-                                                    <th>Emp. Name</th>
-                                                    <th>Period</th>
+                                                    <th>Employee</th>
+                                                    <th>Date</th>
                                                     <th>Description</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($history as $item)
+                                                @foreach ($leaves as $item)
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $item->requester_emp_id }}</td>
-                                                        <td>{{ $item->requester_name }}</td>
+                                                        <td>
+                                                            <div class="custom-checkbox custom-control">
+                                                                <input type="checkbox" data-checkboxes="mygroup"
+                                                                    class="custom-control-input"
+                                                                    id="checkbox-{{ $loop->iteration }}" name="action[]"
+                                                                    value="{{ $item->id }}">
+                                                                <label for="checkbox-{{ $loop->iteration }}"
+                                                                    class="custom-control-label">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <b>{{ $item->requester_emp_id }}</b>
+                                                            <br>
+                                                            {{ $item->requester_name }}
+                                                        </td>
                                                         <td>{{ \Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
                                                             -
                                                             {{ \Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
@@ -144,64 +133,155 @@
                                         </table>
                                     </div>
                                 </div>
+                            </form>
+
+                        </div>
+                        <div class="tab-pane " id="tab2FollowUs">
+
+                            <!-- START card -->
+                            <div class="card card-transparent">
+                                <div class="card-header">
+                                    <div class="pull-right">
+                                        <div class="col-xs-12">
+                                            <input type="text" id="search-table" class="form-control pull-right"
+                                                placeholder="Search">
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped" id="tableWithSearch">
+                                        <thead>
+                                            <tr>
+                                                <th width="10">No.</th>
+                                                <th>Employee</th>
+                                                <th>Date</th>
+                                                <th>Description</th>
+                                                <th>Attachment</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach ($history as $item)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        <b>{{ $item->requester_emp_id }}</b>
+                                                        <br>
+                                                        {{ $item->requester_name }}
+                                                    </td>
+
+                                                    <td>
+                                                        {{ \Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                        -
+                                                        {{ \Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                    </td>
+                                                    <td>{{ $item->description }}</td>
+                                                    <td>
+                                                        @if ($item->attachment != null)
+                                                            <a href="{{ $download_url . $item->attachment }}">
+                                                                {{ $item->attachment }}
+                                                            </a>
+                                                        @else
+                                                            No Attachment.
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @php
+                                                            $badge = 'badge-warning';
+                                                            if ($item->last_status == 'Approved') {
+                                                                $badge = 'badge-success';
+                                                            } elseif ($item->last_status == 'Rejected') {
+                                                                $badge = 'badge-danger';
+                                                            }
+                                                        @endphp
+                                                        <span
+                                                            class="badge {{ $badge }}">{{ $item->last_status }}</span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                            <!-- END card -->
                         </div>
                     </div>
                 </div>
+                <!-- END card -->
+                <!-- END PLACE PAGE CONTENT HERE -->
             </div>
+            <!-- END CONTAINER FLUID -->
         </div>
-    </section>
+        <!-- END PAGE CONTENT -->
+        <!-- START COPYRIGHT -->
+        <!-- START CONTAINER FLUID -->
+        @include('dashboard.partials.footer')
+        <!-- END COPYRIGHT -->
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
 @endsection
 
-@section('js')
-    <!-- JS Libraies -->
-    <script src="{{ asset('assets/modules/datatables/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
-    <script src="{{ asset('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+@section('javascript')
 
-    <!-- Page Specific JS File -->
-    <script src="{{ asset('assets/js/page/modules-datatables.js') }}"></script>
+    <!-- BEGIN VENDOR JS -->
+    <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js"
+        type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js" type="text/javascript">
+    </script>
+    <script type="text/javascript" src="assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
+    <script type="text/javascript" src="assets/plugins/datatables-responsive/js/lodash.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/classie/classie.js"></script>
+    <!-- END VENDOR JS -->
+    <!-- BEGIN PAGE LEVEL JS -->
+    <script src="assets/js/datatables.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL JS -->
 
-    <!-- JS Libraies -->
-    <script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
     @if (Session::has('status'))
         <script>
-            let status = document.getElementById('status').value
-            iziToast.success({
-                title: `Approval Leave.`,
-                message: `${status}`,
-                position: 'topRight'
+            $(document).ready(function() {
+                // Simple notification having bootstrap's .alert class
+                $('.page-content-wrapper').pgNotification({
+                    style: 'bar',
+                    message: '{{ Session::get('status') }}',
+                    position: 'top',
+                    timeout: 4000,
+                    type: 'success'
+                }).show();
             });
         </script>
     @endif
-
+    
     @if (Session::has('error'))
         <script>
-            let error = document.getElementById('error').value
-            iziToast.error({
-                title: `Approval Leave.`,
-                message: `${error}`,
-                position: 'topRight'
+            $(document).ready(function() {
+                // Simple notification having bootstrap's .alert class
+                $('.page-content-wrapper').pgNotification({
+                    style: 'bar',
+                    message: "{{ Session::get('error') }}",
+                    position: 'top',
+                    timeout: 4000,
+                    type: 'danger'
+                }).show();
             });
         </script>
     @endif
-
 
     <script>
         let isApproved = document.getElementById('isApproved')
-        $( '.approve').click(function() {
+
+        $("#checkbox-all").click(function() {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        })
+
+        $('.approve').click(function() {
             isApproved.value = 'true'
-        });
-
-        $( '.reject').click(function() {
+        })
+        $('.reject').click(function() {
             isApproved.value = 'false'
-        });
-
+        })
     </script>
 @endsection
-
-@push('active.approval-leave')
-    active
-@endpush

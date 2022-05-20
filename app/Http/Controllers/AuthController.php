@@ -36,7 +36,7 @@ class AuthController extends Controller
         if($checkToken->success) {
             return view('auth/invitational', compact('token'));
         } else {
-            return redirect(route('auth.index'))->with('status', $checkToken->message);
+            return redirect(route('auth.index'))->with('error', $checkToken->message);
         }
     }
 
@@ -81,15 +81,15 @@ class AuthController extends Controller
     public function accept(Request $request)
     {
         Validator::make($request->all(), [
-            'password' => 'required|confirmed'
+            'password' => 'required'
         ])->validate();
         
         $acceptingInvitation = Http::patch($this->url_dynamic() . 'auth/invitation/accepting', [
-            'email' => $request->email,
-            'full_name' => $request->full_name,
+            'full_name' => $request->fname . ' ' . $request->lname,
             'password' => $request->password,
-            'token' => $request->token,
+            'token' => $request->token
         ]);
+        
         $acceptingInvitation = json_decode($acceptingInvitation->body());
 
         if ($acceptingInvitation->success){

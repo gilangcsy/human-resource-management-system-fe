@@ -9,6 +9,7 @@
     <link href="assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="assets/plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/jquery-nestable/jquery.nestable.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css"
         rel="stylesheet" type="text/css" />
     <link href="assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css"
@@ -40,74 +41,66 @@
             <!-- START CONTAINER FLUID -->
             <div class="container-fluid container-fixed-lg">
                 <!-- BEGIN PlACE PAGE CONTENT HERE -->
-                
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card card-transparent">
-                            <div class="card-header ">
-                                <div class="card-title">Portlet Tools
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div data-pages="card" class="card card-default" id="card-basic">
-                                            <div class="card-header">
-                                                <div class="card-title">Portlet Title
-                                                </div>
-                                                <div class="card-controls">
-                                                    <ul>
-                                                        <li><a data-toggle="collapse" class="card-collapse" href="#"><i
-                                                                    class="card-icon card-icon-collapse"></i></a>
-                                                        </li>
-                                                        <li><a data-toggle="refresh" class="card-refresh" href="#"><i
-                                                                    class="card-icon card-icon-refresh"></i></a>
-                                                        </li>
-                                                        <li><a data-toggle="close" class="card-close" href="#"><i
-                                                                    class="card-icon card-icon-close"></i></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="card card-transparent">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div data-pages="card" class="card card-default" id="card-basic">
-                                                                    <div class="card-header">
-                                                                        <div class="card-title">Portlet Title
-                                                                        </div>
-                                                                        <div class="card-controls">
-                                                                            <ul>
-                                                                                <li><a data-toggle="collapse" class="card-collapse" href="#"><i
-                                                                                            class="card-icon card-icon-collapse"></i></a>
-                                                                                </li>
-                                                                                <li><a data-toggle="refresh" class="card-refresh" href="#"><i
-                                                                                            class="card-icon card-icon-refresh"></i></a>
-                                                                                </li>
-                                                                                <li><a data-toggle="close" class="card-close" href="#"><i
-                                                                                            class="card-icon card-icon-close"></i></a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card-body">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- START card -->
+                <div class="card card-transparent">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <form action="<?php echo e(route('menu.create')); ?>">
+                                <button class="btn btn-primary">
+                                    <i class="pg-icon">plus</i>
+                                    Add New Menu
+                                </button>
+                            </form>
+                        </div>
+                        <div class="pull-right">
+                            <div class="col-xs-12">
+                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
                             </div>
                         </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="tableWithSearch">
+                            <thead>
+                                <tr>
+                                    <th> No.</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <?php $__currentLoopData = $menu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
+                                        <td><?php echo e($loop->iteration); ?></td>
+                                        <td>
+                                            <b><?php echo e($item->master_menu == 0 ? 'Master Menu' : 'Sub Menu'); ?></b>
+                                            <br>
+                                            <?php echo e($item->name); ?>
+
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="<?php echo e(route('menu.edit', $item->id)); ?>" class="btn btn-warning">
+                                                    <i class="pg-icon">edit</i>
+                                                </a>
+    
+                                                <form action="<?php echo e(route('menu.destroy', $item->id)); ?>" method="POST">
+                                                    <?php echo csrf_field(); ?>
+                                                    <?php echo method_field('delete'); ?>
+                                                    <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
+                                                        <i class="pg-icon">trash</i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+                <!-- END card -->
                 <!-- END PLACE PAGE CONTENT HERE -->
             </div>
             <!-- END CONTAINER FLUID -->
@@ -157,48 +150,6 @@
         </script>
     <?php endif; ?>
 
-    <script>
-        $('#tableWithSearch tbody').sortable({
-            handle: '.semi-bold',
-            update: function(event, ui) {
-                $(this).children().each(function(index) {
-                    if ($(this).attr('data-position') != (index + 1)) {
-                        $(this).attr('data-position', (index + 1)).addClass('updated')
-                    }
-                })
-                saveNewPositions();
-            }
-        })
-
-        $(".sortable-table-custom").dataTable({
-            "dom": 'frtip',
-            "columnDefs": [{
-                "sortable": false,
-                "targets": [0]
-            }]
-        })
-
-        function saveNewPositions() {
-            let positions = []
-            $('.updated').each(function() {
-                positions.push([$(this).attr('data-index'), $(this).attr('data-position')])
-                $(this).removeClass('updated')
-            })
-
-            $.ajax({
-                url: '<?php echo e($base_url); ?>master/menu/newPositions',
-                method: 'POST',
-                dataType: 'TEXT',
-                data: {
-                    positions: positions
-                },
-                success: function(response) {
-                    location.reload()
-                }
-            })
-        }
-    </script>
-
     <!-- BEGIN VENDOR JS -->
     <script type="text/javascript" src="assets/plugins/classie/classie.js"></script>
     <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -209,14 +160,11 @@
     </script>
     <script type="text/javascript" src="assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
     <script type="text/javascript" src="assets/plugins/datatables-responsive/js/lodash.min.js"></script>
+    <script src="assets/plugins/jquery-nestable/jquery.nestable.js" type="text/javascript"></script>
     <!-- END VENDOR JS -->
     <!-- BEGIN PAGE LEVEL JS -->
     <script src="assets/js/datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 <?php $__env->stopSection(); ?>
-
-<?php $__env->startPush('active.menu'); ?>
-    active
-<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/dashboard/pages/menu/index.blade.php ENDPATH**/ ?>

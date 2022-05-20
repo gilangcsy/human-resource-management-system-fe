@@ -75,9 +75,8 @@ class ApprovalTemplateController extends Controller
             'approver_three' => $request->approver_three,
             'type' => $request->type,
             'createdBy' => session()->get('userId'),
-            'updatedBy' => session()->get('userId'),
         ]);
-
+        
         $response = json_decode($response->body());
         if($response->success) {
             return redirect()->route('approval-template.index')->with('status', $response->message);

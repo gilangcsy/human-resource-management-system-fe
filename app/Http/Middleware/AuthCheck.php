@@ -18,11 +18,8 @@ class AuthCheck
     {
         if(!empty(session()->get('token'))) {
             return $next($request);
+        } else {
+            return redirect(route('auth.index'))->with('error', "You have to login first!");
         }
-        else
-        {
-            redirect()->back();
-        }
-        return redirect(route('auth.index'))->with('error', "You have to login first!");
     }
 }

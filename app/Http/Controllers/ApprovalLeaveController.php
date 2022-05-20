@@ -18,12 +18,14 @@ class ApprovalLeaveController extends Controller
      */
     public function index()
     {
+        $download_url = $this->url_dynamic() . 'leaves/download/';
+
         $response = Http::get($this->url_dynamic() . 'leaves/readByApproverNowId/' . session()->get('userId'));
         $response = json_decode($response->body());
         $leaves = $response->data;
         $history = $response->history;
         if($response->success) {
-            return view('dashboard.pages.approval-leave.index', compact('leaves', 'history'));
+            return view('dashboard.pages.approval-leave.index', compact('leaves', 'history', 'download_url'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
@@ -97,6 +99,9 @@ class ApprovalLeaveController extends Controller
 
     public function action(Request $request)
     {
+        if(!$request->action) {
+            return redirect()->back()->with('error', 'Check minimum 1 data to continue.');
+        }
         $totalOfAction = count($request->action);
 
         for ($i=0; $i < $totalOfAction ; $i++) { 

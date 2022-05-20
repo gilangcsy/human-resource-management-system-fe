@@ -22,12 +22,13 @@
             <h2 class="p-t-25">Get Started <br /> with your Dashboard</h2>
             <p class="mw-80 m-t-5">Sign in to your account</p>
             <!-- START Login Form -->
-            <form id="form-login" class="p-t-15" role="form" action="index.html">
+            <form id="form-login" class="p-t-15" action="<?php echo e(route('auth.store')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <!-- START Form Control-->
                 <div class="form-group form-group-default">
                     <label>Login</label>
                     <div class="controls">
-                        <input type="text" name="username" placeholder="User Name" class="form-control" required>
+                        <input type="text" name="email" placeholder="Email" class="form-control" required>
                     </div>
                 </div>
                 <!-- END Form Control-->
@@ -216,4 +217,36 @@
     <!-- END OVERLAY -->
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startSection('javascript'); ?>
+<?php if(Session::has('error')): ?>
+    <script>
+        $(document).ready(function () {
+            // Simple notification having bootstrap's .alert class
+            $('.login-container').pgNotification({
+                style: 'simple',
+                message: '<?php echo e(Session::get("error")); ?>',
+                position: 'top-right',
+                timeout: 4000,
+                type: 'danger'
+            }).show();
+        });
+    </script>
+<?php endif; ?>
+
+
+<?php if(Session::has('status')): ?>
+    <script>
+        $(document).ready(function () {
+            // Simple notification having bootstrap's .alert class
+            $('.login-container').pgNotification({
+                style: 'simple',
+                message: '<?php echo e(Session::get("status")); ?>',
+                position: 'top-right',
+                timeout: 4000,
+                type: 'success'
+            }).show();
+        });
+    </script>
+<?php endif; ?>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('auth.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/auth/index.blade.php ENDPATH**/ ?>

@@ -37,6 +37,29 @@
         });
     }
 
+    // Initialize datatable showing a search box at the top right corner
+    var initTableWithSearch2 = function() {
+        var table = $('#tableWithSearch2');
+
+        var settings = {
+            "sDom": "<t><'row'<p i>>",
+            "destroy": true,
+            "scrollCollapse": true,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ ",
+                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+            },
+            "iDisplayLength": 5
+        };
+
+        table.dataTable(settings);
+
+        // search box for table
+        $('#search-table2').keyup(function() {
+            table.fnFilter($(this).val());
+        });
+    }
+
     // Initialize datatable with ability to add rows dynamically
     var initTableWithDynamicRows = function() {
         var table = $('#tableWithDynamicRows');
@@ -133,6 +156,7 @@
     }
 
     initTableWithSearch();
+    initTableWithSearch2();
     initTableWithDynamicRows();
     initTableWithExportOptions();
 

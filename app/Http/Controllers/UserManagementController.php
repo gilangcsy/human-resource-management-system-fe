@@ -17,11 +17,12 @@ class UserManagementController extends Controller
     
     public function index()
     {
+        $base_url = $this->url_dynamic();
         $response = Http::get($this->url_dynamic() . 'users');
         $response = json_decode($response->body());
         $users = $response->data;
         if($response->success) {
-            return view('dashboard.pages.employee.index', compact('users'));
+            return view('dashboard.pages.employee.index', compact('users', 'base_url'));
         } else {
             return redirect()->back();
         }

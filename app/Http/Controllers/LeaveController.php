@@ -17,11 +17,13 @@ class LeaveController extends Controller
      */
     public function index()
     {
+        $download_url = $this->url_dynamic() . 'leaves/download/';
+
         $response = Http::get($this->url_dynamic() . 'leaves/readByUserId/' . session()->get('userId'));
         $response = json_decode($response->body());
         $leave = $response->data;
         if($response->success) {
-            return view('dashboard.pages.leave.index', compact('leave'));
+            return view('dashboard.pages.leave.index', compact('leave', 'download_url'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
@@ -64,6 +66,9 @@ class LeaveController extends Controller
             'end_date' => 'required',
         ])->validate();
 
+        $start_date = date("d-m-Y", strtotime($request->start_date));
+        $end_date = date("d-m-Y", strtotime($request->end_date));
+
         if($request->file('attachment')) {
             $response = Http::attach(
                 'attachment', file_get_contents($request->file('attachment')), $request->file('attachment')->getClientOriginalName()
@@ -71,8 +76,8 @@ class LeaveController extends Controller
                 'attachment' => $request->file('attachment')->getClientOriginalName(),
                 'created_by' => session()->get('userId'),
                 'UserId' => session()->get('userId'),
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
                 'description' => $request->description,
                 'LeaveTypeId' => $request->LeaveTypeId,
             ]);
@@ -80,8 +85,8 @@ class LeaveController extends Controller
             $response = Http::post($this->url_dynamic() . 'leaves', [
                 'created_by' => session()->get('userId'),
                 'UserId' => session()->get('userId'),
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
                 'description' => $request->description,
                 'LeaveTypeId' => $request->LeaveTypeId,
             ]);
@@ -123,7 +128,6 @@ class LeaveController extends Controller
      */
     public function edit($id)
     {
-        $download_url = $this->url_dynamic() . 'leaves/download/';
         $response = Http::get($this->url_dynamic() . 'leaves/' . $id);
         $response = json_decode($response->body());
         $leave = $response->data['0'];
@@ -132,7 +136,7 @@ class LeaveController extends Controller
         $response = json_decode($response->body());
         $leaveType = $response->data;
         if($response->success) {
-            return view('dashboard.pages.leave.form',compact('leave', 'leaveType', 'download_url'));
+            return view('dashboard.pages.leave.form',compact('leave', 'leaveType'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }

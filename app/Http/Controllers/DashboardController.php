@@ -16,17 +16,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // $response = Http::get($this->url_dynamic() . 'attendances/readTodayAttendance/' . session()->get('userId'));
-        // $response = json_decode($response->body());
-        // if($response->success) {
-        //     $attendanceStatus = $response->status;
-        //     $attendanceData = $response->data;
-        //     return view('dashboard.index', compact('attendanceStatus', 'attendanceData'));
-        // } else {
-        //     return redirect()->back()->with('error', $response->message);
-        // }
-        
-        return view('dashboard.index');
+        $response = Http::get($this->url_dynamic() . 'attendances/readTodayAttendance/' . session()->get('userId'));
+        $response = json_decode($response->body());
+        if($response->success) {
+            $attendanceStatus = $response->status;
+            $attendanceData = $response->data;
+
+            return view('dashboard.index', compact('attendanceStatus', 'attendanceData'));
+        } else {
+            return redirect()->back()->with('error', $response->message);
+        }
     }
 
     /**

@@ -3,137 +3,135 @@
 @section('title', 'Employee')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('assets/modules/jquery-selectric/selectric.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
-
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-
-    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+<link href="{{asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
+<link href="{{asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/plugins/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet" type="text/css" media="screen">
+<link href="{{asset('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" media="screen">
+<link href="{{asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" media="screen">
 @endsection
 
-@section('content')
-    <section class="section">
-        <div class="section-header">
-            <h1>Employee</h1>
-        </div>
-
-        <div class="section-body">
-            <h2 class="section-title">{{ $user->id != '' ? 'Edit' : 'Invite' }} Employee</h2>
-            <p class="section-lead">
-                You can {{ $user->id != '' ? 'edit' : 'invite new' }} employee here.
-            </p>
-
-            <form action="{{ $user->id == '' ? route('employee.send_invitational') : route('employee.update', $user->id) }}"
-                method="POST" class="needs-validation" novalidate="">
-                @csrf
-                @if ($user->id != '')
-                    @method('patch')
-                @endif
-                <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="card">
-                            {{-- <div class="card-header">
-                                <h4>Input Text</h4>
-                            </div> --}}
-                            <div class="card-body">
-                                <input type="hidden" name="id" value="">
-
-                                <div class="form-group">
-                                    <label>Employee ID</label>
-                                    <input type="text" name="employee_id"
-                                        value="{{ old('employee_id', $user->employee_id) }}" class="form-control"
-                                        autofocus autocomplete="off">
-                                    <div class="invalid-feedback">Please fill in the Employee Id</div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Full Name</label>
-                                    <input type="text" name="full_name" value="{{ old('full_name', $user->full_name) }}"
-                                        class="form-control" autofocus autocomplete="off">
-                                    <div class="invalid-feedback">Please fill in the Full Name</div>
-                                </div>
-                                @if ($user->id == '')
-                                    <div class="form-group">
-                                        <label>Email *</label>
-                                        <input type="email" name="email" value="{{ old('email', $user->email) }}"
-                                            class="form-control" autofocus autocomplete="off" required>
-                                    </div>
-                                @endif
-
-                                <div class="form-group">
-                                    <label class="col-form-label">
-                                        Address
-                                    </label>
-                                    <textarea class="form-control" name="address">{{ old('address', $user->address) }}</textarea>
-                                </div>
-
-                                {{-- <div class="form-group">
-                                    <label>Avatar</label>
-                                    <input name="avatar" type="file" class="form-control">
-                                    <div class="invalid-feedback">Please fill in your thumbnail</div>
-
-                                    <div class="card mt-3">
-                                        <div class="card-header">
-                                            <h4>Preview Image</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="gallery gallery-md">
-                                                <div class="gallery-item"
-                                                    data-image="https://95.111.202.9:3068/storage/attachment/attendances/clockIn/clockInPhoto-1652155617729-985650678.jpeg"
-                                                    data-title="Image 1"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
-                                <div class="form-group">
-                                    <label>Role</label>
-                                    <select class="form-control select2" name="RoleId" id="RoleId">
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}"
-                                                {{ $role->id == old('RoleId', $user->RoleId) ? 'selected' : '' }}>
-                                                {{ $role->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
-                        </div>
+@section('page-content')
+    <!-- START PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper ">
+        <!-- START PAGE CONTENT -->
+        <div class="content ">
+            <!-- START JUMBOTRON -->
+            <div class="jumbotron" data-pages="parallax">
+                <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+                    <div class="inner">
+                        <!-- START BREADCRUMB -->
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">User Management</a></li>
+                            <li class="breadcrumb-item"><a href="/employee">Employee</a></li>
+                            <li class="breadcrumb-item active">{{ $user->id != '' ? 'Edit' : 'Create' }}</li>
+                        </ol>
+                        <!-- END BREADCRUMB -->
                     </div>
                 </div>
-                <div class="col-12 text-right">
-                    <button type="submit" class="btn btn-primary">
-                        {{ $user->id != '' ? 'Update' : 'Save' }}
-                    </button>
-                    <a href="{{ URL::previous() }}" class="btn btn-primary">
-                        Back
-                    </a>
+            </div>
+            <!-- END JUMBOTRON -->
+            <!-- START CONTAINER FLUID -->
+            <div class="container-fluid container-fixed-lg">
+                <!-- BEGIN PlACE PAGE CONTENT HERE -->
+
+                <!-- START card -->
+                <div class="card card-default">
+                    <div class="card-body">
+                        <form method="POST" action="{{ $user->id == '' ? route('employee.send_invitational') : route('employee.update', $user->id) }}">
+                            @csrf
+                            @if ($user->id != '')
+                                @method('patch')
+                            @endif
+                            <div class="form-group form-group-default">
+                                <label>Employee ID</label>
+                                <input type="text" value="{{ old('employee_id', $user->employee_id) }}" name="employee_id" class="form-control">
+                            </div>
+
+                            <div class="form-group form-group-default">
+                                <label>Full Name</label>
+                                <input type="text" value="{{ old('full_name', $user->full_name) }}" name="full_name" class="form-control">
+                            </div>
+                            
+                            @if ($user->id == '')
+                                <div class="form-group form-group-default required">
+                                    <label>Email</label>
+                                    <input type="text" value="{{ old('email', $user->email) }}" name="email" class="form-control" required>
+                                </div>
+                            @endif
+
+                            <div class="form-group form-group-default">
+                                <label>Address</label>
+                                <input type="text" value="{{ old('address', $user->address) }}" name="address" class="form-control">
+                            </div>
+                            
+                            <div class="form-group form-group-default form-group-default-select2 required">
+                                <label class="">Role</label>
+                                <select class="full-width" name="RoleId" data-init-plugin="select2">
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}" {{ $role->id == old('RoleId', $user->RoleId) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ $user->id != '' ? 'Update' : 'Save' }}
+                                </button>
+                                <a href="{{ URL::previous() }}" class="btn btn-primary">
+                                    Back
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+                <!-- END card -->
+                <!-- END PLACE PAGE CONTENT HERE -->
+            </div>
+            <!-- END CONTAINER FLUID -->
         </div>
-        </form>
-        </div>
-    </section>
+        <!-- END PAGE CONTENT -->
+        <!-- START COPYRIGHT -->
+        @include('dashboard.partials.footer')
+        <!-- END COPYRIGHT -->
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
 @endsection
 
-@section('js')
-    <script src="{{ asset('assets/modules/jquery-selectric/jquery.selectric.min.js') }}"></script>
-    <script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('assets/js/page/forms-advanced-forms.js') }}"></script>
+@section('javascript')
 
+    <!-- BEGIN VENDOR JS -->
+    <script type="text/javascript" src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/plugins/classie/classie.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/plugins/jquery-autonumeric/autoNumeric.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/plugins/dropzone/dropzone.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/plugins/jquery-inputmask/jquery.inputmask.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-form-wizard/js/jquery.bootstrap.wizard.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-typehead/typeahead.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-typehead/typeahead.jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/handlebars/handlebars-v4.0.5.js') }}"></script>
+    <script src="{{ asset('assets/js/form_elements.js') }}" type="text/javascript"></script>
 
-    <script src="{{ asset('assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-
+    <!-- END VENDOR JS -->
+    
+    @if (Session::has('error'))
+        <script>
+            $(document).ready(function () {
+                // Simple notification having bootstrap's .alert class
+                $('.page-content-wrapper').pgNotification({
+                    style: 'bar',
+                    message: '{{Session::get("status")}}',
+                    position: 'top',
+                    timeout: 4000,
+                    type: 'danger'
+                }).show();
+            });
+        </script>
+    @endif
 @endsection
-
-
-@push('active.employee')
-    active
-@endpush

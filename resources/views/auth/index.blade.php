@@ -24,12 +24,13 @@
             <h2 class="p-t-25">Get Started <br /> with your Dashboard</h2>
             <p class="mw-80 m-t-5">Sign in to your account</p>
             <!-- START Login Form -->
-            <form id="form-login" class="p-t-15" role="form" action="index.html">
+            <form id="form-login" class="p-t-15" action="{{ route('auth.store') }}" method="POST">
+                @csrf
                 <!-- START Form Control-->
                 <div class="form-group form-group-default">
                     <label>Login</label>
                     <div class="controls">
-                        <input type="text" name="username" placeholder="User Name" class="form-control" required>
+                        <input type="text" name="email" placeholder="Email" class="form-control" required>
                     </div>
                 </div>
                 <!-- END Form Control-->
@@ -216,4 +217,36 @@
         <!-- END Overlay Content !-->
     </div>
     <!-- END OVERLAY -->
+@endsection
+
+@section('javascript')
+@if (Session::has('error'))
+    <script>
+        $(document).ready(function () {
+            // Simple notification having bootstrap's .alert class
+            $('.login-container').pgNotification({
+                style: 'simple',
+                message: '{{Session::get("error")}}',
+                position: 'top-right',
+                timeout: 4000,
+                type: 'danger'
+            }).show();
+        });
+    </script>
+@endif
+
+@if (Session::has('status'))
+    <script>
+        $(document).ready(function () {
+            // Simple notification having bootstrap's .alert class
+            $('.login-container').pgNotification({
+                style: 'simple',
+                message: '{{Session::get("status")}}',
+                position: 'top-right',
+                timeout: 4000,
+                type: 'success'
+            }).show();
+        });
+    </script>
+@endif
 @endsection

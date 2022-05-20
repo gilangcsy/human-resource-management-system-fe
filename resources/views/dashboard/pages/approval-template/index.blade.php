@@ -46,7 +46,7 @@
                     <div class="card-header">
                         <div class="card-title">
                             <form action="{{ route('approval-template.create') }}">
-                                <button class="btn btn-primary">
+                                <button class="btn btn-complete">
                                     <i class="pg-icon">plus</i>
                                     Add New Approval Template
                                 </button>
@@ -88,7 +88,8 @@
 
                                             <form action="{{ route('approval-template.destroy', $item->id) }}" method="POST">
                                                 @csrf
-                                                <button class="btn btn-danger ml-2">
+                                                @method('delete')
+                                                <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
                                                     <i class="pg-icon">trash</i>
                                                 </button>
                                             </form>
@@ -107,47 +108,13 @@
         <!-- END PAGE CONTENT -->
         <!-- START COPYRIGHT -->
         <!-- START CONTAINER FLUID -->
-        <!-- START CONTAINER FLUID -->
-        <div class=" container-fluid  container-fixed-lg footer">
-            <div class="copyright sm-text-center">
-                <p class="small-text no-margin pull-left sm-pull-reset">
-                    ©2014-2020 All Rights Reserved. Pages® and/or its subsidiaries or affiliates are registered
-                    trademark of Revox Ltd.
-                    <span class="hint-text m-l-15">Pages v05.23 20201105.r.190</span>
-                </p>
-                <p class="small no-margin pull-right sm-pull-reset">
-                    Hand-crafted <span class="hint-text">&amp; made with Love</span>
-                </p>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+        @include('dashboard.partials.footer')
         <!-- END COPYRIGHT -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
 @endsection
 
 @section('javascript')
-    {{-- @if (Session::has('status'))
-        <script>
-            let status = document.getElementById('status').value
-            iziToast.success({
-                title: `Menu Management.`,
-                message: `${status}`,
-                position: 'topRight'
-            });
-        </script>
-    @endif
-
-    @if (Session::has('error'))
-        <script>
-            let error = document.getElementById('error').value
-            iziToast.error({
-                title: `Menu Management.`,
-                message: `${error}`,
-                position: 'topRight'
-            });
-        </script>
-    @endif --}}
 
     <!-- BEGIN VENDOR JS -->
     <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -163,16 +130,31 @@
     <script src="assets/js/datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 
-    <script>
-        $(document).ready(function () {
-        // Simple notification having bootstrap's .alert class
-        $('.page-content-wrapper').pgNotification({
-            style: 'bar',
-            message: 'Login has been successfully.',
-            position: 'top',
-            timeout: 4000,
-            type: 'success'
-        }).show();
-    });
-    </script>
+    {{--
+
+    @if (Session::has('error'))
+        <script>
+            let error = document.getElementById('error').value
+            iziToast.error({
+                title: `Menu Management.`,
+                message: `${error}`,
+                position: 'topRight'
+            });
+        </script>
+    @endif --}}
+
+    @if (Session::has('status'))
+        <script>
+            $(document).ready(function () {
+                // Simple notification having bootstrap's .alert class
+                $('.page-content-wrapper').pgNotification({
+                    style: 'bar',
+                    message: '{{Session::get("status")}}',
+                    position: 'top',
+                    timeout: 4000,
+                    type: 'success'
+                }).show();
+            });
+        </script>
+    @endif
 @endsection

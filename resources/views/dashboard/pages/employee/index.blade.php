@@ -1,152 +1,166 @@
 @extends('dashboard.partials.app')
 
-@section('title', 'User Management')
+@section('title', 'Employee')
 
 @section('css')
-<!-- CSS Libraries -->
-<link rel="stylesheet" href="{{asset('assets/modules/datatables/datatables.min.css')}}">
-<link rel="stylesheet"
-    href="{{asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css')}}">
-
-<link rel="stylesheet" href="{{asset('assets/modules/izitoast/css/iziToast.min.css')}}">
+    <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="assets/plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css"
+        media="screen" />
+    <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
+    <!-- Please remove the file below for production: Contains demo classes -->
+    <link class="main-stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css" />
 @endsection
 
-@section('content')
-<input type="hidden" id="status" value="{{Session::get('status')}}">
-<input type="hidden" id="error" value="{{Session::get('error')}}">
-<section class="section">
-    <div class="section-header">
-        <h1>User Management</h1>
-    </div>
-
-    <div class="section-body">
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        {{-- <form action="{{ route('employee.send_invitational') }}" method="POST" class="needs-validation" novalidate="" enctype="multipart/form-data">
-							@csrf
-                            <div class="d-flex">
-                                <div class="form-group">
-                                    <input type="email" name="email" value="" class="form-control" required autofocus autocomplete="off">
-                                    <div class="invalid-feedback">Please fill in the email</div>
-                                </div>
-                                <div>
-                                </div>
-                            </div>
-                        </form> --}}
-                        
-                        <a href="{{route('employee.create')}}" class="btn btn-primary ml-2">
-                            Invite User
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="table-1">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">
-                                            No.
-                                        </th>
-                                        <th>Full Name</th>
-                                        <th>Email</th>
-                                        <th>Is Verified</th>
-                                        <th>Is Active</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <td>
-                                                {{ $loop->iteration }}
-                                            </td>
-                                            <td>{{ $user->full_name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            {{-- <td>
-                                                <img alt="image" src="{{ $devHostStorage }}service/{{$item->thumbnail}}"
-                                                    width="150" data-toggle="tooltip" title="{{$item->thumbnail}}">
-                                            </td> --}}
-                                            <td>
-                                                <a href="" class="badge {{ $user->isVerified == true ? 'badge-primary' : 'badge-danger' }}">
-                                                    {{ $user->isVerified == true ? 'Yes' : 'No' }}
-                                                </a>
-                                            </td>
-                                            <td>
-                                                {{-- <a href="{{ route('employee.set_active', $user->id) }}" class="badge {{ $user->isActive == true ? 'badge-success' : 'badge-danger' }}">
-                                                    {{ $user->isActive == true ? 'Yes' : 'No' }}
-                                                </a> --}}
-                                                
-                                                {{-- <div class="control-label">Toggle switch single</div> --}}
-                                                <label class="custom-switch mt-2">
-                                                    <input type="checkbox" name="custom-switch-checkbox" {{ $user->isVerified == true ? 'checked' : '' }} class="custom-switch-input">
-                                                    <span class="custom-switch-indicator"></span>
-                                                    {{-- <span class="custom-switch-description">I agree with terms and conditions</span> --}}
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <form action="/employee/destroy/{{ $user->id }}/{{ session()->get('userId') }}" method="POST">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                                <a href="{{ route('employee.edit', $user->id) }}" class="btn btn-warning mt-3">
-                                                    <i class="fa fa-pen-square"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+@section('page-content')
+    <!-- START PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper ">
+        <!-- START PAGE CONTENT -->
+        <div class="content ">
+            <!-- START JUMBOTRON -->
+            <div class="jumbotron" data-pages="parallax">
+                <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+                    <div class="inner">
+                        <!-- START BREADCRUMB -->
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">User Management</a></li>
+                            <li class="breadcrumb-item active">Employee</li>
+                        </ol>
+                        <!-- END BREADCRUMB -->
                     </div>
                 </div>
             </div>
+            <!-- END JUMBOTRON -->
+            <!-- START CONTAINER FLUID -->
+            <div class="container-fluid container-fixed-lg">
+                <!-- BEGIN PlACE PAGE CONTENT HERE -->
+
+                <!-- START card -->
+                <div class="card card-transparent">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <form action="{{ route('employee.create') }}">
+                                <button class="btn btn-complete">
+                                    <i class="pg-icon">plus</i>
+                                    Add New Employee
+                                </button>
+                            </form>
+                        </div>
+                        <div class="pull-right">
+                            <div class="col-xs-12">
+                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="tableWithSearch">
+                            <thead>
+                                <tr>
+                                    <th> No.</th>
+                                    <th>Name</th>
+                                    <th>Is Verified</th>
+                                    <th>Is Active</th>
+                                    <th class="text-left">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($users as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->full_name }}</td>
+                                        <td><span
+                                                class="badge badge-{{ $item->isVerified ? 'success' : 'danger' }}">Yes</span>
+                                        </td>
+                                        <td>
+                                            <div class="form-check form-check-inline switch switch-lg complete">
+                                                <input type="checkbox" class="checkbox-action" data-user="{{$item->id}}" id="switch-{{ $loop->iteration }}" {{ $item->isActive ? 'checked' : '' }}>
+                                                <label for="switch-{{ $loop->iteration }}"></label>
+                                            </div>
+                                        </td>
+                                        <td class="d-flex">
+                                            <a href="{{ route('employee.edit', $item->id) }}" class="btn btn-warning">
+                                                <i class="pg-icon">edit</i>
+                                            </a>
+
+                                            <form
+                                                action="/employee/destroy/{{ $item->id }}/{{ session()->get('userId') }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-danger ml-2"
+                                                    onclick="return confirm('Are you sure?')">
+                                                    <i class="pg-icon">trash</i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END card -->
+                <!-- END PLACE PAGE CONTENT HERE -->
+            </div>
+            <!-- END CONTAINER FLUID -->
         </div>
+        <!-- END PAGE CONTENT -->
+
+        @include('dashboard.partials.footer')
     </div>
-</section>
+    <!-- END PAGE CONTENT WRAPPER -->
 @endsection
 
-@section('js')
-    <!-- JS Libraies -->
-    <script src="{{asset('assets/modules/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js')}}"></script>
-    <script src="{{asset('assets/modules/jquery-ui/jquery-ui.min.js')}}"></script>
-    <script src="{{asset('assets/modules/izitoast/js/iziToast.min.js')}}"></script>
+@section('javascript')
 
-    <!-- Page Specific JS File -->
-    <script src="{{asset('assets/js/page/modules-datatables.js')}}"></script>
+    <!-- BEGIN VENDOR JS -->
+    <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js"
+        type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/media/js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js" type="text/javascript">
+    </script>
+    <script type="text/javascript" src="assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
+    <script type="text/javascript" src="assets/plugins/datatables-responsive/js/lodash.min.js"></script>
+    <!-- END VENDOR JS -->
+    <!-- BEGIN PAGE LEVEL JS -->
+    <script src="assets/js/datatables.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL JS -->
 
-    <!-- JS Libraies -->
-    <script src="{{asset('assets/modules/izitoast/js/iziToast.min.js')}}"></script>
     @if (Session::has('status'))
         <script>
-            let status = document.getElementById('status').value
-            iziToast.success({
-                title: `User management.`,
-                message: `${status}`,
-                position: 'topRight'
-            });
-
-        </script>
-    @endif
-
-    @if (Session::has('error'))
-        <script>
-            let error = document.getElementById('error').value
-            iziToast.error({
-                title: `Employee.`,
-                message: `${error}`,
-                position: 'topRight'
+            $(document).ready(function() {
+                // Simple notification having bootstrap's .alert class
+                $('.page-content-wrapper').pgNotification({
+                    style: 'bar',
+                    message: '{{ Session::get('status') }}',
+                    position: 'top',
+                    timeout: 4000,
+                    type: 'success'
+                }).show();
             });
         </script>
     @endif
+
+    <script>
+        $('#tableWithSearch tbody').on('click', '.checkbox-action', function () {
+            let user_id = $(this).attr('data-user')
+            $.ajax({
+                url: `{{ $base_url }}users/setActive/${user_id}`,
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(data) {
+                    location.reload()
+                },
+            });
+        })
+    </script>
 @endsection
-@push('active.employee')
-    active
-@endpush

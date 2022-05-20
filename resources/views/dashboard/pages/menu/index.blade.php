@@ -9,6 +9,7 @@
     <link href="assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="assets/plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/jquery-nestable/jquery.nestable.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css"
         rel="stylesheet" type="text/css" />
     <link href="assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css"
@@ -40,10 +41,16 @@
             <!-- START CONTAINER FLUID -->
             <div class="container-fluid container-fixed-lg">
                 <!-- BEGIN PlACE PAGE CONTENT HERE -->
-                {{-- <!-- START card -->
+                <!-- START card -->
                 <div class="card card-transparent">
-                    <div class="card-header ">
-                        <div class="card-title">Pages Default Tables Style
+                    <div class="card-header">
+                        <div class="card-title">
+                            <form action="{{ route('menu.create') }}">
+                                <button class="btn btn-primary">
+                                    <i class="pg-icon">plus</i>
+                                    Add New Menu
+                                </button>
+                            </form>
                         </div>
                         <div class="pull-right">
                             <div class="col-xs-12">
@@ -53,129 +60,46 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="card-body">
-                        <table class="table table-hover demo-table-search table-responsive-block" id="tableWithSearch">
+                        <table class="table table-striped" id="tableWithSearch">
                             <thead>
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Places</th>
-                                    <th>Activities</th>
-                                    <th>Status</th>
-                                    <th>Last Update</th>
+                                    <th> No.</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
-                                <tr>
-                                    <td class="v-align-middle semi-bold">
-                                        <p>First Tour</p>
-                                    </td>
-                                    <td class="v-align-middle"><a href="#" class="btn btn-tag">United States</a><a
-                                            href="#" class="btn btn-tag">India</a>
-                                        <a href="#" class="btn btn-tag">China</a><a href="#"
-                                            class="btn btn-tag">Africa</a>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>it is more then ONE nation/nationality as its fall name is The United Kingdom of
-                                            Great Britain and North Ireland..</p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>Public</p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>April 13,2014 10:13</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="v-align-middle semi-bold">
-                                        <p>Second Tour</p>
-                                    </td>
-                                    <td class="v-align-middle"><a href="#" class="btn btn-tag">United States</a><a
-                                            href="#" class="btn btn-tag">India</a>
-                                        <a href="#" class="btn btn-tag">China</a><a href="#"
-                                            class="btn btn-tag">Africa</a>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>it is more then ONE nation/nationality as its fall name is The United Kingdom of
-                                            Great Britain and North Ireland..</p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>Public</p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p>April 13,2014 10:13</p>
-                                    </td>
-                                </tr>
+                                @foreach ($menu as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <b>{{ $item->master_menu == 0 ? 'Master Menu' : 'Sub Menu' }}</b>
+                                            <br>
+                                            {{ $item->name }}
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="{{route('menu.edit', $item->id)}}" class="btn btn-warning">
+                                                    <i class="pg-icon">edit</i>
+                                                </a>
+    
+                                                <form action="{{ route('menu.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
+                                                        <i class="pg-icon">trash</i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <!-- END card --> --}}
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card card-transparent">
-                            <div class="card-header ">
-                                <div class="card-title">Portlet Tools
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div data-pages="card" class="card card-default" id="card-basic">
-                                            <div class="card-header">
-                                                <div class="card-title">Portlet Title
-                                                </div>
-                                                <div class="card-controls">
-                                                    <ul>
-                                                        <li><a data-toggle="collapse" class="card-collapse" href="#"><i
-                                                                    class="card-icon card-icon-collapse"></i></a>
-                                                        </li>
-                                                        <li><a data-toggle="refresh" class="card-refresh" href="#"><i
-                                                                    class="card-icon card-icon-refresh"></i></a>
-                                                        </li>
-                                                        <li><a data-toggle="close" class="card-close" href="#"><i
-                                                                    class="card-icon card-icon-close"></i></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="card card-transparent">
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div data-pages="card" class="card card-default" id="card-basic">
-                                                                    <div class="card-header">
-                                                                        <div class="card-title">Portlet Title
-                                                                        </div>
-                                                                        <div class="card-controls">
-                                                                            <ul>
-                                                                                <li><a data-toggle="collapse" class="card-collapse" href="#"><i
-                                                                                            class="card-icon card-icon-collapse"></i></a>
-                                                                                </li>
-                                                                                <li><a data-toggle="refresh" class="card-refresh" href="#"><i
-                                                                                            class="card-icon card-icon-refresh"></i></a>
-                                                                                </li>
-                                                                                <li><a data-toggle="close" class="card-close" href="#"><i
-                                                                                            class="card-icon card-icon-close"></i></a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card-body">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- END card -->
                 <!-- END PLACE PAGE CONTENT HERE -->
             </div>
             <!-- END CONTAINER FLUID -->
@@ -225,48 +149,6 @@
         </script>
     @endif
 
-    <script>
-        $('#tableWithSearch tbody').sortable({
-            handle: '.semi-bold',
-            update: function(event, ui) {
-                $(this).children().each(function(index) {
-                    if ($(this).attr('data-position') != (index + 1)) {
-                        $(this).attr('data-position', (index + 1)).addClass('updated')
-                    }
-                })
-                saveNewPositions();
-            }
-        })
-
-        $(".sortable-table-custom").dataTable({
-            "dom": 'frtip',
-            "columnDefs": [{
-                "sortable": false,
-                "targets": [0]
-            }]
-        })
-
-        function saveNewPositions() {
-            let positions = []
-            $('.updated').each(function() {
-                positions.push([$(this).attr('data-index'), $(this).attr('data-position')])
-                $(this).removeClass('updated')
-            })
-
-            $.ajax({
-                url: '{{ $base_url }}master/menu/newPositions',
-                method: 'POST',
-                dataType: 'TEXT',
-                data: {
-                    positions: positions
-                },
-                success: function(response) {
-                    location.reload()
-                }
-            })
-        }
-    </script>
-
     <!-- BEGIN VENDOR JS -->
     <script type="text/javascript" src="assets/plugins/classie/classie.js"></script>
     <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -277,12 +159,9 @@
     </script>
     <script type="text/javascript" src="assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
     <script type="text/javascript" src="assets/plugins/datatables-responsive/js/lodash.min.js"></script>
+    <script src="assets/plugins/jquery-nestable/jquery.nestable.js" type="text/javascript"></script>
     <!-- END VENDOR JS -->
     <!-- BEGIN PAGE LEVEL JS -->
     <script src="assets/js/datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 @endsection
-
-@push('active.menu')
-    active
-@endpush

@@ -38,10 +38,14 @@
                 <!-- START card -->
                 <div class="card card-default">
                     <div class="card-body">
-                        <form class="" role="form">
+                        <form method="POST" action="<?php echo e($approvalTemplate->id == '' ? route('approval-template.store') : route('approval-template.update', $approvalTemplate->id)); ?>">
+                            <?php echo csrf_field(); ?>
+                            <?php if($approvalTemplate->id != ''): ?>
+                                <?php echo method_field('patch'); ?>
+                            <?php endif; ?>
                             <div class="form-group form-group-default required">
                                 <label>Name</label>
-                                <input type="name" value="<?php echo e(old('name', $approvalTemplate->name)); ?>" class="form-control" required>
+                                <input type="text" value="<?php echo e(old('name', $approvalTemplate->name)); ?>" name="name" class="form-control" required>
                             </div>
 
                             <div class="form-group form-group-default form-group-default-select2 required">
@@ -94,7 +98,7 @@
 
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Type</label>
-                                <select class="full-width" data-placeholder="Select Type" name="approver_three" data-init-plugin="select2">
+                                <select class="full-width" data-placeholder="Select Type" name="type" data-init-plugin="select2">
                                     <option value="Claim" <?php echo e($approvalTemplate->type == 'Claim' ? 'selected' : ''); ?>>Claim</option>
                                     <option value="Leave" <?php echo e($approvalTemplate->type == 'Leave' ? 'selected' : ''); ?>>Leave</option>
                                 </select>
@@ -161,6 +165,21 @@
     <script src="<?php echo e(asset('assets/js/form_elements.js')); ?>" type="text/javascript"></script>
 
     <!-- END VENDOR JS -->
+    
+    <?php if(Session::has('error')): ?>
+        <script>
+            $(document).ready(function () {
+                // Simple notification having bootstrap's .alert class
+                $('.page-content-wrapper').pgNotification({
+                    style: 'bar',
+                    message: '<?php echo e(Session::get("status")); ?>',
+                    position: 'top',
+                    timeout: 4000,
+                    type: 'danger'
+                }).show();
+            });
+        </script>
+    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/dashboard/pages/approval-template/form.blade.php ENDPATH**/ ?>

@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Pages - Admin Dashboard UI Kit - Lock Screen</title>
+    <title>Auth &mdash; IDS Intranet</title>
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
     <link rel="apple-touch-icon" href="pages/ico/60.png">
@@ -56,8 +56,9 @@
     <script src="<?php echo e(asset('assets/plugins/jquery-actual/jquery.actual.min.js')); ?>"></script>
     <script src="<?php echo e(asset('assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js')); ?>"></script>
     <script type="text/javascript" src="<?php echo e(asset('assets/plugins/classie/classie.js')); ?>"></script>
-    <script src="<?php echo e(asset('assets/plugins/jquery-validation/js/jquery.validate.min.js')); ?>" type="text/javascript">
-    </script>
+    <script src="<?php echo e(asset('assets/plugins/jquery-validation/js/jquery.validate.min.js')); ?>" type="text/javascript"></script>
+
+    <?php echo $__env->yieldContent('javascript'); ?>
     <!-- END VENDOR JS -->
     <script src="pages/js/pages.min.js"></script>
     <script>

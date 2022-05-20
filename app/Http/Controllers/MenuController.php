@@ -17,48 +17,12 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $base_url = $this->url_dynamic();
+        $response = Http::get($this->url_dynamic() . 'master/menu');
+        $response = json_decode($response->body());
+        $menu = $response->data;
 
-        $response2 = Http::get($this->url_dynamic() . 'master/menu/readSubMenu');
-        $response2 = json_decode($response2->body());
-        $sub_menu = $response2->data;
-        
-        $master_menu = Http::get($this->url_dynamic() . 'master/menu/readMasterMenu');
-        $master_menu = json_decode($master_menu->body());
-        $master_menu = $master_menu->data;
-        
-        $lists = array();
-
-        foreach($master_menu as $menu) {
-            $lists[] = array (  
-                'id' => $menu->id,
-                'name' => $menu->name,
-                'link' => '/',
-                'icon' => '',
-                'childs' => []
-            );
-        }
-        $menu_items = [];
-        foreach($sub_menu as $item) {
-            $menu_items[] = array (  
-                'id' => $item->id,
-                'name' => $item->name,
-                'master_menu' => $item->master_menu_id,
-                'position' => $item->position_number
-            );
-        }
-        $menuCount = count($menu_items);
-        $master_menuCount = count($lists);
-        for ($i = 0; $i < $master_menuCount; $i++) { 
-            for ($j = 0; $j < $menuCount; $j++) { 
-                if($menu_items[$j]['master_menu'] == $lists[$i]['id']) {
-                    $lists[$i]['childs'][] = $menu_items[$j];
-                }
-            }
-        }
-        
-        if($response2->success) {
-            return view('dashboard.pages.menu.index', compact('lists', 'base_url'));
+        if($response->success) {
+            return view('dashboard.pages.menu.index', compact('menu'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }

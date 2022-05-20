@@ -27,7 +27,7 @@ class AccessRights
         // 3 => "approval-leave"
         
         //If user role is super admin, then next
-        if(session()->get('role_id') == 1) {
+        if(session()->get('role_id') == 1 || session()->get('role_id') == 7) {
             return $next($request);
         } else {
             // > 3 meaning that they trying to access some page (beacause array 4 is url)

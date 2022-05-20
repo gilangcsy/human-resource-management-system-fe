@@ -71,6 +71,7 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         Validator::make($request->all(), [
             'photo' => 'required|mimes:jpg,png,jpeg'
         ])->validate();
@@ -87,7 +88,7 @@ class AttendanceController extends Controller
             'longitude' => $request->longitude,
             'latitude' => $request->latitude
         ]);
-
+        dd($response->json());
         $response = json_decode($response->body());
         
         if($response->success) {
