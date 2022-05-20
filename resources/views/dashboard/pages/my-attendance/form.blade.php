@@ -93,7 +93,7 @@
 
                                     <div class="form-group form-group-default form-group-default-select2 required">
                                         <label>Work Load Status</label>
-                                        <select class="full-width" data-placeholder="Select Type" name="workLoadStatus"
+                                        <select class="full-width" data-placeholder="Select Type" id="workLoadStatus" name="workLoadStatus"
                                             data-init-plugin="select2">
                                             <option value="Available"
                                                 {{ $attendanceData->workLoadStatus == 'Available' ? 'selected' : '' }}>
