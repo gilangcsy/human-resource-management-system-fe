@@ -113,7 +113,7 @@
                                     <div class="form-group form-group-default required">
                                         <label>Planning Activity</label>
                                         <input type="text" value="{{ $attendanceData->planningActivity }}"
-                                            name="planningActivity" class="form-control" required>
+                                            name="planningActivity" id="planningActivity" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
