@@ -102,31 +102,31 @@
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checkbox-action" data-user="{{$item->id}}" id="switch-create{{ $loop->iteration }}" {{ $allowCreate == true ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="create">
+                                                <input type="checkbox" class="checkbox-action" data-user="{{$item_menu->id}}" id="switch-create{{ $loop->iteration }}" {{ $allowCreate == true ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="create">
                                                 <label for="switch-create{{ $loop->iteration }}"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checkbox-action" data-user="{{$item->id}}" id="switch-read{{ $loop->iteration }}" {{ $allowRead == true ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="read">
+                                                <input type="checkbox" class="checkbox-action" data-user="{{$item_menu->id}}" id="switch-read{{ $loop->iteration }}" {{ $allowRead == true ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="read">
                                                 <label for="switch-read{{ $loop->iteration }}"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checkbox-action" data-user="{{$item->id}}" id="switch-update{{ $loop->iteration }}" {{ $allowUpdate == true ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="update">
+                                                <input type="checkbox" class="checkbox-action" data-user="{{$item_menu->id}}" id="switch-update{{ $loop->iteration }}" {{ $allowUpdate == true ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="update">
                                                 <label for="switch-update{{ $loop->iteration }}"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checkbox-action" data-user="{{$item->id}}" id="switch-delete{{ $loop->iteration }}" {{ $allowDelete == true ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="delete">
+                                                <input type="checkbox" class="checkbox-action" data-user="{{$item_menu->id}}" id="switch-delete{{ $loop->iteration }}" {{ $allowDelete == true ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="delete">
                                                 <label for="switch-delete{{ $loop->iteration }}"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checked-all" data-user="{{$item->id}}" id="switch-checked{{ $loop->iteration }}" {{ $checkedAll ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="check-all">
+                                                <input type="checkbox" class="checked-all" data-user="{{$item_menu->id}}" id="switch-checked{{ $loop->iteration }}" {{ $checkedAll ? 'checked' : '' }} data-menu="{{ $item_menu->id }}" data-role-menu="{{ $isExists }}" data-action="check-all">
                                                 <label for="switch-checked{{ $loop->iteration }}"></label>
                                             </div>
                                             

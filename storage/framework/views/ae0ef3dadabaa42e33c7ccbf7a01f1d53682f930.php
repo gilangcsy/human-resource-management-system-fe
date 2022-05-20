@@ -103,31 +103,31 @@
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item->id); ?>" id="switch-create<?php echo e($loop->iteration); ?>" <?php echo e($allowCreate == true ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="create">
+                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item_menu->id); ?>" id="switch-create<?php echo e($loop->iteration); ?>" <?php echo e($allowCreate == true ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="create">
                                                 <label for="switch-create<?php echo e($loop->iteration); ?>"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item->id); ?>" id="switch-read<?php echo e($loop->iteration); ?>" <?php echo e($allowRead == true ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="read">
+                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item_menu->id); ?>" id="switch-read<?php echo e($loop->iteration); ?>" <?php echo e($allowRead == true ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="read">
                                                 <label for="switch-read<?php echo e($loop->iteration); ?>"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item->id); ?>" id="switch-update<?php echo e($loop->iteration); ?>" <?php echo e($allowUpdate == true ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="update">
+                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item_menu->id); ?>" id="switch-update<?php echo e($loop->iteration); ?>" <?php echo e($allowUpdate == true ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="update">
                                                 <label for="switch-update<?php echo e($loop->iteration); ?>"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item->id); ?>" id="switch-delete<?php echo e($loop->iteration); ?>" <?php echo e($allowDelete == true ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="delete">
+                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item_menu->id); ?>" id="switch-delete<?php echo e($loop->iteration); ?>" <?php echo e($allowDelete == true ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="delete">
                                                 <label for="switch-delete<?php echo e($loop->iteration); ?>"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg complete">
-                                                <input type="checkbox" class="checked-all" data-user="<?php echo e($item->id); ?>" id="switch-checked<?php echo e($loop->iteration); ?>" <?php echo e($checkedAll ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="check-all">
+                                                <input type="checkbox" class="checked-all" data-user="<?php echo e($item_menu->id); ?>" id="switch-checked<?php echo e($loop->iteration); ?>" <?php echo e($checkedAll ? 'checked' : ''); ?> data-menu="<?php echo e($item_menu->id); ?>" data-role-menu="<?php echo e($isExists); ?>" data-action="check-all">
                                                 <label for="switch-checked<?php echo e($loop->iteration); ?>"></label>
                                             </div>
                                             
