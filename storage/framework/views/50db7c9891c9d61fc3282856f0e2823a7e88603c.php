@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
     <!-- START Login Background Pic Wrapper-->
     <div class="bg-pic">
@@ -232,7 +234,6 @@
         });
     </script>
 <?php endif; ?>
-
 
 <?php if(Session::has('status')): ?>
     <script>

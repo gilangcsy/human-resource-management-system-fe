@@ -71,7 +71,6 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         Validator::make($request->all(), [
             'photo' => 'required|mimes:jpg,png,jpeg'
         ])->validate();
