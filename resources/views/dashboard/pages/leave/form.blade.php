@@ -53,10 +53,10 @@
                                 </select>
                             </div>
 
-                            <div class="input-daterange input-group" id="datepicker-range">
-                                <input type="text" placeholder="From" class="input-sm form-control" name="start_date" value="{{ $leave->start_date != '' ? \Carbon\carbon::parse(strtotime($leave->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d/m/Y') : '' }}" required />
+                            <div class="input-daterange input-group">
+                                <input type="date" placeholder="From" class="input-sm form-control" name="start_date" value="{{ $leave->start_date != '' ? \Carbon\carbon::parse(strtotime($leave->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d-m-Y') : '' }}" required min="2022-01-01" max="2050-01-01" />
                                 <div class="input-group-addon">to</div>
-                                <input type="text" placeholder="To" class="input-sm form-control" name="end_date" value="{{ $leave->end_date != '' ? \Carbon\carbon::parse(strtotime($leave->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d/m/Y') : '' }}" required/>
+                                <input type="date" placeholder="To" class="input-sm form-control" name="end_date" value="{{ $leave->end_date != '' ? \Carbon\carbon::parse(strtotime($leave->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d-m-Y') : '' }}" required/>
                             </div>
 
                             <div class="form-group form-group-default mt-3">

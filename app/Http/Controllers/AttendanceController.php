@@ -151,6 +151,8 @@ class AttendanceController extends Controller
         )->post($this->url_dynamic() . 'attendances', [
             'clockOutPhoto' => $request->file('photo')->getClientOriginalName(),
             'userId' => session()->get('userId'),
+            'workLoadStatus' => $request->workLoadStatus,
+            'planningActivity' => $request->planningActivity,
             'location' => $request->location,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude

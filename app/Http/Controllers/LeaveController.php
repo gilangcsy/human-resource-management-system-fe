@@ -66,9 +66,6 @@ class LeaveController extends Controller
             'end_date' => 'required',
         ])->validate();
 
-        $start_date = date("d-m-Y", strtotime($request->start_date));
-        $end_date = date("d-m-Y", strtotime($request->end_date));
-
         if($request->file('attachment')) {
             $response = Http::attach(
                 'attachment', file_get_contents($request->file('attachment')), $request->file('attachment')->getClientOriginalName()
