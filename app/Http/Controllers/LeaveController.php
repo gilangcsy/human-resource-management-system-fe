@@ -73,8 +73,8 @@ class LeaveController extends Controller
                 'attachment' => $request->file('attachment')->getClientOriginalName(),
                 'created_by' => session()->get('userId'),
                 'UserId' => session()->get('userId'),
-                'start_date' => $start_date,
-                'end_date' => $end_date,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
                 'description' => $request->description,
                 'LeaveTypeId' => $request->LeaveTypeId,
             ]);
@@ -82,8 +82,8 @@ class LeaveController extends Controller
             $response = Http::post($this->url_dynamic() . 'leaves', [
                 'created_by' => session()->get('userId'),
                 'UserId' => session()->get('userId'),
-                'start_date' => $start_date,
-                'end_date' => $end_date,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
                 'description' => $request->description,
                 'LeaveTypeId' => $request->LeaveTypeId,
             ]);
