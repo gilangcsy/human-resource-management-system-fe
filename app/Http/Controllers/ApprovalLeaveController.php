@@ -21,9 +21,10 @@ class ApprovalLeaveController extends Controller
         $download_url = $this->url_dynamic() . 'leaves/download/';
 
         $response = Http::get($this->url_dynamic() . 'leaves/readByApproverNowId/' . session()->get('userId'));
-        $response = json_decode($response->body());
-        $leaves = $response->data;
-        $history = $response->history;
+        // $response = json_decode($response->body());
+        $response = $response->json();
+        $claims = $response['data'];
+        $history = $response['history'];
         if($response->success) {
             return view('dashboard.pages.approval-leave.index', compact('leaves', 'history', 'download_url'));
         } else {

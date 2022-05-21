@@ -66,7 +66,7 @@
                                     <td>1</td>
                                     <td>{{ $leave->approver_one_name }}</td>
                                     <td>
-                                        <span class="badge {{ $leave->approval_one_status == 'Approved' ? 'badge-success' : $leave->approval_one_status == 'Rejected' ? 'badge-danger' : 'badge-warning' }}">{{ $leave->approval_one_status  }}</span>
+                                        <span class="badge {{ $leave->approval_one_status == 'Approved' ? 'badge-success' : ($leave->approval_one_status == 'Rejected' ? 'badge-danger' : 'badge-warning') }}">{{ $leave->approval_one_status  }}</span>
                                     </td>
                                 </tr>
                                 @if ($leave->approver_two != null)
@@ -74,7 +74,7 @@
                                         <td>2</td>
                                         <td>{{ $leave->approver_two_name }}</td>
                                         <td>
-                                            <span class="badge {{ $leave->approval_two_status == 'Approved' ? 'badge-success' : $leave->approval_two_status == 'Rejected' ? 'badge-danger' : 'badge-warning' }}">{{ $leave->approval_two_status  }}</span>
+                                            <span class="badge {{ $leave->approval_two_status == 'Approved' ? 'badge-success' : ($leave->approval_two_status == 'Rejected' ? 'badge-danger' : 'badge-warning') }}">{{ $leave->approval_two_status  }}</span>
                                         </td>
                                     </tr>
                                 @endif
@@ -83,7 +83,7 @@
                                         <td>3</td>
                                         <td>{{ $leave->approver_three_name }}</td>
                                         <td>
-                                            <span class="badge {{ $leave->approval_three_status == 'Approved' ? 'badge-success' : $leave->approval_three_status == 'Rejected' ? 'badge-danger' : 'badge-warning' }}">{{ $leave->approval_three_status  }}</span>
+                                            <span class="badge {{ $leave->approval_three_status == 'Approved' ? 'badge-success' : ($leave->approval_three_status == 'Rejected' ? 'badge-danger' : 'badge-warning') }}">{{ $leave->approval_three_status  }}</span>
                                         </td>
                                     </tr>
                                 @endif

@@ -99,32 +99,32 @@
                                                                 <input type="checkbox" data-checkboxes="mygroup"
                                                                     class="custom-control-input"
                                                                     id="checkbox-{{ $loop->iteration }}" name="action[]"
-                                                                    value="{{ $item->id }}">
+                                                                    value="{{ $item['id'] }}">
                                                                 <label for="checkbox-{{ $loop->iteration }}"
                                                                     class="custom-control-label">&nbsp;</label>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <b>{{ $item->requester_emp_id }}</b>
+                                                            <b>{{ $item['requester_emp_id'] }}</b>
                                                             <br>
-                                                            {{ $item->requester_name }}
+                                                            {{ $item['requester_name'] }}
                                                         </td>
-                                                        <td>{{ \Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                        <td>{{ \Carbon\carbon::parse(strtotime($item['start_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
                                                             -
-                                                            {{ \Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                            {{ \Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
                                                         </td>
                                                         <td>{{ $item->description }}</td>
                                                         <td>
                                                             @php
                                                                 $badge = 'badge-warning';
-                                                                if ($item->last_status == 'Approved') {
+                                                                if ($item['last_status'] == 'Approved') {
                                                                     $badge = 'badge-success';
-                                                                } elseif ($item->last_status == 'Rejected') {
+                                                                } elseif ($item['last_status'] == 'Rejected') {
                                                                     $badge = 'badge-danger';
                                                                 }
                                                             @endphp
                                                             <span class="badge {{ $badge }}">
-                                                                {{ $item->last_status }}
+                                                                {{ $item['last_status'] }}
                                                             </span>
                                                         </td>
                                                     </tr>
@@ -164,42 +164,54 @@
 
                                         <tbody>
                                             @foreach ($history as $item)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>
-                                                        <b>{{ $item->requester_emp_id }}</b>
-                                                        <br>
-                                                        {{ $item->requester_name }}
-                                                    </td>
+                                                @php
+                                                    if ($item['approver_one'] == session()->get('userId')) {
+                                                        $approverPosition = 'approval_one_status';
+                                                    } else if ($item['approver_two'] == session()->get('userId')) {
+                                                        $approverPosition = 'approval_two_status';
+                                                    } else if ($item['approver_three'] == session()->get('userId')) {
+                                                        $approverPosition = 'approval_three_status';
+                                                    }
+                                                @endphp
 
-                                                    <td>
-                                                        {{ \Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
-                                                        -
-                                                        {{ \Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
-                                                    </td>
-                                                    <td>{{ $item->description }}</td>
-                                                    <td>
-                                                        @if ($item->attachment != null)
-                                                            <a href="{{ $download_url . $item->attachment }}">
-                                                                {{ $item->attachment }}
-                                                            </a>
-                                                        @else
-                                                            No Attachment.
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @php
-                                                            $badge = 'badge-warning';
-                                                            if ($item->last_status == 'Approved') {
-                                                                $badge = 'badge-success';
-                                                            } elseif ($item->last_status == 'Rejected') {
-                                                                $badge = 'badge-danger';
-                                                            }
-                                                        @endphp
-                                                        <span
-                                                            class="badge {{ $badge }}">{{ $item->last_status }}</span>
-                                                    </td>
-                                                </tr>
+                                                @if ($item[$approverPosition] == 'Approved' OR $item[$approverPosition] == 'Rejected' )
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>
+                                                            <b>{{ $item['requester_emp_id'] }}</b>
+                                                            <br>
+                                                            {{ $item['requester_name'] }}
+                                                        </td>
+
+                                                        <td>
+                                                            {{ \Carbon\carbon::parse(strtotime($item['start_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                            -
+                                                            {{ \Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                        </td>
+                                                        <td>{{ $item['description'] }}</td>
+                                                        <td>
+                                                            @if ($item['attachment'] != null)
+                                                                <a href="{{ $download_url . $item['attachment'] }}">
+                                                                    {{ $item['attachment'] }}
+                                                                </a>
+                                                            @else
+                                                                No Attachment.
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                                $badge = 'badge-warning';
+                                                                if ($item['last_status'] == 'Approved') {
+                                                                    $badge = 'badge-success';
+                                                                } elseif ($item['last_status'] == 'Rejected') {
+                                                                    $badge = 'badge-danger';
+                                                                }
+                                                            @endphp
+                                                            <span
+                                                                class="badge {{ $badge }}">{{ $item['last_status'] }}</span>
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>

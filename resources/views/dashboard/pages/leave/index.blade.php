@@ -108,19 +108,22 @@
                                             </td>
                                         <td>
                                             <div class="d-flex">
-                                                <a href="{{ route('leave.edit', $item->id) }}" class="btn btn-md btn-warning">
-                                                    <i class="pg-icon">edit</i>
-                                                </a>
+                                                
+                                                @if ($item->approval_one_status != 'Approved' AND $item->approval_one_status != 'Rejected')
+                                                    <a href="{{ route('leave.edit', $item->id) }}" class="btn btn-md btn-warning">
+                                                        <i class="pg-icon">edit</i>
+                                                    </a>
+                                                    <form action="{{route('leave.destroy', $item->id)}}" method="POST">
+                                                        @method('delete')
+                                                        @csrf
+                                                        <button class="btn btn-md btn-danger ml-2" onclick="return confirm('Are you sure?')">
+                                                            <i class="pg-icon">trash</i>
+                                                        </button>
+                                                    </form>
+                                                @endif
                                                 <a href="{{ route('leave.show', $item->id) }}" class="btn btn-md btn-primary ml-2">
                                                     <i class="pg-icon">eye</i>
                                                 </a>
-                                                <form action="{{route('leave.destroy', $item->id)}}" method="POST">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button class="btn btn-md btn-danger ml-2" onclick="return confirm('Are you sure?')">
-                                                        <i class="pg-icon">trash</i>
-                                                    </button>
-                                                </form>
                                             </div>
                                         </td>
                                     </tr>
