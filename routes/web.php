@@ -16,6 +16,8 @@ use App\Http\Controllers\ApprovalLeaveController;
 use App\Http\Controllers\AccessRightsController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuPositionController;
+use App\Http\Controllers\ClaimController;
+use App\Http\Controllers\ApprovalClaimController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +51,19 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 		Route::delete('/destroy/{id}', [ApprovalLeaveController::class, 'destroy'])->name('approval-leave.destroy');
 		Route::post('/create', [ApprovalLeaveController::class, 'action'])->name('approval-leave.action');
 	});
-	//=============END OF SELF SERVICE============================================================================================//
+
+	//-------------APPROVAL CLAIM ------------------------------------------------------------------------------------------------//
+	Route::prefix('approval-claim/')->namespace('Leave')->group(function () {
+		Route::get('', [ApprovalClaimController::class, 'index'])->name('approval-claim.index');
+		Route::get('/create', [ApprovalClaimController::class, 'create'])->name('approval-claim.create');
+		Route::post('/', [ApprovalClaimController::class, 'store'])->name('approval-claim.store');
+		Route::get('/edit/{id}', [ApprovalClaimController::class, 'edit'])->name('approval-claim.edit');
+		Route::get('/show/{id}', [ApprovalClaimController::class, 'show'])->name('approval-claim.show');
+		Route::patch('/edit/{id}', [ApprovalClaimController::class, 'update'])->name('approval-claim.update');
+		Route::delete('/destroy/{id}', [ApprovalClaimController::class, 'destroy'])->name('approval-claim.destroy');
+		Route::post('/create', [ApprovalClaimController::class, 'action'])->name('approval-claim.action');
+	});
+	//=============END OF MONITORING==============================================================================================//
 
 
 
@@ -74,6 +88,16 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 		Route::get('/show/{id}', [LeaveController::class, 'show'])->name('leave.show');
 		Route::patch('/edit/{id}', [LeaveController::class, 'update'])->name('leave.update');
 		Route::delete('/destroy/{id}', [LeaveController::class, 'destroy'])->name('leave.destroy');
+	});
+
+	Route::prefix('claim/')->namespace('Claim')->group(function () {
+		Route::get('', [ClaimController::class, 'index'])->name('claim.index');
+		Route::get('/create', [ClaimController::class, 'create'])->name('claim.create');
+		Route::post('/', [ClaimController::class, 'store'])->name('claim.store');
+		Route::get('/edit/{id}', [ClaimController::class, 'edit'])->name('claim.edit');
+		Route::get('/show/{id}', [ClaimController::class, 'show'])->name('claim.show');
+		Route::patch('/edit/{id}', [ClaimController::class, 'update'])->name('claim.update');
+		Route::delete('/destroy/{id}', [ClaimController::class, 'destroy'])->name('claim.destroy');
 	});
 	//=============END OF SELF SERVICE============================================================================================//
 
