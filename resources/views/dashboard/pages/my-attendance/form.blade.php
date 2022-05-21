@@ -214,7 +214,7 @@
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: '{{ Session::get('status') }}',
+                    message: "{{ Session::get('status') }}",
                     position: 'top',
                     timeout: 4000,
                     type: 'danger'
