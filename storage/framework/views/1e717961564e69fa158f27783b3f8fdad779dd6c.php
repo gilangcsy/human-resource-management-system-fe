@@ -46,20 +46,15 @@
                     <div class="card-header">
                         <div class="card-title">
                             <form action="<?php echo e(route('approval-template.create')); ?>">
-                                <button class="btn btn-complete">
+                                <button class="btn btn-primary">
                                     <i class="pg-icon">plus</i>
-                                    Add New Approval Template
+                                    Add
                                 </button>
                             </form>
                         </div>
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-striped" id="tableWithSearch">
                             <thead>
                                 <tr>
@@ -81,18 +76,22 @@
                                         <td><?php echo e($item->approver_two_name); ?></td>
                                         <td><?php echo e($item->approver_three_name); ?></td>
                                         <td><?php echo e($item->type); ?></td>
-                                        <td class="d-flex">
-                                            <a href="<?php echo e(route('approval-template.edit', $item->id)); ?>" class="btn btn-warning">
-                                                <i class="pg-icon">edit</i>
-                                            </a>
-
-                                            <form action="<?php echo e(route('approval-template.destroy', $item->id)); ?>" method="POST">
-                                                <?php echo csrf_field(); ?>
-                                                <?php echo method_field('delete'); ?>
-                                                <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
-                                                    <i class="pg-icon">trash</i>
-                                                </button>
-                                            </form>
+                                        <td>
+                                            <div>
+                                                <div class="d-flex">
+                                                    <a href="<?php echo e(route('approval-template.edit', $item->id)); ?>" class="btn btn-warning">
+                                                        <i class="pg-icon">edit</i>
+                                                    </a>
+        
+                                                    <form action="<?php echo e(route('approval-template.destroy', $item->id)); ?>" method="POST">
+                                                        <?php echo csrf_field(); ?>
+                                                        <?php echo method_field('delete'); ?>
+                                                        <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
+                                                            <i class="pg-icon">trash</i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

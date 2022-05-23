@@ -48,18 +48,13 @@
                             <form action="<?php echo e(route('leave-type.create')); ?>">
                                 <button class="btn btn-primary">
                                     <i class="pg-icon">plus</i>
-                                    Add New Leave Type
+                                    Add
                                 </button>
                             </form>
                         </div>
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-striped" id="tableWithSearch">
                             <thead>
                                 <tr>
@@ -73,18 +68,22 @@
                                     <tr>
                                         <td><?php echo e($loop->iteration); ?></td>
                                         <td><?php echo e($item->name); ?></td>
-                                        <td class="d-flex">
-                                            <a href="<?php echo e(route('leave-type.edit', $item->id)); ?>" class="btn btn-warning">
-                                                <i class="pg-icon">edit</i>
-                                            </a>
-
-                                            <form action="<?php echo e(route('leave-type.destroy', $item->id)); ?>" method="POST">
-                                                <?php echo csrf_field(); ?>
-                                                <?php echo method_field('delete'); ?>
-                                                <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
-                                                    <i class="pg-icon">trash</i>
-                                                </button>
-                                            </form>
+                                        <td>
+                                            <div>
+                                                <div class="d-flex">
+                                                    <a href="<?php echo e(route('leave-type.edit', $item->id)); ?>" class="btn btn-warning">
+                                                        <i class="pg-icon">edit</i>
+                                                    </a>
+        
+                                                    <form action="<?php echo e(route('leave-type.destroy', $item->id)); ?>" method="POST">
+                                                        <?php echo csrf_field(); ?>
+                                                        <?php echo method_field('delete'); ?>
+                                                        <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
+                                                            <i class="pg-icon">trash</i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

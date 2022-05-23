@@ -60,19 +60,13 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <?php echo csrf_field(); ?>
-                                            <button type="submit" class="btn btn-complete approve">Approve</button>
+                                            <button type="submit" class="btn btn-primary approve">Approve</button>
                                             <button type="submit" class="btn btn-danger reject">Reject</button>
                                             <input type="hidden" name="isApproved" id="isApproved" value="">
                                         </div>
-                                        <div class="pull-right">
-                                            <div class="col-xs-12">
-                                                <input type="text" id="search-table2" class="form-control pull-right"
-                                                    placeholder="Search">
-                                            </div>
-                                        </div>
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body table-responsive">
                                         <table class="table table-striped" id="tableWithSearch2">
                                             <thead>
                                                 <tr>
@@ -99,35 +93,35 @@
                                                                 <input type="checkbox" data-checkboxes="mygroup"
                                                                     class="custom-control-input"
                                                                     id="checkbox-<?php echo e($loop->iteration); ?>" name="action[]"
-                                                                    value="<?php echo e($item->id); ?>">
+                                                                    value="<?php echo e($item['id']); ?>">
                                                                 <label for="checkbox-<?php echo e($loop->iteration); ?>"
                                                                     class="custom-control-label">&nbsp;</label>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <b><?php echo e($item->requester_emp_id); ?></b>
+                                                            <b><?php echo e($item['requester_emp_id']); ?></b>
                                                             <br>
-                                                            <?php echo e($item->requester_name); ?>
+                                                            <?php echo e($item['requester_name']); ?>
 
                                                         </td>
-                                                        <td><?php echo e(\Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+                                                        <td><?php echo e(\Carbon\carbon::parse(strtotime($item['start_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
 
                                                             -
-                                                            <?php echo e(\Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+                                                            <?php echo e(\Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
 
                                                         </td>
                                                         <td><?php echo e($item->description); ?></td>
                                                         <td>
                                                             <?php
                                                                 $badge = 'badge-warning';
-                                                                if ($item->last_status == 'Approved') {
+                                                                if ($item['last_status'] == 'Approved') {
                                                                     $badge = 'badge-success';
-                                                                } elseif ($item->last_status == 'Rejected') {
+                                                                } elseif ($item['last_status'] == 'Rejected') {
                                                                     $badge = 'badge-danger';
                                                                 }
                                                             ?>
                                                             <span class="badge <?php echo e($badge); ?>">
-                                                                <?php echo e($item->last_status); ?>
+                                                                <?php echo e($item['last_status']); ?>
 
                                                             </span>
                                                         </td>
@@ -145,15 +139,9 @@
                             <!-- START card -->
                             <div class="card card-transparent">
                                 <div class="card-header">
-                                    <div class="pull-right">
-                                        <div class="col-xs-12">
-                                            <input type="text" id="search-table" class="form-control pull-right"
-                                                placeholder="Search">
-                                        </div>
-                                    </div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body table-responsive">
                                     <table class="table table-striped" id="tableWithSearch">
                                         <thead>
                                             <tr>
@@ -168,46 +156,58 @@
 
                                         <tbody>
                                             <?php $__currentLoopData = $history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <tr>
-                                                    <td><?php echo e($loop->iteration); ?></td>
-                                                    <td>
-                                                        <b><?php echo e($item->requester_emp_id); ?></b>
-                                                        <br>
-                                                        <?php echo e($item->requester_name); ?>
+                                                <?php
+                                                    if ($item['approver_one'] == session()->get('userId')) {
+                                                        $approverPosition = 'approval_one_status';
+                                                    } else if ($item['approver_two'] == session()->get('userId')) {
+                                                        $approverPosition = 'approval_two_status';
+                                                    } else if ($item['approver_three'] == session()->get('userId')) {
+                                                        $approverPosition = 'approval_three_status';
+                                                    }
+                                                ?>
 
-                                                    </td>
+                                                <?php if($item[$approverPosition] == 'Approved' OR $item[$approverPosition] == 'Rejected' ): ?>
+                                                    <tr>
+                                                        <td><?php echo e($loop->iteration); ?></td>
+                                                        <td>
+                                                            <b><?php echo e($item['requester_emp_id']); ?></b>
+                                                            <br>
+                                                            <?php echo e($item['requester_name']); ?>
 
-                                                    <td>
-                                                        <?php echo e(\Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+                                                        </td>
 
-                                                        -
-                                                        <?php echo e(\Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+                                                        <td>
+                                                            <?php echo e(\Carbon\carbon::parse(strtotime($item['start_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
 
-                                                    </td>
-                                                    <td><?php echo e($item->description); ?></td>
-                                                    <td>
-                                                        <?php if($item->attachment != null): ?>
-                                                            <a href="<?php echo e($download_url . $item->attachment); ?>">
-                                                                <?php echo e($item->attachment); ?>
+                                                            -
+                                                            <?php echo e(\Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
 
-                                                            </a>
-                                                        <?php else: ?>
-                                                            No Attachment.
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                            $badge = 'badge-warning';
-                                                            if ($item->last_status == 'Approved') {
-                                                                $badge = 'badge-success';
-                                                            } elseif ($item->last_status == 'Rejected') {
-                                                                $badge = 'badge-danger';
-                                                            }
-                                                        ?>
-                                                        <span
-                                                            class="badge <?php echo e($badge); ?>"><?php echo e($item->last_status); ?></span>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td><?php echo e($item['description']); ?></td>
+                                                        <td>
+                                                            <?php if($item['attachment'] != null): ?>
+                                                                <a href="<?php echo e($download_url . $item['attachment']); ?>">
+                                                                    <?php echo e($item['attachment']); ?>
+
+                                                                </a>
+                                                            <?php else: ?>
+                                                                No Attachment.
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php
+                                                                $badge = 'badge-warning';
+                                                                if ($item['last_status'] == 'Approved') {
+                                                                    $badge = 'badge-success';
+                                                                } elseif ($item['last_status'] == 'Rejected') {
+                                                                    $badge = 'badge-danger';
+                                                                }
+                                                            ?>
+                                                            <span
+                                                                class="badge <?php echo e($badge); ?>"><?php echo e($item['last_status']); ?></span>
+                                                        </td>
+                                                    </tr>
+                                                <?php endif; ?>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>

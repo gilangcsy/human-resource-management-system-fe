@@ -46,20 +46,15 @@
                     <div class="card-header">
                         <div class="card-title">
                             <form action="<?php echo e(route('employee.create')); ?>">
-                                <button class="btn btn-complete">
+                                <button class="btn btn-primary">
                                     <i class="pg-icon">plus</i>
-                                    Add New Employee
+                                    Add
                                 </button>
                             </form>
                         </div>
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-striped" id="tableWithSearch">
                             <thead>
                                 <tr>
@@ -80,26 +75,28 @@
                                                 class="badge badge-<?php echo e($item->isVerified ? 'success' : 'danger'); ?>">Yes</span>
                                         </td>
                                         <td>
-                                            <div class="form-check form-check-inline switch switch-lg complete">
+                                            <div class="form-check form-check-inline switch switch-lg primary">
                                                 <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item->id); ?>" id="switch-<?php echo e($loop->iteration); ?>" <?php echo e($item->isActive ? 'checked' : ''); ?>>
                                                 <label for="switch-<?php echo e($loop->iteration); ?>"></label>
                                             </div>
                                         </td>
-                                        <td class="d-flex">
-                                            <a href="<?php echo e(route('employee.edit', $item->id)); ?>" class="btn btn-warning">
-                                                <i class="pg-icon">edit</i>
-                                            </a>
-
-                                            <form
-                                                action="/employee/destroy/<?php echo e($item->id); ?>/<?php echo e(session()->get('userId')); ?>"
-                                                method="POST">
-                                                <?php echo csrf_field(); ?>
-                                                <?php echo method_field('delete'); ?>
-                                                <button class="btn btn-danger ml-2"
-                                                    onclick="return confirm('Are you sure?')">
-                                                    <i class="pg-icon">trash</i>
-                                                </button>
-                                            </form>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="<?php echo e(route('employee.edit', $item->id)); ?>" class="btn btn-warning">
+                                                    <i class="pg-icon">edit</i>
+                                                </a>
+    
+                                                <form
+                                                    action="/employee/destroy/<?php echo e($item->id); ?>/<?php echo e(session()->get('userId')); ?>"
+                                                    method="POST">
+                                                    <?php echo csrf_field(); ?>
+                                                    <?php echo method_field('delete'); ?>
+                                                    <button class="btn btn-danger ml-2"
+                                                        onclick="return confirm('Are you sure?')">
+                                                        <i class="pg-icon">trash</i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

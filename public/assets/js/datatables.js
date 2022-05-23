@@ -19,37 +19,40 @@
         var table = $('#tableWithSearch');
 
         var settings = {
-            "sDom": "<t><'row'<p i>>",
-            "destroy": true,
-            "scrollCollapse": true,
-            "oLanguage": {
-                "sLengthMenu": "_MENU_ ",
-                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
-            },
-            "iDisplayLength": 5
+            "dom": "<'row'<'col-sm-12 col-md-6 justify-content-md-end'l><'col-sm-12 col-md-6'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5 justify-content-md-end'i><'col-sm-12 col-md-7'p>>",
+            "autoWidth": false,
         };
 
         table.dataTable(settings);
 
         // search box for table
-        $('#search-table').keyup(function() {
-            table.fnFilter($(this).val());
-        });
+        // $('#search-table').keyup(function() {
+        //     table.fnFilter($(this).val());
+        // });
     }
 
     // Initialize datatable showing a search box at the top right corner
     var initTableWithSearch2 = function() {
         var table = $('#tableWithSearch2');
 
+        // var settings = {
+        //     "sDom": "<t><'row'<p i>>",
+        //     "destroy": true,
+        //     "scrollCollapse": true,
+        //     "oLanguage": {
+        //         "sLengthMenu": "_MENU_ ",
+        //         "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+        //     },
+        //     "iDisplayLength": 5
+        // };
+
         var settings = {
-            "sDom": "<t><'row'<p i>>",
-            "destroy": true,
-            "scrollCollapse": true,
-            "oLanguage": {
-                "sLengthMenu": "_MENU_ ",
-                "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
-            },
-            "iDisplayLength": 5
+            "dom": "<'row'<'col-sm-12 col-md-6 justify-content-md-end'l><'col-sm-12 col-md-6'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5 justify-content-md-end'i><'col-sm-12 col-md-7'p>>",
+            "autoWidth": false
         };
 
         table.dataTable(settings);

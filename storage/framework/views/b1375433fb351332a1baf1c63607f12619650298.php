@@ -93,7 +93,7 @@
 
                                     <div class="form-group form-group-default form-group-default-select2 required">
                                         <label>Work Load Status</label>
-                                        <select class="full-width" data-placeholder="Select Type" name="workLoadStatus"
+                                        <select class="full-width" data-placeholder="Select Type" id="workLoadStatus" name="workLoadStatus"
                                             data-init-plugin="select2">
                                             <option value="Available"
                                                 <?php echo e($attendanceData->workLoadStatus == 'Available' ? 'selected' : ''); ?>>
@@ -113,7 +113,7 @@
                                     <div class="form-group form-group-default required">
                                         <label>Planning Activity</label>
                                         <input type="text" value="<?php echo e($attendanceData->planningActivity); ?>"
-                                            name="planningActivity" class="form-control" required>
+                                            name="planningActivity" id="planningActivity" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -215,7 +215,7 @@
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: '<?php echo e(Session::get('status')); ?>',
+                    message: "<?php echo e(Session::get('error')); ?>",
                     position: 'top',
                     timeout: 4000,
                     type: 'danger'

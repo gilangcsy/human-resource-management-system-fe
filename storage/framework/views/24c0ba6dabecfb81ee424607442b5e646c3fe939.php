@@ -48,18 +48,13 @@
                             <form action="<?php echo e(route('leave.create')); ?>">
                                 <button class="btn btn-primary">
                                     <i class="pg-icon">plus</i>
-                                    Add New Leave
+                                    Add
                                 </button>
                             </form>
                         </div>
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-striped" id="tableWithSearch">
                             <thead>
                                 <tr>
@@ -110,19 +105,22 @@
                                             </td>
                                         <td>
                                             <div class="d-flex">
-                                                <a href="<?php echo e(route('leave.edit', $item->id)); ?>" class="btn btn-md btn-warning">
-                                                    <i class="pg-icon">edit</i>
-                                                </a>
+                                                
+                                                <?php if($item->approval_one_status != 'Approved' AND $item->approval_one_status != 'Rejected'): ?>
+                                                    <a href="<?php echo e(route('leave.edit', $item->id)); ?>" class="btn btn-md btn-warning">
+                                                        <i class="pg-icon">edit</i>
+                                                    </a>
+                                                    <form action="<?php echo e(route('leave.destroy', $item->id)); ?>" method="POST">
+                                                        <?php echo method_field('delete'); ?>
+                                                        <?php echo csrf_field(); ?>
+                                                        <button class="btn btn-md btn-danger ml-2" onclick="return confirm('Are you sure?')">
+                                                            <i class="pg-icon">trash</i>
+                                                        </button>
+                                                    </form>
+                                                <?php endif; ?>
                                                 <a href="<?php echo e(route('leave.show', $item->id)); ?>" class="btn btn-md btn-primary ml-2">
                                                     <i class="pg-icon">eye</i>
                                                 </a>
-                                                <form action="<?php echo e(route('leave.destroy', $item->id)); ?>" method="POST">
-                                                    <?php echo method_field('delete'); ?>
-                                                    <?php echo csrf_field(); ?>
-                                                    <button class="btn btn-md btn-danger ml-2" onclick="return confirm('Are you sure?')">
-                                                        <i class="pg-icon">trash</i>
-                                                    </button>
-                                                </form>
                                             </div>
                                         </td>
                                     </tr>

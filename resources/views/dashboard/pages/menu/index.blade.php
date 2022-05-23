@@ -48,18 +48,13 @@
                             <form action="{{ route('menu.create') }}">
                                 <button class="btn btn-primary">
                                     <i class="pg-icon">plus</i>
-                                    Add New Menu
+                                    Add
                                 </button>
                             </form>
                         </div>
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-striped" id="tableWithSearch">
                             <thead>
                                 <tr>
@@ -79,18 +74,20 @@
                                             {{ $item->name }}
                                         </td>
                                         <td>
-                                            <div class="d-flex">
-                                                <a href="{{route('menu.edit', $item->id)}}" class="btn btn-warning">
-                                                    <i class="pg-icon">edit</i>
-                                                </a>
-    
-                                                <form action="{{ route('menu.destroy', $item->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
-                                                        <i class="pg-icon">trash</i>
-                                                    </button>
-                                                </form>
+                                            <div>
+                                                <div class="d-flex">
+                                                    <a href="{{route('menu.edit', $item->id)}}" class="btn btn-warning">
+                                                        <i class="pg-icon">edit</i>
+                                                    </a>
+        
+                                                    <form action="{{ route('menu.destroy', $item->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
+                                                            <i class="pg-icon">trash</i>
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

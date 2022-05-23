@@ -46,20 +46,15 @@
                     <div class="card-header">
                         <div class="card-title">
                             <form action="<?php echo e(route('approval-authorization.create')); ?>">
-                                <button class="btn btn-complete">
+                                <button class="btn btn-primary">
                                     <i class="pg-icon">plus</i>
-                                    Add New Approval Authorization
+                                    Add
                                 </button>
                             </form>
                         </div>
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-striped" id="tableWithSearch">
                             <thead>
                                 <tr>
@@ -138,6 +133,8 @@
     </script>
     <script type="text/javascript" src="assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
     <script type="text/javascript" src="assets/plugins/datatables-responsive/js/lodash.min.js"></script>
+
+    
     <!-- END VENDOR JS -->
     <!-- BEGIN PAGE LEVEL JS -->
     <script src="assets/js/datatables.js" type="text/javascript"></script>

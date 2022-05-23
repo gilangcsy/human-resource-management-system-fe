@@ -44,14 +44,9 @@
                 <!-- START card -->
                 <div class="card card-transparent">
                     <div class="card-header">
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-striped" id="tableWithSearch">
                             <thead>
                                 <tr>
@@ -66,7 +61,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td class="d-flex">
+                                        <td>
                                             <a href="{{ route('access-rights.edit', $item->id) }}" class="btn btn-warning">
                                                 <i class="pg-icon">edit</i>
                                             </a>

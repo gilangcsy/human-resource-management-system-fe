@@ -30,7 +30,7 @@
                     <div class="inner">
                         <!-- START BREADCRUMB -->
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Master Data</a></li>
+                            <li class="breadcrumb-item"><a href="#">Settings</a></li>
                             <li class="breadcrumb-item active">Menu</li>
                         </ol>
                         <!-- END BREADCRUMB -->
