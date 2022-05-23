@@ -1,13 +1,5 @@
 
 
-
-
-
-
-
-
-
-
 <?php $__env->startSection('title', 'My Attendance'); ?>
 
 <?php $__env->startSection('css'); ?>

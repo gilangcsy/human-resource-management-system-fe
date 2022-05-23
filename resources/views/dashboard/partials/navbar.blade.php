@@ -5,7 +5,7 @@
         menu</a>
     <!-- END MOBILE SIDEBAR TOGGLE -->
     <div class="">
-        <div class="brand inline ml-5">
+        <div class="brand inline ml-lg-5">
             <img src="{{asset('assets/img/logo.png') }}" alt="logo" data-src="{{ asset('assets/img/logo.png') }}"
                 data-src-retina="{{ asset('assets/img/logo.png') }}" width="150" class="img-fluid">
         </div>
@@ -14,7 +14,7 @@
     </div>
     <div class="d-flex align-items-center">
         <!-- START User Info-->
-        <div class="dropdown pull-right d-lg-block d-none">
+        <div class="dropdown pull-right d-lg-block">
             <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false" aria-label="profile dropdown">
                 <span class="thumbnail-wrapper d32 circular inline">
