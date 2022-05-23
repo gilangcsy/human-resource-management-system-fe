@@ -213,7 +213,7 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 
 
 Route::prefix('auth/')->namespace('Auth')->group(function () {
-	Route::get('', [AuthController::class, 'index'])->name('auth.index');
+	Route::get('', [AuthController::class, 'index'])->name('auth.index')->middleware('login.check');
 	Route::get('invitational', [AuthController::class, 'create'])->name('auth.invitational');
 	Route::post('', [AuthController::class, 'store'])->name('auth.store');
 	Route::patch('', [AuthController::class, 'accept'])->name('auth.accept');
