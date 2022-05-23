@@ -19,6 +19,7 @@
         var table = $('#tableWithSearch');
 
         table.dataTable({
+		"lengthChange": false,
             "dom": "<'row'<'col-sm-12 col-md-6 justify-content-md-end'l><'col-sm-12 col-md-6'f>>" +
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-12 col-md-5 justify-content-md-end'i><'col-sm-12 col-md-7'p>>"
