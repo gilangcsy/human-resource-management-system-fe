@@ -29,13 +29,10 @@ use App\Http\Controllers\ApprovalClaimController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('', function () {
+	return redirect()->route('dashboard.index');
+});
 Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
-	
-	Route::get('', function () {
-		return redirect()->route('dashboard.index');
-	});
-	
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 	//=============MONITORING=====================================================================================================//

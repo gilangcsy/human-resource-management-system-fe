@@ -49,7 +49,7 @@ class AccessRights
                         if($accessRights->allow_read == true) {
                             return $next($request);
                         } else {
-                            dd('cannot access.');
+                            abort(403);
                         }
                     } else {
                         if($url['4'] == 'create' && $accessRights->allow_create == true) {
@@ -61,11 +61,11 @@ class AccessRights
                         } else if($url['4'] == 'show' && $accessRights->allow_read == true) {
                             return $next($request);
                         } else {
-                            dd('you dont have authority.');
+                            abort(403);
                         }
                     }
                 } else {
-                    dd('you dont have authority.');
+                    abort(403);
                 }
             }
             
