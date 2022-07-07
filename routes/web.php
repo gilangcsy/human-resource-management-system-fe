@@ -18,6 +18,10 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuPositionController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ApprovalClaimController;
+use App\Http\Controllers\ReportingAttendanceController;
+use App\Http\Controllers\ReportingClaimController;
+use App\Http\Controllers\ReportingLeaveController;
+use App\Http\Controllers\VisualizationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,6 +210,50 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 	});
 	//=============END OF SETTINGS================================================================================================//
 
+
+
+	//=============REPORTING======================================================================================================//
+	//-------------ATTENDANCE-----------------------------------------------------------------------------------------------------//
+	Route::prefix('reporting-attendance/')->namespace('Reporting Attendance')->group(function () {
+		Route::get('', [ReportingAttendanceController::class, 'index'])->name('reporting-attendance.index');
+		Route::get('/create', [ReportingAttendanceController::class, 'create'])->name('reporting-attendance.create');
+		Route::post('/', [ReportingAttendanceController::class, 'store'])->name('reporting-attendance.store');
+		Route::get('/edit/{id}', [ReportingAttendanceController::class, 'edit'])->name('reporting-attendance.edit');
+		Route::patch('/edit/{id}', [ReportingAttendanceController::class, 'update'])->name('reporting-attendance.update');
+		Route::delete('/destroy/{id}', [ReportingAttendanceController::class, 'destroy'])->name('reporting-attendance.destroy');
+	});
+
+	//-------------CLAIM-----------------------------------------------------------------------------------------------------------//
+	Route::prefix('reporting-claim/')->namespace('Reporting Claim')->group(function () {
+		Route::get('', [ReportingClaimController::class, 'index'])->name('reporting-claim.index');
+		Route::get('/create', [ReportingClaimController::class, 'create'])->name('reporting-claim.create');
+		Route::post('/', [ReportingClaimController::class, 'store'])->name('reporting-claim.store');
+		Route::get('/edit/{id}', [ReportingClaimController::class, 'edit'])->name('reporting-claim.edit');
+		Route::patch('/edit/{id}', [ReportingClaimController::class, 'update'])->name('reporting-claim.update');
+		Route::delete('/destroy/{id}', [ReportingClaimController::class, 'destroy'])->name('reporting-claim.destroy');
+	});
+
+	//-------------LEAVE----------------------------------------------------------------------------------------------------------//
+	Route::prefix('reporting-leave/')->namespace('Reporting Leave')->group(function () {
+		Route::get('', [ReportingLeaveController::class, 'index'])->name('reporting-leave.index');
+		Route::get('/create', [ReportingLeaveController::class, 'create'])->name('reporting-leave.create');
+		Route::post('/', [ReportingLeaveController::class, 'store'])->name('reporting-leave.store');
+		Route::get('/edit/{id}', [ReportingLeaveController::class, 'edit'])->name('reporting-leave.edit');
+		Route::patch('/edit/{id}', [ReportingLeaveController::class, 'update'])->name('reporting-leave.update');
+		Route::delete('/destroy/{id}', [ReportingLeaveController::class, 'destroy'])->name('reporting-leave.destroy');
+	});
+
+	//=============END OF REPORTING================================================================================================//
+
+
+	Route::prefix('visualization/')->namespace('Visualization')->group(function () {
+		Route::get('', [VisualizationController::class, 'index'])->name('visualization.index');
+		Route::get('/create', [VisualizationController::class, 'create'])->name('visualization.create');
+		Route::post('/', [VisualizationController::class, 'store'])->name('visualization.store');
+		Route::get('/edit/{id}', [VisualizationController::class, 'edit'])->name('visualization.edit');
+		Route::patch('/edit/{id}', [VisualizationController::class, 'update'])->name('visualization.update');
+		Route::delete('/destroy/{id}', [VisualizationController::class, 'destroy'])->name('visualization.destroy');
+	});
 });
 
 

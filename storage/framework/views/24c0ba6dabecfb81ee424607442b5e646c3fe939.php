@@ -60,7 +60,8 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Employee</th>
-                                    <th>Date</th>
+                                    <th>Start</th>
+                                    <th>End</th>
                                     <th>Description</th>
                                     <th>Attachment</th>
                                     <th>Status</th>
@@ -80,14 +81,24 @@
                                         </td>
                                         
                                         <td>
-                                            <?php echo e(\Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?> - <?php echo e(\Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?></td>
+                                            <?php echo e(\Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+
+                                        </td>
+                                        <td><?php echo e(\Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?></td>
                                         <td><?php echo e($item->description); ?></td>
                                         <td>
                                             <?php if($item->attachment != null): ?>
-                                                <a href="<?php echo e($download_url . $item->attachment); ?>">
-                                                    <?php echo e($item->attachment); ?>
+                                                <?php
+                                                    $attachment = $item->attachment;
+                                                    $jml = count($attachment) - 1;
+                                                    for ($i = 0; $i <= $jml; $i++) { ?>
+                                                        <a href="<?php echo e($download_url . $attachment[$i]); ?>">
+                                                            <?php echo e($attachment[$i]); ?>
 
-                                                </a>
+                                                        </a>
+                                                        <br>
+                                                <?php }?>
+                                                
                                             <?php else: ?>
                                                 No Attachment.
                                             <?php endif; ?>

@@ -66,8 +66,38 @@
                             
                             <div class="form-group">
                                 <label>Attachment</label>
-                                <input type="file" accept="application/pdf" name="attachment" class="form-control">
+                                <input type="file" accept="application/pdf" name="attachment[]" class="form-control" multiple>
                             </div>
+                            <?php if($claim->attachment != null): ?>
+                                <div class="card card-transparent">
+                                    <div class="card-header ">
+                                        <div class="card-title">Attachment
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row no-gutters">
+                                            <div class="col-6">
+                                                <div class="card card-default">
+                                                    <div class="card-body">
+                                                        <?php
+                                                            $attachment = $claim->attachment;
+                                                            $jml = count($attachment) - 1;
+                                                            for ($i = 0; $i <= $jml; $i++) { ?>
+                                                                <a href="<?php echo e($download_url . $attachment[$i]); ?>" class="btn btn-default btn-xs mt-2">
+                                                                    <?php echo e($attachment[$i]); ?>
+
+                                                                </a>
+                                                                <a href="#" data-attach="<?php echo e($attachment[$i]); ?>" class="btn btn-danger btn-xs mt-2 remove-attach" onclick="return confirm('Are you sure?')">
+                                                                    <span class="pg-icon">trash</span>
+                                                                </a>
+                                                        <?php }?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             <div class="text-right mt-3">
                                 <button type="submit" class="btn btn-primary">
                                     <?php echo e($claim->id != '' ? 'Update' : 'Save'); ?>
@@ -128,6 +158,31 @@
                     type: 'danger'
                 }).show();
             });
+        </script>
+    <?php endif; ?>
+    <?php if($claim->id != ''): ?>
+        <script>
+            $('.remove-attach').on('click', function () {
+                let attachmentFile = $(this).attr('data-attach')
+
+                let attachmentData = {
+                    claimId: '<?php echo e($claim->id); ?>',
+                    attachment: attachmentFile
+                }
+
+                $.ajax({
+                        url: `<?php echo e($url); ?>claims/attachment/remove`,
+                        type: 'DELETE',
+                        dataType: 'JSON',
+                        headers: {
+                            'x-access-token':"<?php echo e(Session::get('token')); ?>"
+                        },
+                        data: attachmentData,
+                        success: function(data) {
+                            location.reload()
+                        },
+                    })
+            })
         </script>
     <?php endif; ?>
 <?php $__env->stopSection(); ?>

@@ -1,6 +1,6 @@
 
 
-<?php $__env->startSection('title', 'Approval Authorization'); ?>
+<?php $__env->startSection('title', 'Leave Report'); ?>
 
 <?php $__env->startSection('css'); ?>
     <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
@@ -16,6 +16,8 @@
     <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
     <!-- Please remove the file below for production: Contains demo classes -->
     <link class="main-stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('page-content'); ?>
@@ -29,8 +31,8 @@
                     <div class="inner">
                         <!-- START BREADCRUMB -->
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">User Management</a></li>
-                            <li class="breadcrumb-item active">Approval Authorization</li>
+                            <li class="breadcrumb-item"><a href="#">Report</a></li>
+                            <li class="breadcrumb-item active">Leave</li>
                         </ol>
                         <!-- END BREADCRUMB -->
                     </div>
@@ -44,69 +46,69 @@
                 <!-- START card -->
                 <div class="card card-transparent">
                     <div class="card-header">
-                        <div class="card-title">
-                            <form action="<?php echo e(route('approval-authorization.create')); ?>">
-                                <button class="btn btn-primary">
-                                    <i class="pg-icon">plus</i>
-                                    Add
-                                </button>
-                            </form>
+                        <div class="pull-left no-gutters">
+                            <div class="col-12">
+                                <label for="min">Start</label>
+                                <input type="date" id="min" class="form-control pull-left">
+                            </div>
+                        </div>
+                        <div class="pull-left">
+                            <div class="col-12">
+                                <label for="max">End</label>
+                                <input type="date" id="max" class="form-control pull-left">
+                            </div>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-striped" id="tableWithSearch">
+                        <table class="table table-striped" id="tableTest">
                             <thead>
                                 <tr>
-                                    <th>
-                                        No.
-                                    </th>
-                                    <th>Role Name</th>
-                                    <th>Template</th>
-                                    <th>Approver</th>
-                                    <th class="text-left">Action</th>
+                                    <th> No.</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Desription</th>
+                                    <th>Submission Date</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
-                                <?php $__currentLoopData = $approvalAuthorization; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $leaves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td><?php echo e($loop->iteration); ?></td>
-                                        <td><?php echo e($item->role_name); ?></td>
                                         <td>
-                                            <b><?php echo e($item->approval_template_type); ?></b>
-                                            <br>
-                                            <?php echo e($item->approval_template_name); ?>
+                                            <?php echo e($item->requester_emp_id); ?>
 
                                         </td>
+                                        <td><?php echo e($item->requester_name); ?></td>
+                                        <td><?php echo e($item->description); ?></td>
+                                        <td><?php echo e($item->submission_date != null ? \Carbon\carbon::parse(strtotime($item->submission_date))->setTimezone('Asia/Jakarta')->translatedFormat('Y-m-d') : 'N/A'); ?></td>
+                                        
                                         <td>
-                                            1. <?php echo e($item->approver_one_name); ?>
-
-                                            <br>
-                                            2. <?php echo e($item->approver_two_name); ?>
-
-                                            <br>
-                                            3. <?php echo e($item->approver_three_name); ?>
-
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <div class="d-flex">
-                                                    <a href="<?php echo e(route('approval-authorization.edit', $item->id)); ?>" class="btn btn-warning">
-                                                        <i class="pg-icon">edit</i>
-                                                    </a>
-                                                    <form action="<?php echo e(route('approval-authorization.destroy', $item->id)); ?>" method="POST">
-                                                        <?php echo csrf_field(); ?>
-                                                        <?php echo method_field('delete'); ?>
-                                                        <button class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">
-                                                            <i class="pg-icon">trash</i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
+                                            <?php
+                                                $badge = 'badge-warning';
+                                                if($item->last_status == 'Approved') {
+                                                    $badge = 'badge-success';
+                                                } else if($item->last_status == 'Rejected') {
+                                                    $badge = 'badge-danger';
+                                                }
+                                            ?>
+                                            <span class="badge <?php echo e($badge); ?>"><?php echo e($item->last_status); ?></span>
                                         </td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th> No.</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Desription</th>
+                                    <th>Submission Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -135,11 +137,18 @@
     </script>
     <script type="text/javascript" src="assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
     <script type="text/javascript" src="assets/plugins/datatables-responsive/js/lodash.min.js"></script>
-
+    <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     
+    
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
     <!-- END VENDOR JS -->
     <!-- BEGIN PAGE LEVEL JS -->
-    <script src="assets/js/datatables.js" type="text/javascript"></script>
+    <script src="assets/js/custom-datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 
     <?php if(Session::has('status')): ?>
@@ -156,6 +165,11 @@
             });
         </script>
     <?php endif; ?>
+
+    <script>
+        let claimPosition = [0, 1, 2, 3, 4, 5, 6]
+        datatableWithRange(4, claimPosition)
+    </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/dashboard/pages/approval-authorization/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Work\IDS\human-resource-management-system-fe\resources\views/dashboard/pages/reporting-leave/index.blade.php ENDPATH**/ ?>

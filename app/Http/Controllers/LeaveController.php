@@ -65,32 +65,25 @@ class LeaveController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
         ])->validate();
-
+        
+        $response = Http::withToken(session()->get('token'));
         if($request->file('attachment')) {
-            $response = Http::attach(
-                'attachment', file_get_contents($request->file('attachment')), $request->file('attachment')->getClientOriginalName()
-            )->post($this->url_dynamic() . 'leaves', [
-                'attachment' => $request->file('attachment')->getClientOriginalName(),
-                'created_by' => session()->get('userId'),
-                'UserId' => session()->get('userId'),
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'description' => $request->description,
-                'LeaveTypeId' => $request->LeaveTypeId,
-            ]);
-        } else {
-            $response = Http::post($this->url_dynamic() . 'leaves', [
-                'created_by' => session()->get('userId'),
-                'UserId' => session()->get('userId'),
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'description' => $request->description,
-                'LeaveTypeId' => $request->LeaveTypeId,
-            ]);
+            foreach ($request->file('attachment') as $key => $file) {
+                $response = $response->attach('attachment', file_get_contents($request->file('attachment')[$key]), $request->file('attachment')[$key]->getClientOriginalName());
+            }
         }
+        
+        $response = $response->post($this->url_dynamic() . 'leaves', [
+            'created_by' => session()->get('userId'),
+            'UserId' => session()->get('userId'),
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'description' => $request->description,
+            'LeaveTypeId' => $request->LeaveTypeId
+        ]);
 
         $response = json_decode($response->body());
-        
+
         if($response->success) {
             return redirect()->route('leave.index')->with('status', $response->message);
         } else {
@@ -125,6 +118,9 @@ class LeaveController extends Controller
      */
     public function edit($id)
     {
+        $download_url = $this->url_dynamic() . 'leaves/download/';
+        $url = $this->url_dynamic();
+
         $response = Http::get($this->url_dynamic() . 'leaves/' . $id);
         $response = json_decode($response->body());
         $leave = $response->data['0'];
@@ -132,8 +128,9 @@ class LeaveController extends Controller
         $response = Http::get($this->url_dynamic() . 'master/leaveType/');
         $response = json_decode($response->body());
         $leaveType = $response->data;
+
         if($response->success) {
-            return view('dashboard.pages.leave.form',compact('leave', 'leaveType'));
+            return view('dashboard.pages.leave.form',compact('leave', 'leaveType', 'download_url', 'url'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
@@ -153,29 +150,22 @@ class LeaveController extends Controller
             'end_date' => 'required',
         ])->validate();
 
+        $response = Http::withToken(session()->get('token'));
         if($request->file('attachment')) {
-            $response = Http::attach(
-                'attachment', file_get_contents($request->file('attachment')), $request->file('attachment')->getClientOriginalName()
-            )->patch($this->url_dynamic() . 'leaves/' . $id, [
-                'attachment' => $request->file('attachment')->getClientOriginalName(),
-                'created_by' => session()->get('userId'),
-                'UserId' => session()->get('userId'),
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'description' => $request->description,
-                'LeaveTypeId' => $request->LeaveTypeId,
-            ]);
-        } else {
-            $response = Http::patch($this->url_dynamic() . 'leaves/' . $id, [
-                'updated_by' => session()->get('userId'),
-                'UserId' => session()->get('userId'),
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'description' => $request->description,
-                'LeaveTypeId' => $request->LeaveTypeId,
-            ]);
+            foreach ($request->file('attachment') as $key => $file) {
+                $response = $response->attach('attachment', file_get_contents($request->file('attachment')[$key]), $request->file('attachment')[$key]->getClientOriginalName());
+            }
         }
 
+        $response = $response->patch($this->url_dynamic() . 'leaves/' . $id, [
+            'updated_by' => session()->get('userId'),
+            'UserId' => session()->get('userId'),
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'description' => $request->description,
+            'LeaveTypeId' => $request->LeaveTypeId
+        ]);
+        
         $response = json_decode($response->body());
         
         if($response->success) {

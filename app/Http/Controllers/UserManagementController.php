@@ -42,6 +42,7 @@ class UserManagementController extends Controller
             'employee_id' => '',
             'full_name' => '',
             'address' => '',
+            'gender' => '',
             'RoleId' => ''
         ];
         
@@ -148,6 +149,7 @@ class UserManagementController extends Controller
             'employee_id' =>  $request->employee_id,
             'address' =>  $request->address,
             'RoleId' =>  $request->RoleId,
+            'gender' => $request->gender,
             'invitedBy' => $userId
         ]);
         $response = json_decode($response->body());

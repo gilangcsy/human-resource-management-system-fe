@@ -66,28 +66,20 @@ class ClaimController extends Controller
             'end_date' => 'required',
         ])->validate();
 
+        $response = Http::withToken(session()->get('token'));
         if($request->file('attachment')) {
-            $response = Http::attach(
-                'attachment', file_get_contents($request->file('attachment')), $request->file('attachment')->getClientOriginalName()
-            )->post($this->url_dynamic() . 'claims', [
-                'attachment' => $request->file('attachment')->getClientOriginalName(),
-                'created_by' => session()->get('userId'),
-                'UserId' => session()->get('userId'),
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'description' => $request->description,
-                'ClaimTypeId' => $request->ClaimTypeId,
-            ]);
-        } else {
-            $response = Http::post($this->url_dynamic() . 'claims', [
-                'created_by' => session()->get('userId'),
-                'UserId' => session()->get('userId'),
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'description' => $request->description,
-                'ClaimTypeId' => $request->ClaimTypeId,
-            ]);
+            foreach ($request->file('attachment') as $key => $file) {
+                $response = $response->attach('attachment', file_get_contents($request->file('attachment')[$key]), $request->file('attachment')[$key]->getClientOriginalName());
+            }
         }
+        $response = $response->post($this->url_dynamic() . 'claims', [
+            'created_by' => session()->get('userId'),
+            'UserId' => session()->get('userId'),
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'description' => $request->description,
+            'ClaimTypeId' => $request->ClaimTypeId
+        ]);
 
         $response = json_decode($response->body());
         
@@ -125,6 +117,9 @@ class ClaimController extends Controller
      */
     public function edit($id)
     {
+        $download_url = $this->url_dynamic() . 'claims/download/';
+        $url = $this->url_dynamic();
+
         $response = Http::get($this->url_dynamic() . 'claims/' . $id);
         $response = json_decode($response->body());
         $claim = $response->data['0'];
@@ -133,7 +128,7 @@ class ClaimController extends Controller
         $response = json_decode($response->body());
         $claimType = $response->data;
         if($response->success) {
-            return view('dashboard.pages.claim.form',compact('claim', 'claimType'));
+            return view('dashboard.pages.claim.form',compact('claim', 'claimType', 'download_url', 'url'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }

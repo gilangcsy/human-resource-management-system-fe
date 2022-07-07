@@ -444,7 +444,7 @@
     <script src="{{ asset('assets/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
     <!--  A polyfill for browsers that don't support ligatures: remove liga.js if not needed-->
     <script src="{{asset('assets/plugins/liga.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/plugins/jquery/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/modernizr.custom.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('assets/plugins/popper/umd/popper.min.js') }}" type="text/javascript"></script>

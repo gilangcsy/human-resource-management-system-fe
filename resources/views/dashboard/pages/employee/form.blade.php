@@ -53,6 +53,14 @@
                                 <input type="text" value="{{ old('full_name', $user->full_name) }}" name="full_name" class="form-control">
                             </div>
                             
+                            <div class="form-group form-group-default form-group-default-select2 required">
+                                <label>Gender</label>
+                                <select class="full-width" name="gender" data-init-plugin="select2">
+                                    <option value="L" {{ old('gender', $user->gender) == 'L' ? 'selected' : '' }}>Men</option>
+                                    <option value="P" {{ old('gender', $user->gender) == 'P' ? 'selected' : '' }}>Women</option>
+                                </select>
+                            </div>
+                            
                             @if ($user->id == '')
                                 <div class="form-group form-group-default required">
                                     <label>Email</label>

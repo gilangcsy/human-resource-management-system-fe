@@ -60,7 +60,8 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Employee</th>
-                                    <th>Date</th>
+                                    <th>Start</th>
+                                    <th>End</th>
                                     <th>Description</th>
                                     <th>Attachment</th>
                                     <th>Status</th>
@@ -79,13 +80,21 @@
                                         </td>
                                         
                                         <td>
-                                            {{ \Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }} - {{ \Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}</td>
+                                            {{ \Carbon\carbon::parse(strtotime($item->start_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                        </td>
+                                        <td>{{ \Carbon\carbon::parse(strtotime($item->end_date))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>
                                             @if ($item->attachment != null)
-                                                <a href="{{ $download_url . $item->attachment }}">
-                                                    {{ $item->attachment }}
-                                                </a>
+                                                <?php
+                                                    $attachment = $item->attachment;
+                                                    $jml = count($attachment) - 1;
+                                                    for ($i = 0; $i <= $jml; $i++) { ?>
+                                                        <a href="{{ $download_url . $attachment[$i] }}">
+                                                            {{ $attachment[$i] }}
+                                                        </a>
+                                                        <br>
+                                                <?php }?>
                                             @else
                                                 No Attachment.
                                             @endif

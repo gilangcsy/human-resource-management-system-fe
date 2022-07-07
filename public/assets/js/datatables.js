@@ -156,6 +156,9 @@
 
     }
 
+    // Initialize datatable showing a search box at the top right corner and date range filter
+    
+
     initTableWithSearch();
     initTableWithSearch2();
     initTableWithDynamicRows();

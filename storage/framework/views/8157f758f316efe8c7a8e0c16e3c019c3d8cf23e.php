@@ -45,11 +45,6 @@
                 <!-- START card -->
                 <div class="card card-transparent">
                     <div class="card-header">
-                        <div class="pull-right">
-                            <div class="col-xs-12">
-                                <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
-                            </div>
-                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="card-body">
@@ -66,7 +61,7 @@
                                     <td>1</td>
                                     <td><?php echo e($leave->approver_one_name); ?></td>
                                     <td>
-                                        <span class="badge <?php echo e($leave->approval_one_status == 'Approved' ? 'badge-success' : $leave->approval_one_status == 'Rejected' ? 'badge-danger' : 'badge-warning'); ?>"><?php echo e($leave->approval_one_status); ?></span>
+                                        <span class="badge <?php echo e($leave->approval_one_status == 'Approved' ? 'badge-success' : ($leave->approval_one_status == 'Rejected' ? 'badge-danger' : 'badge-warning')); ?>"><?php echo e($leave->approval_one_status); ?></span>
                                     </td>
                                 </tr>
                                 <?php if($leave->approver_two != null): ?>
@@ -74,7 +69,7 @@
                                         <td>2</td>
                                         <td><?php echo e($leave->approver_two_name); ?></td>
                                         <td>
-                                            <span class="badge <?php echo e($leave->approval_two_status == 'Approved' ? 'badge-success' : $leave->approval_two_status == 'Rejected' ? 'badge-danger' : 'badge-warning'); ?>"><?php echo e($leave->approval_two_status); ?></span>
+                                            <span class="badge <?php echo e($leave->approval_two_status == 'Approved' ? 'badge-success' : ($leave->approval_two_status == 'Rejected' ? 'badge-danger' : 'badge-warning')); ?>"><?php echo e($leave->approval_two_status); ?></span>
                                         </td>
                                     </tr>
                                 <?php endif; ?>
@@ -83,7 +78,7 @@
                                         <td>3</td>
                                         <td><?php echo e($leave->approver_three_name); ?></td>
                                         <td>
-                                            <span class="badge <?php echo e($leave->approval_three_status == 'Approved' ? 'badge-success' : $leave->approval_three_status == 'Rejected' ? 'badge-danger' : 'badge-warning'); ?>"><?php echo e($leave->approval_three_status); ?></span>
+                                            <span class="badge <?php echo e($leave->approval_three_status == 'Approved' ? 'badge-success' : ($leave->approval_three_status == 'Rejected' ? 'badge-danger' : 'badge-warning')); ?>"><?php echo e($leave->approval_three_status); ?></span>
                                         </td>
                                     </tr>
                                 <?php endif; ?>

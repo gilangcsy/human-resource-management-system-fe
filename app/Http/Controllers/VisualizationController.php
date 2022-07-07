@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Traits\UrlTrait;
 
-class DashboardController extends Controller
+class VisualizationController extends Controller
 {
     use UrlTrait;
     /**
@@ -26,6 +26,7 @@ class DashboardController extends Controller
         $countLeave = Http::get($this->url_dynamic() . 'leaves/allStatus/count', [
             'userId' => session()->get('userId')
         ]);
+
         $countLeave = json_decode($countLeave->body());
         $approvedLeave = $countLeave->data->approved;
         $waitingLeave = $countLeave->data->waiting;
@@ -39,21 +40,17 @@ class DashboardController extends Controller
         $countClaim = Http::get($this->url_dynamic() . 'claims/allStatus/count', [
             'userId' => session()->get('userId')
         ]);
+
         $countClaim = json_decode($countClaim->body());
         $approvedClaim = $countClaim->data->approved;
         $waitingClaim = $countClaim->data->waiting;
         $rejectedClaim = $countClaim->data->rejected;
+        
+        $usersData = Http::get($this->url_dynamic() . 'visualizations/genderAndRole');
+        $usersData = json_decode($usersData->body());
+        $usersData = $usersData->data;
 
-        $response = Http::get($this->url_dynamic() . 'attendances/readTodayAttendance/' . session()->get('userId'));
-        $response = json_decode($response->body());
-        if($response->success) {
-            $attendanceStatus = $response->status;
-            $attendanceData = $response->data;
-
-            return view('dashboard.index', compact('attendanceStatus', 'attendanceData', 'base_url', 'leaveCount', 'approvedLeave', 'rejectedLeave', 'waitingLeave', 'claimCount', 'approvedClaim', 'rejectedClaim', 'waitingClaim'));
-        } else {
-            return redirect()->back()->with('error', $response->message);
-        }
+        return view('dashboard.pages.visualization.index', compact('base_url', 'leaveCount', 'approvedLeave', 'rejectedLeave', 'waitingLeave', 'claimCount', 'approvedClaim', 'rejectedClaim', 'waitingClaim', 'usersData'));
     }
 
     /**
