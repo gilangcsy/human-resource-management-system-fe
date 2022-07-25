@@ -110,7 +110,7 @@
                                                             <?php echo e(\Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
 
                                                         </td>
-                                                        <td><?php echo e($item->description); ?></td>
+                                                        <td><?php echo e($item['description']); ?></td>
                                                         <td>
                                                             <?php
                                                                 $badge = 'badge-warning';

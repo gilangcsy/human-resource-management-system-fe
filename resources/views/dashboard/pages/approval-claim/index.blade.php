@@ -145,7 +145,7 @@
                                                 <th>Employee</th>
                                                 <th>Date</th>
                                                 <th>Description</th>
-                                                <th>Attachment</th>
+                                                {{-- <th>Attachment</th> --}}
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -177,7 +177,7 @@
                                                             {{ \Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
                                                         </td>
                                                         <td>{{ $item['description'] }}</td>
-                                                        <td>
+                                                        {{-- <td>
                                                             @if ($item['attachment'] != null)
                                                                 <a href="{{ $download_url . $item['attachment'] }}">
                                                                     {{ $item['attachment'] }}
@@ -185,7 +185,7 @@
                                                             @else
                                                                 No Attachment.
                                                             @endif
-                                                        </td>
+                                                        </td> --}}
                                                         <td>
                                                             @php
                                                                 $badge = 'badge-warning';

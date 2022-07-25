@@ -66,12 +66,12 @@ class ApprovalAuthorization extends Controller
             'ApprovalTemplateId' => $request->ApprovalTemplateId,
             'createdBy' => session()->get('userId')
         ]);
-
+        
         $response = json_decode($response->body());
         if($response->success) {
             return redirect()->route('approval-authorization.index')->with('status', $response->message);
         } else {
-            return redirect()->back()->with('error', $response->message)->withInput();
+            return redirect()->back()->with('error', $response->message)->withInput()->with('error', $response->message);
         }
     }
 

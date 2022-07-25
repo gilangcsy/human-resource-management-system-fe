@@ -149,7 +149,7 @@
                                                 <th>Employee</th>
                                                 <th>Date</th>
                                                 <th>Description</th>
-                                                <th>Attachment</th>
+                                                
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -184,16 +184,7 @@
 
                                                         </td>
                                                         <td><?php echo e($item['description']); ?></td>
-                                                        <td>
-                                                            <?php if($item['attachment'] != null): ?>
-                                                                <a href="<?php echo e($download_url . $item['attachment']); ?>">
-                                                                    <?php echo e($item['attachment']); ?>
-
-                                                                </a>
-                                                            <?php else: ?>
-                                                                No Attachment.
-                                                            <?php endif; ?>
-                                                        </td>
+                                                        
                                                         <td>
                                                             <?php
                                                                 $badge = 'badge-warning';

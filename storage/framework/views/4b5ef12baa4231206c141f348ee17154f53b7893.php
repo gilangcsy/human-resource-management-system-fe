@@ -125,16 +125,20 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('javascript'); ?>
-    <?php if(Session::has('status')): ?>
-        <script>
-            let status = document.getElementById('status').value
-            iziToast.success({
-                title: `Menu Management.`,
-                message: `${status}`,
-                position: 'topRight'
-            });
-        </script>
-    <?php endif; ?>
+<?php if(Session::has('status')): ?>
+<script>
+    $(document).ready(function () {
+        // Simple notification having bootstrap's .alert class
+        $('.page-content-wrapper').pgNotification({
+            style: 'bar',
+            message: '<?php echo e(Session::get("status")); ?>',
+            position: 'top',
+            timeout: 4000,
+            type: 'success'
+        }).show();
+    });
+</script>
+<?php endif; ?>
 
     <?php if(Session::has('error')): ?>
         <script>

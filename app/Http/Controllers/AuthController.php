@@ -178,4 +178,54 @@ class AuthController extends Controller
             return redirect(route('auth.index'))->with('error', $checkToken->message || 'Internal error.');
         }
     }
+
+    public function forgot_password(Request $request) {
+        if ($request->has('token')) {
+            $token = $request->input('token');
+            $checkToken = Http::get($this->url_dynamic() . 'auth/passwordReset?token=' . $token);
+            $checkToken = json_decode($checkToken->body());
+            if($checkToken->success) {
+                return view('auth.forgot-password.form', compact('checkToken'));
+            } else {
+                return redirect('dashboard');
+            }
+        } else {
+            return view('auth.forgot-password.index');
+        }
+    }
+
+    public function forgot_password_sent(Request $request) {
+        
+		$sendEmail = Http::post($this->url_dynamic() . 'auth/passwordReset', [
+            'email' =>  $request->email
+        ]);
+        $sendEmail = json_decode($sendEmail->body());
+
+        if($sendEmail->success) {
+            return view('auth.forgot-password.sent');
+        } else {
+            return redirect()->back()->with('error', $sendEmail->message);
+        }
+    }
+
+    public function set_new_password(Request $request) {
+        
+        Validator::make($request->all(), [
+            'password' => 'required|confirmed',
+        ])->validate();
+
+        $token = $request->token;
+        $password = $request->password;
+
+		$setNewPassword = Http::patch($this->url_dynamic() . 'auth/setNewPassword?token=' . $token, [
+            'password' =>  $password
+        ]);
+        $setNewPassword = json_decode($setNewPassword->body());
+
+        if($setNewPassword) {
+            return redirect(route('auth.index'))->with('status', $setNewPassword->message);
+        } else {
+            return redirect(route('auth.index'))->with('error', $setNewPassword->message);
+        }
+    }
 }

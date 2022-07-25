@@ -124,16 +124,20 @@
 @endsection
 
 @section('javascript')
-    @if (Session::has('status'))
-        <script>
-            let status = document.getElementById('status').value
-            iziToast.success({
-                title: `Menu Management.`,
-                message: `${status}`,
-                position: 'topRight'
-            });
-        </script>
-    @endif
+@if (Session::has('status'))
+<script>
+    $(document).ready(function () {
+        // Simple notification having bootstrap's .alert class
+        $('.page-content-wrapper').pgNotification({
+            style: 'bar',
+            message: '{{Session::get("status")}}',
+            position: 'top',
+            timeout: 4000,
+            type: 'success'
+        }).show();
+    });
+</script>
+@endif
 
     @if (Session::has('error'))
         <script>

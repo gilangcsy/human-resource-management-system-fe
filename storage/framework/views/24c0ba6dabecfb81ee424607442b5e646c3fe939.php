@@ -98,7 +98,6 @@
                                                         </a>
                                                         <br>
                                                 <?php }?>
-                                                
                                             <?php else: ?>
                                                 No Attachment.
                                             <?php endif; ?>

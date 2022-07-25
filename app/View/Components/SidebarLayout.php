@@ -27,7 +27,7 @@ class SidebarLayout extends Component
     public function render()
     {
         
-        if(session()->get('role_id') == 1 || session()->get('role_id') == 7) {
+        if(session()->get('role_id') == 1) {
             $subMenu = Http::get($this->url_dynamic() . 'master/menu/readSubMenu');
             $subMenu = json_decode($subMenu->body());
             $subMenu = $subMenu->data;
@@ -98,7 +98,7 @@ class SidebarLayout extends Component
                     'name' => $item->menu_name,
                     'url' => $item->url,
                     'icon' => $item->icon,
-                    'master_menu' => $item->master_menu
+                    'master_menu_id' => $item->master_menu_id
                 );
             }
             $allowedMenuCount = count($menu_items);
@@ -109,7 +109,7 @@ class SidebarLayout extends Component
             //Memasukkan sub menu ke dalam masing-masing master menunya
             for ($i = 0; $i < $masterMenuCount; $i++) { 
                 for ($j = 0; $j < $allowedMenuCount; $j++) { 
-                    if($menu_items[$j]['master_menu'] == $lists[$i]['id']) {
+                    if($menu_items[$j]['master_menu_id'] == $lists[$i]['id']) {
                         $lists[$i]['childs'][] = $menu_items[$j];
                     }
                 }
@@ -118,7 +118,7 @@ class SidebarLayout extends Component
             //Mencari master menu yang berdiri sendiri atau tidak punya childs
             foreach($lists as $key => $value) {
                 foreach ($allowedMenu as $al) {
-                    if(!$value['childs'] && $al->master_menu == 0) {
+                    if(!$value['childs'] && $al->master_menu_id == 0) {
                         if($al->menu_id == $value['id']) {
                             //Memasukkan master data yang berdiri sendiri dan statusnya allowed
                             $masterDataAllowed[] = $key;

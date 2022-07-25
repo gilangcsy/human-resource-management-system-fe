@@ -18,7 +18,7 @@
                 </li>
             <?php else: ?>
                 <li class="<?php echo e($loop->iteration == 1 ? 'm-t-20' : ''); ?>">
-                    <a href="/<?php echo e($list['url']); ?>" class="detailed">
+                    <a href="/<?php echo e($list['url']); ?>">
                         <span class="title"><?php echo e($list['name']); ?></span>
                     </a>
                     <span class="icon-thumbnail"><i class="pg-icon"><?php echo e($list['icon']); ?></i></span>

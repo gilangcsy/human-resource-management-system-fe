@@ -54,10 +54,7 @@
                     </div>
                 </div>
                 <div class="m-b-5 m-t-30">
-                    <a href="#" class="normal">Lost your password?</a>
-                </div>
-                <div>
-                    <a href="#" class="normal">Not a member yet? Signup now.</a>
+                    <a href="<?php echo e(route('auth.forgot-password')); ?>" class="normal">Lost your password?</a>
                 </div>
                 <!-- END Form Control-->
             </form>

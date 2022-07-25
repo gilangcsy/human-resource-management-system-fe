@@ -263,6 +263,10 @@ Route::prefix('auth/')->namespace('Auth')->group(function () {
 	Route::post('', [AuthController::class, 'store'])->name('auth.store');
 	Route::patch('', [AuthController::class, 'accept'])->name('auth.accept');
 	Route::get('/logout', [AuthController::class, 'destroy'])->name('auth.logout');
+	Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->name('auth.forgot-password');
+
+	Route::post('/forgot-password', [AuthController::class, 'forgot_password_sent'])->name('auth.forgot-password-sent');
+	Route::post('/set-new-password', [AuthController::class, 'set_new_password'])->name('auth.set-new-password');
 
 	Route::get('invitational/{token}', [AuthController::class, 'check_token'])->name('invitational.index');
 });

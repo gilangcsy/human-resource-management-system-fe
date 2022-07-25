@@ -107,7 +107,7 @@
                                                             -
                                                             {{ \Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
                                                         </td>
-                                                        <td>{{ $item->description }}</td>
+                                                        <td>{{ $item['description'] }}</td>
                                                         <td>
                                                             @php
                                                                 $badge = 'badge-warning';

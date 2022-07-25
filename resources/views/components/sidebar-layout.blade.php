@@ -18,7 +18,7 @@
                 </li>
             @else
                 <li class="{{ $loop->iteration == 1 ? 'm-t-20' : '' }}">
-                    <a href="/{{ $list['url'] }}" class="detailed">
+                    <a href="/{{ $list['url'] }}">
                         <span class="title">{{ $list['name'] }}</span>
                     </a>
                     <span class="icon-thumbnail"><i class="pg-icon">{{ $list['icon'] }}</i></span>

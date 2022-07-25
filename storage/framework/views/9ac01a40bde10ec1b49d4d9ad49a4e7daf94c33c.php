@@ -152,7 +152,7 @@
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: '<?php echo e(Session::get("status")); ?>',
+                    message: '<?php echo e(Session::get("error")); ?>',
                     position: 'top',
                     timeout: 4000,
                     type: 'danger'
