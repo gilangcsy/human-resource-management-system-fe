@@ -69,10 +69,10 @@
                                     <tr>
                                         <td><?php echo e($loop->iteration); ?></td>
                                         <td>
-                                            <b><?php echo e($item->master_menu == 0 ? 'Master Menu' : 'Sub Menu'); ?></b>
-                                            <br>
-                                            <?php echo e($item->name); ?>
+                                            <?php echo e($item->master_menu == 0 ? 'Master Menu' : 'Sub Menu'); ?>
 
+                                            <br>
+                                            <b><?php echo e($item->name); ?></b>
                                         </td>
                                         <td>
                                             <div>

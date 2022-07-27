@@ -22,6 +22,7 @@ use App\Http\Controllers\ReportingAttendanceController;
 use App\Http\Controllers\ReportingClaimController;
 use App\Http\Controllers\ReportingLeaveController;
 use App\Http\Controllers\VisualizationController;
+use App\Http\Controllers\TaskManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -160,7 +161,7 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 
 	//=============END OF MASTER DATA=============================================================================================//
 
-
+		
 
 	//=============USER MANAGEMENT================================================================================================//
 	//-------------ACCESS RIGHTS--------------------------------------------------------------------------------------------------//
@@ -253,6 +254,33 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 		Route::get('/edit/{id}', [VisualizationController::class, 'edit'])->name('visualization.edit');
 		Route::patch('/edit/{id}', [VisualizationController::class, 'update'])->name('visualization.update');
 		Route::delete('/destroy/{id}', [VisualizationController::class, 'destroy'])->name('visualization.destroy');
+	});
+
+	Route::prefix('my-task/')->namespace('My Task')->group(function () {
+		Route::get('/', [TaskManagementController::class, 'my_task'])->name('my-task.index');
+		Route::get('/create', [TaskManagementController::class, 'create_my_task'])->name('my-task.create');
+		Route::post('/create', [TaskManagementController::class, 'store_my_task'])->name('my-task.store');
+		Route::get('/edit/{id}', [TaskManagementController::class, 'edit_my_task'])->name('my-task.edit');
+		Route::patch('/edit/{id}', [TaskManagementController::class, 'update_my_task'])->name('my-task.update');
+		Route::delete('/destroy/{id}', [TaskManagementController::class, 'destroy_my_task'])->name('my-task.destroy');
+	});
+
+	Route::prefix('all-task/')->namespace('All Task')->group(function () {
+		Route::get('/', [TaskManagementController::class, 'index'])->name('all-task.index');
+		Route::get('/create', [TaskManagementController::class, 'create'])->name('all-task.create');
+		Route::post('/create', [TaskManagementController::class, 'store'])->name('all-task.store');
+		Route::get('/edit/{id}', [TaskManagementController::class, 'edit'])->name('all-task.edit');
+		Route::patch('/edit/{id}', [TaskManagementController::class, 'update'])->name('all-task.update');
+		Route::delete('/destroy/{id}', [TaskManagementController::class, 'destroy'])->name('all-task.destroy');
+	});
+
+	Route::prefix('member-task/')->namespace('All Task')->group(function () {
+		Route::get('/', [TaskManagementController::class, 'member_task'])->name('member-task.index');
+		Route::get('/create', [TaskManagementController::class, 'create_member_task'])->name('member-task.create');
+		Route::post('/create', [TaskManagementController::class, 'store_member_task'])->name('member-task.store');
+		Route::get('/edit/{id}', [TaskManagementController::class, 'edit_member_task'])->name('member-task.edit');
+		Route::delete('/destroy/{id}', [TaskManagementController::class, 'destroy_member_task'])->name('member-task.destroy');
+		Route::patch('/update/{id}', [TaskManagementController::class, 'update_member_task'])->name('member-task.update');
 	});
 });
 

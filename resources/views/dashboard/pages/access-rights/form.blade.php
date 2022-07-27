@@ -91,9 +91,9 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <b>{{ $item_menu->master_menu_name }}</b>
+                                            {{ $item_menu->master_menu_name }}
                                             <br>
-                                            {{ $item_menu->name }}
+                                            <b>{{ $item_menu->name }}</b>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg primary">
@@ -189,7 +189,8 @@
                     allow_update: false,
                     allow_delete: false,
                     allow_view: false,
-                    updatedBy: "{{session()->get('userId')}}"
+                    updatedBy: "{{session()->get('userId')}}",
+                    deletedAt: true
                 }
                 updateRoleMenu(data, role_menu_id)
             } else {
@@ -202,7 +203,8 @@
                     createdBy: "{{session()->get('userId')}}",
                     updatedBy: "{{session()->get('userId')}}",
                     RoleId: '{{ $role->id }}',
-                    MenuId: data_menu
+                    MenuId: data_menu,
+                    deletedAt: false
                 }
                 role_menu_id == '' ? assignRoleMenu(data) : updateRoleMenu(data, role_menu_id)
             }

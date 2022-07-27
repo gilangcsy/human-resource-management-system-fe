@@ -91,10 +91,10 @@
                                     <tr>
                                         <td><?php echo e($loop->iteration); ?></td>
                                         <td>
-                                            <b><?php echo e($item_menu->master_menu_name); ?></b>
-                                            <br>
-                                            <?php echo e($item_menu->name); ?>
+                                            <?php echo e($item_menu->master_menu_name); ?>
 
+                                            <br>
+                                            <b><?php echo e($item_menu->name); ?></b>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg primary">
@@ -190,7 +190,8 @@
                     allow_update: false,
                     allow_delete: false,
                     allow_view: false,
-                    updatedBy: "<?php echo e(session()->get('userId')); ?>"
+                    updatedBy: "<?php echo e(session()->get('userId')); ?>",
+                    deletedAt: true
                 }
                 updateRoleMenu(data, role_menu_id)
             } else {
@@ -203,7 +204,8 @@
                     createdBy: "<?php echo e(session()->get('userId')); ?>",
                     updatedBy: "<?php echo e(session()->get('userId')); ?>",
                     RoleId: '<?php echo e($role->id); ?>',
-                    MenuId: data_menu
+                    MenuId: data_menu,
+                    deletedAt: false
                 }
                 role_menu_id == '' ? assignRoleMenu(data) : updateRoleMenu(data, role_menu_id)
             }
