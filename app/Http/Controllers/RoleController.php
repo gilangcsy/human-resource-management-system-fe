@@ -17,9 +17,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $response = Http::get($this->url_dynamic() . 'master/role');
+        $response = Http::get($this->url_dynamic() . 'master/role/read/all');
         $response = json_decode($response->body());
         $roles = $response->data;
+        
         if($response->success) {
             return view('dashboard.pages.role.index', compact('roles'));
         } else {
@@ -37,10 +38,15 @@ class RoleController extends Controller
         $role = (object) [
             'id' => '',
             'data' => 0,
-            'name' => ''
+            'name' => '',
+            'superiorId' => ''
         ];
-
-        return view('dashboard.pages.role.form', compact('role'));
+        
+        $response = Http::get($this->url_dynamic() . 'master/role/read/all');
+        $response = json_decode($response->body());
+        $roles = $response->data;
+        
+        return view('dashboard.pages.role.form', compact('role', 'roles'));
     }
 
     /**
@@ -57,6 +63,7 @@ class RoleController extends Controller
         
         $response = Http::post($this->url_dynamic() . 'master/role', [
             'name' => $request->name,
+            'superiorId' => $request->superiorId,
             'createdBy' => session()->get('userId')
         ]);
 
@@ -91,8 +98,12 @@ class RoleController extends Controller
         $response = json_decode($response->body());
         $role = $response->data;
         
+        $response = Http::get($this->url_dynamic() . 'master/role/read/all');
+        $response = json_decode($response->body());
+        $roles = $response->data;
+        
         if($response->success) {
-            return view('dashboard.pages.role.form', compact('role'));
+            return view('dashboard.pages.role.form', compact('role', 'roles'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }
@@ -114,6 +125,7 @@ class RoleController extends Controller
         $response = Http::patch($this->url_dynamic() . 'master/role/' . $id, [
             'name' => $request->name,
             'updatedBy' => session()->get('userId'),
+            'superiorId' => $request->superiorId
         ]);
 
         $response = json_decode($response->body());

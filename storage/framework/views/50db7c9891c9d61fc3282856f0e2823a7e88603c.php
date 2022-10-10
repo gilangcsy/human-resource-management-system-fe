@@ -2,26 +2,14 @@
 
 <?php $__env->startSection('content'); ?>
     <!-- START Login Background Pic Wrapper-->
-    <div class="bg-pic">
-        <!-- START Background Caption-->
-        <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
-            <h1 class="semi-bold text-white">
-                Meet pages - The simplest and fastest way to build web UI for your dashboard or app.</h1>
-            <p class="small">
-                Our beautifully-designed UI Framework come with hundreds of customizable features. Every Layout is
-                just a starting point. ©2019-2020 All Rights Reserved. Pages® is a registered trademark of Revox
-                Ltd.
-            </p>
-        </div>
-        <!-- END Background Caption-->
-    </div>
+    
     <!-- END Login Background Pic Wrapper-->
     <!-- START Login Right Container-->
     <div class="login-container bg-white">
         <div class="p-l-50 p-r-50 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
-            <img src="assets/img/logo-48x48_c.png" alt="logo" data-src="assets/img/logo-48x48_c.png"
-                data-src-retina="assets/img/logo-48x48_c@2x.png" width="48" height="48">
-            <h2 class="p-t-25">Get Started <br /> with your Dashboard</h2>
+            <img src="https://secure.gravatar.com/avatar/d6c3b7355777d2933834e7e032e12cfa?s=500&d=mm&r=g" alt="logo" data-src="https://secure.gravatar.com/avatar/d6c3b7355777d2933834e7e032e12cfa?s=500&d=mm&r=g"
+                data-src-retina="https://secure.gravatar.com/avatar/d6c3b7355777d2933834e7e032e12cfa?s=500&d=mm&r=g" width="48" height="48">
+            <h2 class="p-t-25">Welcome To IDS Intranet</h2>
             <p class="mw-80 m-t-5">Sign in to your account</p>
             <!-- START Login Form -->
             <form id="form-login" class="p-t-15" action="<?php echo e(route('auth.store')); ?>" method="POST">

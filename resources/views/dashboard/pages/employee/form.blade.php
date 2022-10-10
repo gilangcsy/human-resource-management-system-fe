@@ -60,6 +60,11 @@
                                     <option value="P" {{ old('gender', $user->gender) == 'P' ? 'selected' : '' }}>Women</option>
                                 </select>
                             </div>
+
+                            <div class="form-group form-group-default">
+                                <label>TTL</label>
+                                <input type="date" value="{{ old('ttl', $user->ttl) }}" name="ttl" class="form-control">
+                            </div>
                             
                             @if ($user->id == '')
                                 <div class="form-group form-group-default required">
@@ -75,11 +80,21 @@
                             
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Role</label>
+                                
                                 <select class="full-width" name="RoleId" data-init-plugin="select2">
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}" {{ $role->id == old('RoleId', $user->RoleId) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                    @foreach ($roles as $item)
+                                        <optgroup label="{{ $item->name }}">
+                                            @foreach ($item->Roles as $role)
+                                                <option value="{{ $role->id }}" {{ $role->id == old('RoleId', $user->RoleId) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="form-group form-group-default">
+                                <label>Join Date</label>
+                                <input type="date" value="{{ old('join_date', $user->join_date) }}" name="join_date" class="form-control">
                             </div>
                             
                             <div class="text-right">

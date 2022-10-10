@@ -35,10 +35,6 @@ class ApprovalTemplateController extends Controller
      */
     public function create()
     {
-        $users = Http::get($this->url_dynamic() . 'users');
-        $users = json_decode($users->body());
-        $users = $users->data;
-        
         $roles = Http::get($this->url_dynamic() . 'master/role');
         $roles = json_decode($roles->body());
         $roles = $roles->data;
@@ -53,7 +49,7 @@ class ApprovalTemplateController extends Controller
             'type' => ''
         ];
         
-        return view('dashboard.pages.approval-template.form', compact('approvalTemplate', 'users', 'roles'));
+        return view('dashboard.pages.approval-template.form', compact('approvalTemplate', 'roles'));
     }
 
     /**
@@ -108,16 +104,12 @@ class ApprovalTemplateController extends Controller
         $response = json_decode($response->body());
         $approvalTemplate = $response->data['0'];
         
-        $users = Http::get($this->url_dynamic() . 'users');
-        $users = json_decode($users->body());
-        $users = $users->data;
-        
         $roles = Http::get($this->url_dynamic() . 'master/role');
         $roles = json_decode($roles->body());
         $roles = $roles->data;
         
         if($response->success) {
-            return view('dashboard.pages.approval-template.form', compact('approvalTemplate', 'users', 'roles'));
+            return view('dashboard.pages.approval-template.form', compact('approvalTemplate', 'roles'));
         } else {
             return redirect()->back()->with('error', $response->message);
         }

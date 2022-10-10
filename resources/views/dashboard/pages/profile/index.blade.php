@@ -1,6 +1,6 @@
 @extends('dashboard.partials.app')
 
-@section('title', 'Role')
+@section('title', 'Profile')
 
 @section('css')
     <link href="{{asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
@@ -22,9 +22,8 @@
                     <div class="inner">
                         <!-- START BREADCRUMB -->
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-                            <li class="breadcrumb-item"><a href="/role">Role</a></li>
-                            <li class="breadcrumb-item active">{{ $role->id != '' ? 'Edit' : 'Create' }}</li>
+                            <li class="breadcrumb-item"><a href="#">Profile</a></li>
+                            <li class="breadcrumb-item active">Index</li>
                         </ol>
                         <!-- END BREADCRUMB -->
                     </div>
@@ -38,31 +37,43 @@
                 <!-- START card -->
                 <div class="card card-default">
                     <div class="card-body">
-                        <form method="POST" action="{{ $role->id == '' ? route('role.store') : route('role.update', $role->id) }}">
+                        <form method="POST" action="{{ route('profile.update', $user->id) }}">
                             @csrf
-                            @if ($role->id != '')
-                                @method('patch')
-                            @endif
-                            <div class="form-group form-group-default required">
-                                <label>Name</label>
-                                <input type="text" value="{{ old('name', $role->name) }}" name="name" class="form-control" required>
+                            @method('patch')
+
+                            <div class="form-group form-group-default">
+                                <label>Full Name</label>
+                                <input type="text" value="{{ old('full_name', $user->full_name) }}" name="full_name" class="form-control">
                             </div>
                             
                             <div class="form-group form-group-default form-group-default-select2 required">
-                                <label class="">Superior</label>
-                                <select class="full-width" name="superiorId" data-init-plugin="select2">
-                                    <option value="" {{ old('superiorId', $role->superiorId) == null || old('superiorId', $role->superiorId) == '' ? 'selected' : '' }}>--None--</option>
-                                    @foreach ($roles as $item)
-                                        @if ($item->id != $role->id)
-                                            <option value="{{ $item->id }}" {{ $item->id == old('superiorId', $role->superiorId) ? 'selected' : '' }}>{{ $item->name }}</option>
-                                        @endif
-                                    @endforeach
+                                <label>Gender</label>
+                                <select class="full-width" name="gender" data-init-plugin="select2">
+                                    <option value="L" {{ old('gender', $user->gender) == 'L' ? 'selected' : '' }}>Men</option>
+                                    <option value="P" {{ old('gender', $user->gender) == 'P' ? 'selected' : '' }}>Women</option>
                                 </select>
+                            </div>
+
+                            <div class="form-group form-group-default">
+                                <label>TTL</label>
+                                <input type="date" value="{{ old('full_name', $user->ttl) }}" name="ttl" class="form-control">
+                            </div>
+                            
+                            @if ($user->id == '')
+                                <div class="form-group form-group-default required">
+                                    <label>Email</label>
+                                    <input type="text" value="{{ old('email', $user->email) }}" name="email" class="form-control" required>
+                                </div>
+                            @endif
+
+                            <div class="form-group form-group-default">
+                                <label>Address</label>
+                                <input type="text" value="{{ old('address', $user->address) }}" name="address" class="form-control">
                             </div>
                             
                             <div class="text-right">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ $role->id != '' ? 'Update' : 'Save' }}
+                                    {{ $user->id != '' ? 'Update' : 'Save' }}
                                 </button>
                                 <a href="{{ URL::previous() }}" class="btn btn-primary">
                                     Back
@@ -78,7 +89,6 @@
         </div>
         <!-- END PAGE CONTENT -->
         <!-- START COPYRIGHT -->
-        <!-- START CONTAINER FLUID -->
         @include('dashboard.partials.footer')
         <!-- END COPYRIGHT -->
     </div>
@@ -107,7 +117,7 @@
 
     <!-- END VENDOR JS -->
     
-    @if (Session::has('error'))
+    @if (Session::has('status'))
         <script>
             $(document).ready(function () {
                 // Simple notification having bootstrap's .alert class
@@ -116,7 +126,7 @@
                     message: '{{Session::get("status")}}',
                     position: 'top',
                     timeout: 4000,
-                    type: 'danger'
+                    type: 'success'
                 }).show();
             });
         </script>

@@ -41,12 +41,14 @@ class UserManagementController extends Controller
             'email' => '',
             'employee_id' => '',
             'full_name' => '',
+            'join_date' => '',
             'address' => '',
             'gender' => '',
-            'RoleId' => ''
+            'RoleId' => '',
+            'ttl' => ''
         ];
         
-        $response = Http::get($this->url_dynamic() . 'master/role');
+        $response = Http::get($this->url_dynamic() . 'master/department');
         $response = json_decode($response->body());
         $roles = $response->data;
 
@@ -87,7 +89,7 @@ class UserManagementController extends Controller
         $response = json_decode($response->body());
         $user = $response->data;
         
-        $response2 = Http::get($this->url_dynamic() . 'master/role');
+        $response2 = Http::get($this->url_dynamic() . 'master/role/read/all');
         $response2 = json_decode($response2->body());
         $roles = $response2->data;
         if($response->success) {
@@ -109,6 +111,9 @@ class UserManagementController extends Controller
         $response = Http::patch($this->url_dynamic() . 'users/' . $id, [
             'full_name' => $request->full_name,
             'address' => $request->address,
+            'ttl' => $request->ttl,
+            'gender' => $request->gender,
+            'join_date' => $request->join_date,
             'employee_id' => $request->employee_id,
             'RoleId' => $request->RoleId,
             'updatedBy' => session()->get('userId'),
@@ -141,16 +146,17 @@ class UserManagementController extends Controller
 
     public function send_invitational(Request $request)
     {
-
         $userId = $request->session()->get('userId');
         $response = Http::post($this->url_dynamic() . 'auth/invitation/invite', [
             'email' =>  $request->email,
             'full_name' =>  $request->full_name,
             'employee_id' =>  $request->employee_id,
+            'ttl' => $request->ttl,
             'address' =>  $request->address,
             'RoleId' =>  $request->RoleId,
             'gender' => $request->gender,
-            'invitedBy' => $userId
+            'invitedBy' => $userId,
+            'join_date' => $request->join_date
         ]);
         $response = json_decode($response->body());
         if($response->success) {

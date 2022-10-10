@@ -60,6 +60,8 @@
                                 <tr>
                                     <th> No.</th>
                                     <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Role</th>
                                     <th>Is Verified</th>
                                     <th>Is Active</th>
                                     <th class="text-left">Action</th>
@@ -71,8 +73,10 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->full_name }}</td>
-                                        <td><span
-                                                class="badge badge-{{ $item->isVerified ? 'success' : 'danger' }}">Yes</span>
+                                        <td>{{ $item->Role->Department->name }}</td>
+                                        <td>{{ $item->Role->name }}</td>
+                                        <td>
+                                            <span class="badge badge-{{ $item->isVerified ? 'success' : 'danger' }}">Yes</span>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg primary">
@@ -156,7 +160,11 @@
                 dataType: 'JSON',
                 success: function(data) {
                     location.reload()
-                },
+                }, error: function (data) {
+                    console.log(data)
+                    alert('Make sure the user already activated their account.')
+                    location.reload()
+                }
             });
         })
     </script>

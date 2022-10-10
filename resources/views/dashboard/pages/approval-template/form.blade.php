@@ -51,48 +51,42 @@
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Approver One</label>
                                 <select class="full-width" data-placeholder="Select Approver One" name="approver_one" data-init-plugin="select2">
-                                    @foreach ($roles as $role)
-                                    <optgroup label="{{ $role->name }}">
-                                        @foreach ($users as $user)
-                                            @if ($role->id == $user->RoleId)
+                                    @foreach ($roles as $item)
+                                        <optgroup label="{{ $item->name }}">
+                                            @foreach ($item->Users as $user)
                                                 <option value="{{ $user->id }}" {{ $user->id == old('approver_one', $approvalTemplate->approver_one_id) ? 'selected' : '' }}>{{ $user->full_name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Approver Two</label>
-                                <select class="full-width" data-placeholder="Select Approver Two" name="approver_two" data-init-plugin="select2">
+                                <select class="full-width" data-placeholder="Select Approver One" name="approver_two" data-init-plugin="select2">
                                     <option value="">-- Select Approver Two --</option>
-                                    @foreach ($roles as $role)
-                                    <optgroup label="{{ $role->name }}">
-                                        @foreach ($users as $user)
-                                            @if ($role->id == $user->RoleId)
+                                    @foreach ($roles as $item)
+                                        <optgroup label="{{ $item->name }}">
+                                            @foreach ($item->Users as $user)
                                                 <option value="{{ $user->id }}" {{ $user->id == old('approver_two', $approvalTemplate->approver_two_id) ? 'selected' : '' }}>{{ $user->full_name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
                                 </select>
                             </div>
-
                             
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Approver Three</label>
-                                <select class="full-width" data-placeholder="Select Approver Three" name="approver_three" data-init-plugin="select2">
-                                    <option value="">-- Select Approver Two --</option>
-                                    @foreach ($roles as $role)
-                                    <optgroup label="{{ $role->name }}">
-                                        @foreach ($users as $user)
-                                            @if ($role->id == $user->RoleId)
+
+                                <select class="full-width" data-placeholder="Select Approver One" name="approver_three" data-init-plugin="select2">
+                                    <option value="">-- Select Approver Three --</option>
+                                    @foreach ($roles as $item)
+                                        <optgroup label="{{ $item->name }}">
+                                            @foreach ($item->Users as $user)
                                                 <option value="{{ $user->id }}" {{ $user->id == old('approver_three', $approvalTemplate->approver_three_id) ? 'selected' : '' }}>{{ $user->full_name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
                                 </select>
                             </div>
 

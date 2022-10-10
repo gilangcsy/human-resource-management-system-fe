@@ -31,6 +31,20 @@
         // });
     }
 
+    var initTableDashboard = function() {
+        let tables = $('.table-dashboard');
+
+        tables.dataTable({
+		"lengthChange": false,
+            "dom": "<'row'<'col-sm-12 col-md-6 justify-content-md-end'l><'col-sm-12 col-md-6'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5 justify-content-md-end'i><'col-sm-12 col-md-7'p>>",
+            "iDisplayLength": 5,
+            "scrollCollapse": true,
+            "autoWidth": true
+        });
+    }
+
     // Initialize datatable showing a search box at the top right corner
     var initTableWithSearch2 = function() {
         var table = $('#tableWithSearch2');
@@ -163,5 +177,6 @@
     initTableWithSearch2();
     initTableWithDynamicRows();
     initTableWithExportOptions();
+    initTableDashboard();
 
 })(window.jQuery);

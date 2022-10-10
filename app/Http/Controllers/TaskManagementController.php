@@ -332,7 +332,7 @@ class TaskManagementController extends Controller
 
         $response = json_decode($response->body());
         if($response->success) {
-            return redirect()->route('all-task.index')->with('status', $response->message);
+            return redirect()->route('member-task.index')->with('status', $response->message);
         } else {
             return redirect()->back()->with('error', $response->message);
         }

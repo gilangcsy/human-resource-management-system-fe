@@ -23,6 +23,8 @@ use App\Http\Controllers\ReportingClaimController;
 use App\Http\Controllers\ReportingLeaveController;
 use App\Http\Controllers\VisualizationController;
 use App\Http\Controllers\TaskManagementController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -281,6 +283,29 @@ Route::group(['middleware' => ['auth.check', 'access.rights']], function () {
 		Route::get('/edit/{id}', [TaskManagementController::class, 'edit_member_task'])->name('member-task.edit');
 		Route::delete('/destroy/{id}', [TaskManagementController::class, 'destroy_member_task'])->name('member-task.destroy');
 		Route::patch('/update/{id}', [TaskManagementController::class, 'update_member_task'])->name('member-task.update');
+	});
+
+
+	//-------------ROLE-----------------------------------------------------------------------------------------------------------//
+	Route::prefix('news/')->namespace('News')->group(function () {
+		Route::get('', [NewsController::class, 'index'])->name('news.index');
+		Route::get('/create', [NewsController::class, 'create'])->name('news.create');
+		Route::post('/', [NewsController::class, 'store'])->name('news.store');
+		Route::get('/edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
+		Route::patch('/edit/{id}', [NewsController::class, 'update'])->name('news.update');
+		Route::delete('/destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+	});
+
+	
+	//-------------PROFILE--------------------------------------------------------------------------------------------------------//
+	Route::prefix('profile/')->namespace('Profile')->group(function () {
+		Route::get('', [ProfileController::class, 'index'])->name('profile.index');
+		Route::get('/create', [ProfileController::class, 'create'])->name('profile.create');
+		Route::post('/', [ProfileController::class, 'store'])->name('profile.store');
+		Route::get('/edit/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
+		Route::get('/show/{id}', [ProfileController::class, 'show'])->name('profile.show');
+		Route::patch('/edit/{id}', [ProfileController::class, 'update'])->name('profile.update');
+		Route::delete('/destroy/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 	});
 });
 

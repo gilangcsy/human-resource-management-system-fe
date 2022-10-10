@@ -45,10 +45,14 @@
                             @endif
                             
                             <div class="form-group form-group-default form-group-default-select2 required">
-                                <label class="">Role</label>
+                                <label>Role</label>
                                 <select class="full-width" name="RoleId" data-init-plugin="select2">
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}" {{ $role->id == old('RoleId', $approvalAuthorization->role_id) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                    @foreach ($roles as $item)
+                                        <optgroup label="{{ $item->name }}">
+                                            @foreach ($item->Roles as $role)
+                                                <option value="{{ $role->id }}" {{ $role->id == old('RoleId', $approvalAuthorization->role_id) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             </div>

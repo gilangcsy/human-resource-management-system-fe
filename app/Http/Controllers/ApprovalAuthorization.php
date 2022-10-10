@@ -38,9 +38,9 @@ class ApprovalAuthorization extends Controller
         $response = json_decode($response->body());
         $approvalTemplate = $response->data;
         
-        $response2= Http::get($this->url_dynamic() . 'master/role');
-        $response2 = json_decode($response2->body());
-        $roles = $response2->data;
+        $response = Http::get($this->url_dynamic() . 'master/department');
+        $response = json_decode($response->body());
+        $roles = $response->data;
 
         $approvalAuthorization = (object) [
             'id' => '',
@@ -98,9 +98,9 @@ class ApprovalAuthorization extends Controller
         $response = json_decode($response->body());
         $approvalTemplate = $response->data;
         
-        $response2= Http::get($this->url_dynamic() . 'master/role');
-        $response2 = json_decode($response2->body());
-        $roles = $response2->data;
+        $response = Http::get($this->url_dynamic() . 'master/department');
+        $response = json_decode($response->body());
+        $roles = $response->data;
 
         $response3= Http::get($this->url_dynamic() . 'approvalAuthorization/' . $id);
         $response3 = json_decode($response3->body());

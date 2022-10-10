@@ -45,10 +45,14 @@
                             <?php endif; ?>
                             
                             <div class="form-group form-group-default form-group-default-select2 required">
-                                <label class="">Role</label>
+                                <label>Role</label>
                                 <select class="full-width" name="RoleId" data-init-plugin="select2">
-                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($role->id); ?>" <?php echo e($role->id == old('RoleId', $approvalAuthorization->role_id) ? 'selected' : ''); ?>><?php echo e($role->name); ?></option>
+                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <optgroup label="<?php echo e($item->name); ?>">
+                                            <?php $__currentLoopData = $item->Roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($role->id); ?>" <?php echo e($role->id == old('RoleId', $approvalAuthorization->role_id) ? 'selected' : ''); ?>><?php echo e($role->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </optgroup>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>

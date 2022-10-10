@@ -75,6 +75,7 @@ class MenuController extends Controller
             'is_active' => true,
             'createdBy' => session()->get('userId'),
         ]);
+
         $response = json_decode($response->body());
         if($response->success) {
             return redirect()->route('menu.index')->with('status', $response->message);

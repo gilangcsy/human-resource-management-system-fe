@@ -47,7 +47,7 @@
                 @csrf
                 <input id="token" type="hidden" class="form-control" name="token"
                     value="{{ old('token', $token) }}" autofocus>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label>First Name</label>
@@ -60,13 +60,12 @@
                             <input type="text" name="lname" placeholder="Smith" class="form-control">
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-group-default">
                             <label>Password</label>
-                            <input type="password" name="password" placeholder="Minimum of 6 Charactors"
-                                class="form-control" required>
+                            <input type="password" name="password" placeholder="Type your password" class="form-control" required>
                         </div>
                     </div>
                 </div>

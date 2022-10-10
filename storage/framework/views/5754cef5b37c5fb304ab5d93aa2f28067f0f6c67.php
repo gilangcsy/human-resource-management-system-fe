@@ -51,48 +51,42 @@
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Approver One</label>
                                 <select class="full-width" data-placeholder="Select Approver One" name="approver_one" data-init-plugin="select2">
-                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <optgroup label="<?php echo e($role->name); ?>">
-                                        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <?php if($role->id == $user->RoleId): ?>
+                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <optgroup label="<?php echo e($item->name); ?>">
+                                            <?php $__currentLoopData = $item->Users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($user->id); ?>" <?php echo e($user->id == old('approver_one', $approvalTemplate->approver_one_id) ? 'selected' : ''); ?>><?php echo e($user->full_name); ?></option>
-                                            <?php endif; ?>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </optgroup>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </optgroup>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Approver Two</label>
-                                <select class="full-width" data-placeholder="Select Approver Two" name="approver_two" data-init-plugin="select2">
+                                <select class="full-width" data-placeholder="Select Approver One" name="approver_two" data-init-plugin="select2">
                                     <option value="">-- Select Approver Two --</option>
-                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <optgroup label="<?php echo e($role->name); ?>">
-                                        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <?php if($role->id == $user->RoleId): ?>
+                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <optgroup label="<?php echo e($item->name); ?>">
+                                            <?php $__currentLoopData = $item->Users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($user->id); ?>" <?php echo e($user->id == old('approver_two', $approvalTemplate->approver_two_id) ? 'selected' : ''); ?>><?php echo e($user->full_name); ?></option>
-                                            <?php endif; ?>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </optgroup>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </optgroup>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
-
                             
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Approver Three</label>
-                                <select class="full-width" data-placeholder="Select Approver Three" name="approver_three" data-init-plugin="select2">
-                                    <option value="">-- Select Approver Two --</option>
-                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <optgroup label="<?php echo e($role->name); ?>">
-                                        <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <?php if($role->id == $user->RoleId): ?>
+
+                                <select class="full-width" data-placeholder="Select Approver One" name="approver_three" data-init-plugin="select2">
+                                    <option value="">-- Select Approver Three --</option>
+                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <optgroup label="<?php echo e($item->name); ?>">
+                                            <?php $__currentLoopData = $item->Users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <option value="<?php echo e($user->id); ?>" <?php echo e($user->id == old('approver_three', $approvalTemplate->approver_three_id) ? 'selected' : ''); ?>><?php echo e($user->full_name); ?></option>
-                                            <?php endif; ?>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </optgroup>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </optgroup>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 

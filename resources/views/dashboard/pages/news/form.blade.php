@@ -1,14 +1,18 @@
 @extends('dashboard.partials.app')
 
-@section('title', 'Role')
+@section('title', 'News')
 
 @section('css')
-    <link href="{{asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
-    <link href="{{asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/plugins/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet" type="text/css" media="screen">
-    <link href="{{asset('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" media="screen">
-    <link href="{{asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" media="screen">
+    <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet" type="text/css"
+        media="screen">
+    <link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet"
+        type="text/css" media="screen">
+    <link href="{{ asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet"
+        type="text/css" media="screen">
+    <link href="{{ asset('assets/css/wysiwyg.scss') }}" rel="stylesheet" type="text/css">
 @endsection
 
 @section('page-content')
@@ -22,9 +26,8 @@
                     <div class="inner">
                         <!-- START BREADCRUMB -->
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-                            <li class="breadcrumb-item"><a href="/role">Role</a></li>
-                            <li class="breadcrumb-item active">{{ $role->id != '' ? 'Edit' : 'Create' }}</li>
+                            <li class="breadcrumb-item"><a href="#">News</a></li>
+                            <li class="breadcrumb-item active">{{ $news->id != '' ? 'Edit' : 'Create' }}</li>
                         </ol>
                         <!-- END BREADCRUMB -->
                     </div>
@@ -38,31 +41,35 @@
                 <!-- START card -->
                 <div class="card card-default">
                     <div class="card-body">
-                        <form method="POST" action="{{ $role->id == '' ? route('role.store') : route('role.update', $role->id) }}">
+                        <form method="POST" action="{{ $news->id == '' ? route('news.store') : route('news.update', $news->id) }}" enctype="multipart/form-data">
                             @csrf
-                            @if ($role->id != '')
+                            @if ($news->id != '')
                                 @method('patch')
                             @endif
                             <div class="form-group form-group-default required">
-                                <label>Name</label>
-                                <input type="text" value="{{ old('name', $role->name) }}" name="name" class="form-control" required>
+                                <label>Title</label>
+                                <input type="text" value="{{ old('title', $news->title) }}" name="title"
+                                    class="form-control" required>
                             </div>
                             
-                            <div class="form-group form-group-default form-group-default-select2 required">
-                                <label class="">Superior</label>
-                                <select class="full-width" name="superiorId" data-init-plugin="select2">
-                                    <option value="" {{ old('superiorId', $role->superiorId) == null || old('superiorId', $role->superiorId) == '' ? 'selected' : '' }}>--None--</option>
-                                    @foreach ($roles as $item)
-                                        @if ($item->id != $role->id)
-                                            <option value="{{ $item->id }}" {{ $item->id == old('superiorId', $role->superiorId) ? 'selected' : '' }}>{{ $item->name }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                            <div class="form-group form-group-default">
+                                <label for="content">Content</label>
+                                <textarea name="content" class="form-control">{{ $news->content }}</textarea>
                             </div>
                             
+                            <div class="form-group">
+                                <label>Thumbnail</label>
+                                <input type="file" accept="image/png,jpeg,jpg" name="thumbnail" class="form-control"
+                                    multiple>
+                            </div>
+
+                            @if ($news->id != '')
+                                <img src="{{ $urlStorage . '/images/news/' . $news->thumbnail }}" alt="thumbnail" class="img-thumbnail" width="120">
+                            @endif
+
                             <div class="text-right">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ $role->id != '' ? 'Update' : 'Save' }}
+                                    {{ $news->id != '' ? 'Update' : 'Save' }}
                                 </button>
                                 <a href="{{ URL::previous() }}" class="btn btn-primary">
                                     Back
@@ -80,7 +87,6 @@
         <!-- START COPYRIGHT -->
         <!-- START CONTAINER FLUID -->
         @include('dashboard.partials.footer')
-        <!-- END COPYRIGHT -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
 @endsection
@@ -94,9 +100,12 @@
     <script type="text/javascript" src="{{ asset('assets/plugins/dropzone/dropzone.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/plugins/jquery-inputmask/jquery.inputmask.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-form-wizard/js/jquery.bootstrap.wizard.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-form-wizard/js/jquery.bootstrap.wizard.min.js') }}"
+        type="text/javascript"></script>
+    <script src="{{ asset('assets/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript">
+    </script>
+    <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript">
+    </script>
     <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
@@ -104,16 +113,38 @@
     <script src="{{ asset('assets/plugins/bootstrap-typehead/typeahead.jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/handlebars/handlebars-v4.0.5.js') }}"></script>
     <script src="{{ asset('assets/js/form_elements.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/wysiwyg.js') }}" type="text/javascript"></script>
+
+    <script>
+        
+        $('#editor').wysiwyg({
+  toolbar: [
+    ['mode'],
+    ['operations', ['undo', 'rendo', 'cut', 'copy', 'paste']],
+    ['styles'],
+    ['fonts', ['select', 'size']],
+    ['text', ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'font-color', 'bg-color']],
+    ['align', ['left', 'center', 'right', 'justify']],
+    ['lists', ['unordered', 'ordered', 'indent', 'outdent']],
+    ['components', ['table', /*'chart'*/]],
+    ['intervals', ['line-height', 'letter-spacing']],
+    ['insert', ['emoji', 'link', 'image', '<a href="https://www.jqueryscript.net/tags.php?/video/">video</a>', 'symbol', /*'bookmark'*/]],
+    ['special', ['print', 'unformat', 'visual', 'clean']],
+    /*['fullscreen'],*/
+  ],
+});
+    </script>
+
 
     <!-- END VENDOR JS -->
-    
+
     @if (Session::has('error'))
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: '{{Session::get("status")}}',
+                    message: '{{ Session::get('status') }}',
                     position: 'top',
                     timeout: 4000,
                     type: 'danger'

@@ -16,6 +16,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $tasks = Http::withHeaders([
+            'x-access-token' => session()->get('token')
+        ])->get($this->url_dynamic() . 'tasks/readByUser/' . session()->get('userId'), [
+            'status' => 'Open'
+        ]);
+        $tasks = json_decode($tasks->body());
+
         $base_url = $this->url_dynamic();
         
         $leave = Http::get($this->url_dynamic() . 'leaves/readByUserId/' . session()->get('userId'));
@@ -46,13 +53,23 @@ class DashboardController extends Controller
 
         $response = Http::get($this->url_dynamic() . 'attendances/readTodayAttendance/' . session()->get('userId'));
         $response = json_decode($response->body());
-        if($response->success) {
+        
+        $birthdayEmployee = Http::withHeaders([
+            'x-access-token' => session()->get('token')
+        ])->get($this->url_dynamic() . 'users/getBirthday/month', [
+            'status' => 'Open'
+        ]);
+        $birthdayEmployee = json_decode($birthdayEmployee->body());
+        $birthdayEmployee = $birthdayEmployee->data;
+
+        if($tasks->success) {
+            $tasks = $tasks->data;
             $attendanceStatus = $response->status;
             $attendanceData = $response->data;
 
-            return view('dashboard.index', compact('attendanceStatus', 'attendanceData', 'base_url', 'leaveCount', 'approvedLeave', 'rejectedLeave', 'waitingLeave', 'claimCount', 'approvedClaim', 'rejectedClaim', 'waitingClaim'));
+            return view('dashboard.index', compact('attendanceStatus', 'attendanceData', 'base_url', 'leaveCount', 'approvedLeave', 'rejectedLeave', 'waitingLeave', 'claimCount', 'approvedClaim', 'rejectedClaim', 'waitingClaim', 'tasks', 'birthdayEmployee'));
         } else {
-            return redirect()->back()->with('error', $response->message);
+            return redirect()->back()->with('error', $tasks->message);
         }
     }
 

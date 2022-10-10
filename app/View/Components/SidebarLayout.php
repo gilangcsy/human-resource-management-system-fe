@@ -27,7 +27,7 @@ class SidebarLayout extends Component
     public function render()
     {
         
-        if(session()->get('role_id') == 1) {
+        if(session()->get('role_id') == 12) {
             $subMenu = Http::get($this->url_dynamic() . 'master/menu/readSubMenu');
             $subMenu = json_decode($subMenu->body());
             $subMenu = $subMenu->data;

@@ -60,6 +60,11 @@
                                     <option value="P" <?php echo e(old('gender', $user->gender) == 'P' ? 'selected' : ''); ?>>Women</option>
                                 </select>
                             </div>
+
+                            <div class="form-group form-group-default">
+                                <label>TTL</label>
+                                <input type="date" value="<?php echo e(old('ttl', $user->ttl)); ?>" name="ttl" class="form-control">
+                            </div>
                             
                             <?php if($user->id == ''): ?>
                                 <div class="form-group form-group-default required">
@@ -75,11 +80,21 @@
                             
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Role</label>
+                                
                                 <select class="full-width" name="RoleId" data-init-plugin="select2">
-                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($role->id); ?>" <?php echo e($role->id == old('RoleId', $user->RoleId) ? 'selected' : ''); ?>><?php echo e($role->name); ?></option>
+                                    <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <optgroup label="<?php echo e($item->name); ?>">
+                                            <?php $__currentLoopData = $item->Roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($role->id); ?>" <?php echo e($role->id == old('RoleId', $user->RoleId) ? 'selected' : ''); ?>><?php echo e($role->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </optgroup>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
+                            </div>
+
+                            <div class="form-group form-group-default">
+                                <label>Join Date</label>
+                                <input type="date" value="<?php echo e(old('join_date', $user->join_date)); ?>" name="join_date" class="form-control">
                             </div>
                             
                             <div class="text-right">
