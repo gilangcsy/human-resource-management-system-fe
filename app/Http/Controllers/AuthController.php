@@ -56,7 +56,6 @@ class AuthController extends Controller
             'address' => $request->address,
         ]);
         $login = json_decode($login->body());
-
         if ($login->success){
             $request->session()->put('token', $login->credentials->token);
             $request->session()->put('email', $login->credentials->email);

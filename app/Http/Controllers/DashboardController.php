@@ -69,8 +69,10 @@ class DashboardController extends Controller
 
             return view('dashboard.index', compact('attendanceStatus', 'attendanceData', 'base_url', 'leaveCount', 'approvedLeave', 'rejectedLeave', 'waitingLeave', 'claimCount', 'approvedClaim', 'rejectedClaim', 'waitingClaim', 'tasks', 'birthdayEmployee'));
         } else {
+            dd('error nih bang');
             return redirect()->back()->with('error', $tasks->message);
         }
+        dd('dashboard');
     }
 
     /**
