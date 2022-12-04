@@ -42,13 +42,13 @@ class AttendanceController extends Controller
             'data' => 0,
             'clockIn' => '',
             'clockOut' => '',
-            'workLoadStatus' => '',
+            'workload_status' => '',
             'location' => '',
             'longitude' => '',
             'latitude' => '',
-            'planningActivity' => '',
-            'clockInPhoto' => '',
-            'clockOutPhoto' => '',
+            'planning_activity' => '',
+            'clock_in_photo' => '',
+            'clock_out_photo' => '',
         ];
 
         $id = 0;
@@ -77,12 +77,12 @@ class AttendanceController extends Controller
 
         $photo = $request->file('photo')->getClientOriginalName();
         $response = Http::attach(
-            'clockInPhoto', file_get_contents($request->file('photo')), $request->file('photo')->getClientOriginalName()
+            'clock_in_photo', file_get_contents($request->file('photo')), $request->file('photo')->getClientOriginalName()
         )->post($this->url_dynamic() . 'attendances', [
-            'clockInPhoto' => $request->file('photo')->getClientOriginalName(),
+            'clock_in_photo' => $request->file('photo')->getClientOriginalName(),
             'userId' => session()->get('userId'),
-            'workLoadStatus' => $request->workLoadStatus,
-            'planningActivity' => $request->planningActivity,
+            'workload_status' => $request->workload_status,
+            'planning_activity' => $request->planning_activity,
             'location' => $request->location,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude
@@ -147,12 +147,12 @@ class AttendanceController extends Controller
 
         $photo = $request->file('photo')->getClientOriginalName();
         $response = Http::attach(
-            'clockOutPhoto', file_get_contents($request->file('photo')), $request->file('photo')->getClientOriginalName()
+            'clock_out_photo', file_get_contents($request->file('photo')), $request->file('photo')->getClientOriginalName()
         )->post($this->url_dynamic() . 'attendances', [
-            'clockOutPhoto' => $request->file('photo')->getClientOriginalName(),
+            'clock_out_photo' => $request->file('photo')->getClientOriginalName(),
             'userId' => session()->get('userId'),
-            'workLoadStatus' => $request->workLoadStatus,
-            'planningActivity' => $request->planningActivity,
+            'workload_status' => $request->workload_status,
+            'planning_activity' => $request->planning_activity,
             'location' => $request->location,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude

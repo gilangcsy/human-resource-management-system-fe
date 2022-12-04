@@ -72,7 +72,7 @@
                                                     Planning Activity
                                                 </p>
                                                 <p class="pull-left no-margin">
-                                                    <?php echo e($attendanceStatus == 'Clock In' ? 'N/A' : $attendanceData->planningActivity); ?>
+                                                    <?php echo e($attendanceStatus == 'Clock In' ? 'N/A' : $attendanceData->planning_activity); ?>
 
                                                 </p>
 
@@ -104,7 +104,7 @@
                                                             <div class="col-lg-12">
                                                                 <p class="pull-left no-margin hint-text fs-13">Status</p>
                                                                 <p class="pull-right no-margin fs-13">
-                                                                    <?php echo e($attendanceStatus == 'Clock In' ? 'N/A' : $attendanceData->workLoadStatus); ?>
+                                                                    <?php echo e($attendanceStatus == 'Clock In' ? 'N/A' : $attendanceData->workload_status); ?>
 
                                                                 </p>
                                                             </div>

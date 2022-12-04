@@ -89,7 +89,7 @@ class UserManagementController extends Controller
         $response = json_decode($response->body());
         $user = $response->data;
         
-        $response2 = Http::get($this->url_dynamic() . 'master/role/read/all');
+        $response2 = Http::get($this->url_dynamic() . 'master/department');
         $response2 = json_decode($response2->body());
         $roles = $response2->data;
         if($response->success) {

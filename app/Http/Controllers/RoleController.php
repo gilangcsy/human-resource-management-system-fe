@@ -39,7 +39,7 @@ class RoleController extends Controller
             'id' => '',
             'data' => 0,
             'name' => '',
-            'superiorId' => ''
+            'superior_id' => ''
         ];
         
         $response = Http::get($this->url_dynamic() . 'master/role/read/all');
@@ -63,10 +63,11 @@ class RoleController extends Controller
         
         $response = Http::post($this->url_dynamic() . 'master/role', [
             'name' => $request->name,
-            'superiorId' => $request->superiorId,
-            'createdBy' => session()->get('userId')
+            'superior_id' => $request->superior_id,
+            'DepartmentId' => 5,
+            'created_by' => session()->get('userId')
         ]);
-
+        
         $response = json_decode($response->body());
         if($response->success) {
             return redirect()->route('role.index')->with('status', $response->message);
@@ -124,8 +125,8 @@ class RoleController extends Controller
         
         $response = Http::patch($this->url_dynamic() . 'master/role/' . $id, [
             'name' => $request->name,
-            'updatedBy' => session()->get('userId'),
-            'superiorId' => $request->superiorId
+            'updated_by' => session()->get('userId'),
+            'superior_id' => $request->superior_id
         ]);
 
         $response = json_decode($response->body());

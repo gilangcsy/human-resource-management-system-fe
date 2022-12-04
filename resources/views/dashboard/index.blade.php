@@ -74,7 +74,7 @@
                                                     Planning Activity
                                                 </p>
                                                 <p class="pull-left no-margin">
-                                                    {{ $attendanceStatus == 'Clock In' ? 'N/A' : $attendanceData->planningActivity }}
+                                                    {{ $attendanceStatus == 'Clock In' ? 'N/A' : $attendanceData->planning_activity }}
                                                 </p>
 
                                                 <div class="clearfix"></div>
@@ -103,7 +103,7 @@
                                                             <div class="col-lg-12">
                                                                 <p class="pull-left no-margin hint-text fs-13">Status</p>
                                                                 <p class="pull-right no-margin fs-13">
-                                                                    {{ $attendanceStatus == 'Clock In' ? 'N/A' : $attendanceData->workLoadStatus }}
+                                                                    {{ $attendanceStatus == 'Clock In' ? 'N/A' : $attendanceData->workload_status }}
                                                                 </p>
                                                             </div>
                                                         </div>

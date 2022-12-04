@@ -1,8 +1,8 @@
-@extends('dashboard.partials.app')
 
-@section('title', 'Approval Leave')
 
-@section('css')
+<?php $__env->startSection('title', 'Approval Leave'); ?>
+
+<?php $__env->startSection('css'); ?>
     <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,9 +16,9 @@
     <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
     <!-- Please remove the file below for production: Contains demo classes -->
     <link class="main-stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css" />
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-content')
+<?php $__env->startSection('page-content'); ?>
     <!-- START PAGE CONTENT WRAPPER -->
     <div class="page-content-wrapper ">
         <!-- START PAGE CONTENT -->
@@ -55,11 +55,11 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab2hellowWorld">
-                            <form action="{{ route('approval-leave.action') }}" method="POST">
+                            <form action="<?php echo e(route('approval-leave.action')); ?>" method="POST">
                                 <div class="card card-transparent">
                                     <div class="card-header">
                                         <div class="card-title">
-                                            @csrf
+                                            <?php echo csrf_field(); ?>
                                             <button type="submit" class="btn btn-primary approve">Approve</button>
                                             <button type="submit" class="btn btn-danger reject">Reject</button>
                                             <input type="hidden" name="isApproved" id="isApproved" value="">
@@ -86,43 +86,47 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($leaves as $item)
+                                                <?php $__currentLoopData = $leaves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <tr>
                                                         <td>
                                                             <div class="custom-checkbox custom-control">
                                                                 <input type="checkbox" data-checkboxes="mygroup"
                                                                     class="custom-control-input"
-                                                                    id="checkbox-{{ $loop->iteration }}" name="action[]"
-                                                                    value="{{ $item['id'] }}">
-                                                                <label for="checkbox-{{ $loop->iteration }}"
+                                                                    id="checkbox-<?php echo e($loop->iteration); ?>" name="action[]"
+                                                                    value="<?php echo e($item['id']); ?>">
+                                                                <label for="checkbox-<?php echo e($loop->iteration); ?>"
                                                                     class="custom-control-label">&nbsp;</label>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <b>{{ $item['requester_emp_id'] }}</b>
+                                                            <b><?php echo e($item['requester_emp_id']); ?></b>
                                                             <br>
-                                                            {{ $item['requester_name'] }}
+                                                            <?php echo e($item['requester_name']); ?>
+
                                                         </td>
-                                                        <td>{{ \Carbon\carbon::parse(strtotime($item['start_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                        <td><?php echo e(\Carbon\carbon::parse(strtotime($item['start_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+
                                                             -
-                                                            {{ \Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                            <?php echo e(\Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+
                                                         </td>
-                                                        <td>{{ $item['description'] }}</td>
+                                                        <td><?php echo e($item['description']); ?></td>
                                                         <td>
-                                                            @php
+                                                            <?php
                                                                 $badge = 'badge-warning';
                                                                 if ($item['last_status'] == 'Approved') {
                                                                     $badge = 'badge-success';
                                                                 } elseif ($item['last_status'] == 'Rejected') {
                                                                     $badge = 'badge-danger';
                                                                 }
-                                                            @endphp
-                                                            <span class="badge {{ $badge }}">
-                                                                {{ $item['last_status'] }}
+                                                            ?>
+                                                            <span class="badge <?php echo e($badge); ?>">
+                                                                <?php echo e($item['last_status']); ?>
+
                                                             </span>
                                                         </td>
                                                     </tr>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -151,8 +155,8 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($history as $item)
-                                                @php
+                                            <?php $__currentLoopData = $history; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php
                                                     if ($item['approver_one'] == session()->get('userId')) {
                                                         $approverPosition = 'approval_one_status';
                                                     } else if ($item['approver_two'] == session()->get('userId')) {
@@ -160,49 +164,53 @@
                                                     } else if ($item['approver_three'] == session()->get('userId')) {
                                                         $approverPosition = 'approval_three_status';
                                                     }
-                                                @endphp
+                                                ?>
 
-                                                @if ($item[$approverPosition] == 'Approved' OR $item[$approverPosition] == 'Rejected' )
+                                                <?php if($item[$approverPosition] == 'Approved' OR $item[$approverPosition] == 'Rejected' ): ?>
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td><?php echo e($loop->iteration); ?></td>
                                                         <td>
-                                                            <b>{{ $item['requester_emp_id'] }}</b>
+                                                            <b><?php echo e($item['requester_emp_id']); ?></b>
                                                             <br>
-                                                            {{ $item['requester_name'] }}
+                                                            <?php echo e($item['requester_name']); ?>
+
                                                         </td>
 
                                                         <td>
-                                                            {{ \Carbon\carbon::parse(strtotime($item['start_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                            <?php echo e(\Carbon\carbon::parse(strtotime($item['start_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+
                                                             -
-                                                            {{ \Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y') }}
+                                                            <?php echo e(\Carbon\carbon::parse(strtotime($item['end_date']))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y')); ?>
+
                                                         </td>
-                                                        <td>{{ $item['description'] }}</td>
+                                                        <td><?php echo e($item['description']); ?></td>
                                                         <td>
-                                                            @if ($item['attachment'] != null)
-                                                                @foreach ($item['attachment'] as $attach)
-                                                                    <a href="{{ $download_url . $attach }}">
-                                                                        {{ $attach }}
+                                                            <?php if($item['attachment'] != null): ?>
+                                                                <?php $__currentLoopData = $item['attachment']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attach): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <a href="<?php echo e($download_url . $attach); ?>">
+                                                                        <?php echo e($attach); ?>
+
                                                                     </a>
-                                                                @endforeach
-                                                            @else
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            <?php else: ?>
                                                                 No Attachment.
-                                                            @endif
+                                                            <?php endif; ?>
                                                         </td>
                                                         <td>
-                                                            @php
+                                                            <?php
                                                                 $badge = 'badge-warning';
                                                                 if ($item['last_status'] == 'Approved') {
                                                                     $badge = 'badge-success';
                                                                 } elseif ($item['last_status'] == 'Rejected') {
                                                                     $badge = 'badge-danger';
                                                                 }
-                                                            @endphp
+                                                            ?>
                                                             <span
-                                                                class="badge {{ $badge }}">{{ $item['last_status'] }}</span>
+                                                                class="badge <?php echo e($badge); ?>"><?php echo e($item['last_status']); ?></span>
                                                         </td>
                                                     </tr>
-                                                @endif
-                                            @endforeach
+                                                <?php endif; ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -219,13 +227,13 @@
         <!-- END PAGE CONTENT -->
         <!-- START COPYRIGHT -->
         <!-- START CONTAINER FLUID -->
-        @include('dashboard.partials.footer')
+        <?php echo $__env->make('dashboard.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- END COPYRIGHT -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
+<?php $__env->startSection('javascript'); ?>
 
     <!-- BEGIN VENDOR JS -->
     <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -242,35 +250,35 @@
     <script src="assets/js/datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 
-    @if (Session::has('status'))
+    <?php if(Session::has('status')): ?>
         <script>
             $(document).ready(function() {
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: '{{ Session::get('status') }}',
+                    message: '<?php echo e(Session::get('status')); ?>',
                     position: 'top',
                     timeout: 4000,
                     type: 'success'
                 }).show();
             });
         </script>
-    @endif
+    <?php endif; ?>
     
-    @if (Session::has('error'))
+    <?php if(Session::has('error')): ?>
         <script>
             $(document).ready(function() {
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: "{{ Session::get('error') }}",
+                    message: "<?php echo e(Session::get('error')); ?>",
                     position: 'top',
                     timeout: 4000,
                     type: 'danger'
                 }).show();
             });
         </script>
-    @endif
+    <?php endif; ?>
 
     <script>
         let isApproved = document.getElementById('isApproved')
@@ -286,4 +294,6 @@
             isApproved.value = 'false'
         })
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\College\SKRIPSI\App\human-resource-management-system-fe\resources\views/dashboard/pages/approval-leave/index.blade.php ENDPATH**/ ?>

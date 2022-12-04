@@ -73,7 +73,7 @@ class MenuController extends Controller
             'icon' => $request->icon,
             'master_menu' => $request->master_menu,
             'is_active' => true,
-            'createdBy' => session()->get('userId'),
+            'created_by' => session()->get('userId'),
         ]);
 
         $response = json_decode($response->body());

@@ -1,8 +1,8 @@
-@extends('dashboard.partials.app')
 
-@section('title', 'Report Attendance')
 
-@section('css')
+<?php $__env->startSection('title', 'Leave Report'); ?>
+
+<?php $__env->startSection('css'); ?>
     <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -18,9 +18,9 @@
     <link class="main-stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-content')
+<?php $__env->startSection('page-content'); ?>
     <!-- START PAGE CONTENT WRAPPER -->
     <div class="page-content-wrapper ">
         <!-- START PAGE CONTENT -->
@@ -32,7 +32,7 @@
                         <!-- START BREADCRUMB -->
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Report</a></li>
-                            <li class="breadcrumb-item active">Attendance</li>
+                            <li class="breadcrumb-item active">Leave</li>
                         </ol>
                         <!-- END BREADCRUMB -->
                     </div>
@@ -67,39 +67,46 @@
                                     <th> No.</th>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Date</th>
-                                    <th>Clock In</th>
-                                    <th>Clock Out</th>
-                                    <th>Activity</th>
+                                    <th>Desription</th>
+                                    <th>Submission Date</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             
                             <tbody>
-                                @foreach ($attendances as $item)
+                                <?php $__currentLoopData = $leaves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td><?php echo e($loop->iteration); ?></td>
                                         <td>
-                                            {{ $item->User->employee_id }}
+                                            <?php echo e($item->requester_emp_id); ?>
+
                                         </td>
+                                        <td><?php echo e($item->requester_name); ?></td>
+                                        <td><?php echo e($item->description); ?></td>
+                                        <td><?php echo e($item->submission_date != null ? \Carbon\carbon::parse(strtotime($item->submission_date))->setTimezone('Asia/Jakarta')->translatedFormat('Y-m-d') : 'N/A'); ?></td>
+                                        
                                         <td>
-                                            {{ $item->User->full_name }}
+                                            <?php
+                                                $badge = 'badge-warning';
+                                                if($item->last_status == 'Approved') {
+                                                    $badge = 'badge-success';
+                                                } else if($item->last_status == 'Rejected') {
+                                                    $badge = 'badge-danger';
+                                                }
+                                            ?>
+                                            <span class="badge <?php echo e($badge); ?>"><?php echo e($item->last_status); ?></span>
                                         </td>
-                                        <td>{{$item->clockIn != null ? \Carbon\carbon::parse(strtotime($item->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('Y-m-d') : 'N/A'}}</td>
-                                        <td>{{$item->clockIn != null ? \Carbon\carbon::parse(strtotime($item->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('H:i') : 'N/A'}}</td>
-                                        <td>{{$item->clockOut != null ? \Carbon\carbon::parse(strtotime($item->clockOut))->setTimezone('Asia/Jakarta')->translatedFormat('H:i') : 'N/A'}}</td>
-                                        <td>{{ $item->planning_activity }}</td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th> No.</th>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Date</th>
-                                    <th>Clock In</th>
-                                    <th>Clock Out</th>
-                                    <th>Activity</th>
+                                    <th>Desription</th>
+                                    <th>Submission Date</th>
+                                    <th>Status</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -113,13 +120,13 @@
         <!-- END PAGE CONTENT -->
         <!-- START COPYRIGHT -->
         <!-- START CONTAINER FLUID -->
-        @include('dashboard.partials.footer')
+        <?php echo $__env->make('dashboard.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- END COPYRIGHT -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
+<?php $__env->startSection('javascript'); ?>
 
     <!-- BEGIN VENDOR JS -->
     <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -144,23 +151,25 @@
     <script src="assets/js/custom-datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 
-    @if (Session::has('status'))
+    <?php if(Session::has('status')): ?>
         <script>
             $(document).ready(function () {
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: '{{Session::get("status")}}',
+                    message: '<?php echo e(Session::get("status")); ?>',
                     position: 'top',
                     timeout: 4000,
                     type: 'success'
                 }).show();
             });
         </script>
-    @endif
-    
+    <?php endif; ?>
+
     <script>
-        let attendancePosition = [0, 1, 2, 3, 4, 5, 6]
-        datatableWithRange(3, attendancePosition)
+        let claimPosition = [1, 2, 3, 4]
+        datatableWithRange(4, claimPosition)
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\College\SKRIPSI\App\human-resource-management-system-fe\resources\views/dashboard/pages/reporting-leave/index.blade.php ENDPATH**/ ?>

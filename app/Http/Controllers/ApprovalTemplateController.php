@@ -70,7 +70,7 @@ class ApprovalTemplateController extends Controller
             'approver_two' => $request->approver_two,
             'approver_three' => $request->approver_three,
             'type' => $request->type,
-            'createdBy' => session()->get('userId'),
+            'created_by' => session()->get('userId'),
         ]);
         
         $response = json_decode($response->body());
@@ -134,7 +134,7 @@ class ApprovalTemplateController extends Controller
             'approver_two' => $request->approver_two,
             'approver_three' => $request->approver_three,
             'type' => $request->type,
-            'updatedBy' => session()->get('userId'),
+            'updated_by' => session()->get('userId'),
         ]);
 
         $response = json_decode($response->body());

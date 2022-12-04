@@ -1,14 +1,14 @@
-@extends('dashboard.partials.app')
 
-@section('title', 'My Attendance')
 
-@section('css')
-    <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
-    <link href="{{ asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet" type="text/css" media="screen">
-    <link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" media="screen">
-    <link href="{{ asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" media="screen">
+<?php $__env->startSection('title', 'My Attendance'); ?>
+
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(asset('assets/plugins/select2/css/select2.min.css')); ?>" rel="stylesheet" type="text/css" media="screen" />
+    <link href="<?php echo e(asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.css')); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(asset('assets/plugins/dropzone/css/dropzone.css')); ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(asset('assets/plugins/bootstrap-datepicker/css/datepicker3.css')); ?>" rel="stylesheet" type="text/css" media="screen">
+    <link href="<?php echo e(asset('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')); ?>" rel="stylesheet" type="text/css" media="screen">
+    <link href="<?php echo e(asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css')); ?>" rel="stylesheet" type="text/css" media="screen">
 
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"  
@@ -21,9 +21,9 @@
         crossorigin=""></script>
 
     <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-content')
+<?php $__env->startSection('page-content'); ?>
     <!-- START PAGE CONTENT WRAPPER -->
     <div class="page-content-wrapper ">
         <!-- START PAGE CONTENT -->
@@ -36,7 +36,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Self Service</a></li>
                             <li class="breadcrumb-item"><a href="/attendance">My Attendance</a></li>
-                            <li class="breadcrumb-item active">{{ $attendanceData->id != '' ? 'Edit' : 'Create' }}</li>
+                            <li class="breadcrumb-item active"><?php echo e($attendanceData->id != '' ? 'Edit' : 'Create'); ?></li>
                         </ol>
                         <!-- END BREADCRUMB -->
                     </div>
@@ -50,45 +50,45 @@
                 <!-- START card -->
                 <div class="card card-default">
                     <div class="card-body">
-                        <form method="POST" action="{{ $attendanceData->id == '' ? route('attendance.store') : route('attendance.update', $attendanceData->id) }}" enctype="multipart/form-data">
-                            @csrf
-                            @if ($attendanceData->id != '')
-                                @method('patch')
-                            @endif
+                        <form method="POST" action="<?php echo e($attendanceData->id == '' ? route('attendance.store') : route('attendance.update', $attendanceData->id)); ?>" enctype="multipart/form-data">
+                            <?php echo csrf_field(); ?>
+                            <?php if($attendanceData->id != ''): ?>
+                                <?php echo method_field('patch'); ?>
+                            <?php endif; ?>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group form-group-default required">
                                         <label>Employee ID</label>
-                                        <input type="text" value="{{ Session::get('employee_id') }}" name="employee_id"
+                                        <input type="text" value="<?php echo e(Session::get('employee_id')); ?>" name="employee_id"
                                             class="form-control" required readonly>
                                     </div>
 
                                     <div class="form-group form-group-default required">
                                         <label>Full Name</label>
-                                        <input type="text" value="{{ Session::get('full_name') }}" name="full_name"
+                                        <input type="text" value="<?php echo e(Session::get('full_name')); ?>" name="full_name"
                                             class="form-control" readonly>
                                     </div>
 
                                     <div class="form-group form-group-default">
                                         <label>Clock In</label>
                                         <input type="text"
-                                            value="{{ $attendanceData->clockIn != ''? \Carbon\carbon::parse(strtotime($attendanceData->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i'): '' }}"
+                                            value="<?php echo e($attendanceData->clockIn != ''? \Carbon\carbon::parse(strtotime($attendanceData->clockIn))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i'): ''); ?>"
                                             name="clockIn" class="form-control" readonly>
                                     </div>
 
                                     <div class="form-group text-center">
-                                        <img alt="clock in selfie" width="200" src="{{ $attendanceData->clock_in_photo == '' ? asset('assets/img/profiles/default.jpg') : $url_storage . '/attachment/attendances/clockIn/' . $attendanceData->clock_in_photo}}" width="350" height="350" class=" mr-1 img-thumbnail img-fluid">
+                                        <img alt="clock in selfie" width="200" src="<?php echo e($attendanceData->clock_in_photo == '' ? asset('assets/img/profiles/default.jpg') : $url_storage . '/attachment/attendances/clockIn/' . $attendanceData->clock_in_photo); ?>" width="350" height="350" class=" mr-1 img-thumbnail img-fluid">
                                     </div>
 
                                     <div class="form-group form-group-default">
                                         <label>Clock Out</label>
                                         <input type="text"
-                                            value="{{ $attendanceData->clockOut != ''? \Carbon\carbon::parse(strtotime($attendanceData->clockOut))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i'): '' }}"
+                                            value="<?php echo e($attendanceData->clockOut != ''? \Carbon\carbon::parse(strtotime($attendanceData->clockOut))->setTimezone('Asia/Jakarta')->translatedFormat('d M Y - H:i'): ''); ?>"
                                             name="clockOut" class="form-control" readonly>
                                     </div>
 
                                     <div class="form-group text-center">
-                                        <img alt="clock out selfie" width="200" src="{{ $attendanceData->clock_out_photo == '' ? asset('assets/img/profiles/default.jpg') : $url_storage . '/attachment/attendances/clockOut/' . $attendanceData->clock_out_photo}}" width="350" height="350" class=" mr-1 img-thumbnail img-fluid">
+                                        <img alt="clock out selfie" width="200" src="<?php echo e($attendanceData->clock_out_photo == '' ? asset('assets/img/profiles/default.jpg') : $url_storage . '/attachment/attendances/clockOut/' . $attendanceData->clock_out_photo); ?>" width="350" height="350" class=" mr-1 img-thumbnail img-fluid">
                                     </div>
 
                                     <div class="form-group form-group-default form-group-default-select2 required">
@@ -96,15 +96,15 @@
                                         <select class="full-width" data-placeholder="Select Type" id="workload_status" name="workload_status"
                                             data-init-plugin="select2">
                                             <option value="Available"
-                                                {{ $attendanceData->workload_status == 'Available' ? 'selected' : '' }}>
+                                                <?php echo e($attendanceData->workload_status == 'Available' ? 'selected' : ''); ?>>
                                                 Available
                                             </option>
                                             <option value="Moderate"
-                                                {{ $attendanceData->workload_status == 'Moderate' ? 'selected' : '' }}>
+                                                <?php echo e($attendanceData->workload_status == 'Moderate' ? 'selected' : ''); ?>>
                                                 Moderate
                                             </option>
                                             <option value="Busy"
-                                                {{ $attendanceData->workload_status == 'Busy' ? 'selected' : '' }}>
+                                                <?php echo e($attendanceData->workload_status == 'Busy' ? 'selected' : ''); ?>>
                                                 Busy
                                             </option>
                                         </select>
@@ -112,7 +112,7 @@
 
                                     <div class="form-group form-group-default required">
                                         <label>Planning Activity</label>
-                                        <input type="text" value="{{ $attendanceData->planning_activity }}"
+                                        <input type="text" value="<?php echo e($attendanceData->planning_activity); ?>"
                                             name="planning_activity" id="planning_activity" class="form-control" required>
                                     </div>
                                 </div>
@@ -133,18 +133,18 @@
                                     
                                     <div class="form-group form-group-default required">
                                         <label>Address</label>
-                                        <input type="text" name="location" value="{{ $attendanceData->location }}" id="location"
+                                        <input type="text" name="location" value="<?php echo e($attendanceData->location); ?>" id="location"
                                         class="form-control" autofocus autocomplete="off" required readonly>
                                     </div>
                                     
                                     <div class="form-group form-group-default required">
                                         <label>Latitude</label>
-                                        <input type="text" value="{{ $attendanceData->latitude }}" id="latitude" name="latitude" class="form-control" required readonly>
+                                        <input type="text" value="<?php echo e($attendanceData->latitude); ?>" id="latitude" name="latitude" class="form-control" required readonly>
                                     </div>
                                     
                                     <div class="form-group form-group-default required">
                                         <label>Longitude</label>
-                                        <input type="text" value="{{ $attendanceData->longitude }}" id="longitude" name="longitude" class="form-control" required readonly>
+                                        <input type="text" value="<?php echo e($attendanceData->longitude); ?>" id="longitude" name="longitude" class="form-control" required readonly>
                                     </div>
 
                                     <div class="form-group">
@@ -152,16 +152,17 @@
                                     </div>
                                     
                                     <div class="text-right">
-                                        @if ($attendanceStatus != 'Clock In')
+                                        <?php if($attendanceStatus != 'Clock In'): ?>
                                             <button type="button" onclick="update()" class="btn btn-complete">
                                                 Update
                                             </button>
-                                        @endif
+                                        <?php endif; ?>
 
-                                        <button type="submit" class="btn {{ $attendanceStatus == 'Clock In' ? 'btn-complete' : 'btn-danger' }} {{ $attendanceStatus == 'Already Recorded' ? 'd-none' : '' }}">
-                                            {{ $attendanceStatus }}
+                                        <button type="submit" class="btn <?php echo e($attendanceStatus == 'Clock In' ? 'btn-complete' : 'btn-danger'); ?> <?php echo e($attendanceStatus == 'Already Recorded' ? 'd-none' : ''); ?>">
+                                            <?php echo e($attendanceStatus); ?>
+
                                         </button>
-                                        <a href="{{ URL::previous() }}" class="btn btn-complete">
+                                        <a href="<?php echo e(URL::previous()); ?>" class="btn btn-complete">
                                             Back
                                         </a>
                                     </div>
@@ -178,50 +179,50 @@
         <!-- END PAGE CONTENT -->
         <!-- START COPYRIGHT -->
         <!-- START CONTAINER FLUID -->
-        @include('dashboard.partials.footer')
+        <?php echo $__env->make('dashboard.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- END COPYRIGHT -->
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
+<?php $__env->startSection('javascript'); ?>
     <!-- BEGIN VENDOR JS -->
-    <script type="text/javascript" src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/plugins/classie/classie.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/plugins/jquery-autonumeric/autoNumeric.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/plugins/dropzone/dropzone.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/plugins/jquery-inputmask/jquery.inputmask.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-form-wizard/js/jquery.bootstrap.wizard.min.js') }}"
+    <script type="text/javascript" src="<?php echo e(asset('assets/plugins/select2/js/select2.full.min.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('assets/plugins/classie/classie.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('assets/plugins/jquery-autonumeric/autoNumeric.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('assets/plugins/dropzone/dropzone.min.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('assets/plugins/bootstrap-tag/bootstrap-tagsinput.min.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('assets/plugins/jquery-inputmask/jquery.inputmask.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/plugins/bootstrap-form-wizard/js/jquery.bootstrap.wizard.min.js')); ?>"
         type="text/javascript"></script>
-    <script src="{{ asset('assets/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript">
+    <script src="<?php echo e(asset('assets/plugins/jquery-validation/js/jquery.validate.min.js')); ?>" type="text/javascript">
     </script>
-    <script src="{{ asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript">
+    <script src="<?php echo e(asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')); ?>" type="text/javascript">
     </script>
-    <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-typehead/typeahead.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-typehead/typeahead.jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/handlebars/handlebars-v4.0.5.js') }}"></script>
-    <script src="{{ asset('assets/js/form_elements.js') }}" type="text/javascript"></script>
+    <script src="<?php echo e(asset('assets/plugins/moment/moment.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/plugins/bootstrap-typehead/typeahead.bundle.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/plugins/bootstrap-typehead/typeahead.jquery.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/plugins/handlebars/handlebars-v4.0.5.js')); ?>"></script>
+    <script src="<?php echo e(asset('assets/js/form_elements.js')); ?>" type="text/javascript"></script>
 
     <!-- END VENDOR JS -->
 
-    @if (Session::has('error'))
+    <?php if(Session::has('error')): ?>
         <script>
             $(document).ready(function() {
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: "{{ Session::get('error') }}",
+                    message: "<?php echo e(Session::get('error')); ?>",
                     position: 'top',
                     timeout: 4000,
                     type: 'danger'
                 }).show();
             });
         </script>
-    @endif
+    <?php endif; ?>
 
     <script>
         let longitude = document.getElementById('longitude');
@@ -244,7 +245,7 @@
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
-            if (`{{ $attendanceStatus }}` != 'Already Recorded') {
+            if (`<?php echo e($attendanceStatus); ?>` != 'Already Recorded') {
                 L.marker([position.coords.latitude, position.coords.longitude]).addTo(map)
                     .bindPopup('This is where I Am :D')
                     .openPopup();
@@ -279,19 +280,21 @@
             let formData = {
                 planning_activity: planning_activity.value,
                 workload_status: choiceText,
-                updatedBy: `{{ Session::get('userId') }}`
+                updatedBy: `<?php echo e(Session::get('userId')); ?>`
             }
             $.ajax({
-                url: `{{ $url }}attendances/{{ $id }}`,
+                url: `<?php echo e($url); ?>attendances/<?php echo e($id); ?>`,
                 type: "PATCH",
                 dataType: "json",
                 data: formData,
                 success: function(data) {
-                    window.location.href = "{{ route('dashboard.index') }}"
+                    window.location.href = "<?php echo e(route('dashboard.index')); ?>"
                 },
             })
         }
     </script>
 
     <!-- Adding a script for dropzone -->
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\College\SKRIPSI\App\human-resource-management-system-fe\resources\views/dashboard/pages/my-attendance/form.blade.php ENDPATH**/ ?>

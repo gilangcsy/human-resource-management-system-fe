@@ -50,11 +50,11 @@
                             
                             <div class="form-group form-group-default form-group-default-select2 required">
                                 <label class="">Superior</label>
-                                <select class="full-width" name="superiorId" data-init-plugin="select2">
-                                    <option value="" {{ old('superiorId', $role->superiorId) == null || old('superiorId', $role->superiorId) == '' ? 'selected' : '' }}>--None--</option>
+                                <select class="full-width" name="superior_id" data-init-plugin="select2">
+                                    <option value="" {{ old('superior_id', $role->superior_id) == null || old('superior_id', $role->superior_id) == '' ? 'selected' : '' }}>--None--</option>
                                     @foreach ($roles as $item)
                                         @if ($item->id != $role->id)
-                                            <option value="{{ $item->id }}" {{ $item->id == old('superiorId', $role->superiorId) ? 'selected' : '' }}>{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}" {{ $item->id == old('superior_id', $role->superior_id) ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endif
                                     @endforeach
                                 </select>

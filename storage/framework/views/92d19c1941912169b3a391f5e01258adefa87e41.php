@@ -1,8 +1,8 @@
-@extends('dashboard.partials.app')
 
-@section('title', 'Employee')
 
-@section('css')
+<?php $__env->startSection('title', 'Employee'); ?>
+
+<?php $__env->startSection('css'); ?>
     <link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,9 +16,9 @@
     <link class="main-stylesheet" href="pages/css/pages.css" rel="stylesheet" type="text/css" />
     <!-- Please remove the file below for production: Contains demo classes -->
     <link class="main-stylesheet" href="assets/css/style.css" rel="stylesheet" type="text/css" />
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('page-content')
+<?php $__env->startSection('page-content'); ?>
     <!-- START PAGE CONTENT WRAPPER -->
     <div class="page-content-wrapper ">
         <!-- START PAGE CONTENT -->
@@ -45,7 +45,7 @@
                 <div class="card card-transparent">
                     <div class="card-header">
                         <div class="card-title">
-                            <form action="{{ route('employee.create') }}">
+                            <form action="<?php echo e(route('employee.create')); ?>">
                                 <button class="btn btn-primary">
                                     <i class="pg-icon">plus</i>
                                     Add
@@ -69,32 +69,32 @@
                             </thead>
 
                             <tbody>
-                                @foreach ($users as $item)
+                                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->full_name }}</td>
-                                        <td>{{ $item->Role->Department->name }}</td>
-                                        <td>{{ $item->Role->name }}</td>
+                                        <td><?php echo e($loop->iteration); ?></td>
+                                        <td><?php echo e($item->full_name); ?></td>
+                                        <td><?php echo e($item->Role->Department->name); ?></td>
+                                        <td><?php echo e($item->Role->name); ?></td>
                                         <td>
-                                            <span class="badge badge-{{ $item->is_verified ? 'success' : 'danger' }}">Yes</span>
+                                            <span class="badge badge-<?php echo e($item->is_verified ? 'success' : 'danger'); ?>">Yes</span>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline switch switch-lg primary">
-                                                <input type="checkbox" class="checkbox-action" data-user="{{$item->id}}" id="switch-{{ $loop->iteration }}" {{ $item->is_active ? 'checked' : '' }}>
-                                                <label for="switch-{{ $loop->iteration }}"></label>
+                                                <input type="checkbox" class="checkbox-action" data-user="<?php echo e($item->id); ?>" id="switch-<?php echo e($loop->iteration); ?>" <?php echo e($item->is_active ? 'checked' : ''); ?>>
+                                                <label for="switch-<?php echo e($loop->iteration); ?>"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex">
-                                                <a href="{{ route('employee.edit', $item->id) }}" class="btn btn-warning">
+                                                <a href="<?php echo e(route('employee.edit', $item->id)); ?>" class="btn btn-warning">
                                                     <i class="pg-icon">edit</i>
                                                 </a>
     
                                                 <form
-                                                    action="/employee/destroy/{{ $item->id }}/{{ session()->get('userId') }}"
+                                                    action="/employee/destroy/<?php echo e($item->id); ?>/<?php echo e(session()->get('userId')); ?>"
                                                     method="POST">
-                                                    @csrf
-                                                    @method('delete')
+                                                    <?php echo csrf_field(); ?>
+                                                    <?php echo method_field('delete'); ?>
                                                     <button class="btn btn-danger ml-2"
                                                         onclick="return confirm('Are you sure?')">
                                                         <i class="pg-icon">trash</i>
@@ -103,7 +103,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
                     </div>
@@ -115,12 +115,12 @@
         </div>
         <!-- END PAGE CONTENT -->
 
-        @include('dashboard.partials.footer')
+        <?php echo $__env->make('dashboard.partials.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('javascript')
+<?php $__env->startSection('javascript'); ?>
 
     <!-- BEGIN VENDOR JS -->
     <script src="assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -136,26 +136,26 @@
     <script src="assets/js/datatables.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
 
-    @if (Session::has('status'))
+    <?php if(Session::has('status')): ?>
         <script>
             $(document).ready(function() {
                 // Simple notification having bootstrap's .alert class
                 $('.page-content-wrapper').pgNotification({
                     style: 'bar',
-                    message: '{{ Session::get('status') }}',
+                    message: '<?php echo e(Session::get('status')); ?>',
                     position: 'top',
                     timeout: 4000,
                     type: 'success'
                 }).show();
             });
         </script>
-    @endif
+    <?php endif; ?>
 
     <script>
         $('#tableWithSearch tbody').on('click', '.checkbox-action', function () {
             let user_id = $(this).attr('data-user')
             $.ajax({
-                url: `{{ $base_url }}users/setActive/${user_id}`,
+                url: `<?php echo e($base_url); ?>users/setActive/${user_id}`,
                 type: 'GET',
                 dataType: 'JSON',
                 success: function(data) {
@@ -168,4 +168,6 @@
             });
         })
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('dashboard.partials.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\College\SKRIPSI\App\human-resource-management-system-fe\resources\views/dashboard/pages/employee/index.blade.php ENDPATH**/ ?>

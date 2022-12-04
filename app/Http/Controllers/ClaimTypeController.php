@@ -57,8 +57,7 @@ class ClaimTypeController extends Controller
         
         $response = Http::post($this->url_dynamic() . 'master/claimType', [
             'name' => $request->name,
-            'createdBy' => session()->get('userId'),
-            'updatedBy' => session()->get('userId'),
+            'created_by' => session()->get('userId')
         ]);
 
         $response = json_decode($response->body());
@@ -114,7 +113,7 @@ class ClaimTypeController extends Controller
         
         $response = Http::patch($this->url_dynamic() . 'master/claimType/' . $id, [
             'name' => $request->name,
-            'updatedBy' => session()->get('userId'),
+            'updated_by' => session()->get('userId'),
         ]);
 
         $response = json_decode($response->body());
@@ -134,7 +133,7 @@ class ClaimTypeController extends Controller
     public function destroy($id)
     {
         $response = Http::delete($this->url_dynamic() . 'master/claimType/' . $id, [
-            'deletedBy' => session()->get('userId'),
+            'deleted_by' => session()->get('userId'),
         ]);
 
         $response = json_decode($response->body());
